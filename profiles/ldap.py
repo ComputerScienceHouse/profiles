@@ -2,7 +2,7 @@ import hashlib, requests, ldap
 
 
 from functools import lru_cache
-from Profiles import _ldap
+from profiles import _ldap
 
 
 

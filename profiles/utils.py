@@ -10,8 +10,8 @@ import io
 from flask import session
 from functools import wraps
 from functools import lru_cache
-from Profiles import _ldap
-from Profiles.ldap import *
+from profiles import _ldap
+from profiles.ldap import *
 from PIL import Image
 from resizeimage import resizeimage
 

@@ -41,8 +41,8 @@ photos = UploadSet('photos', IMAGES)
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
 configure_uploads(app, photos)
 
-from Profiles.utils import before_request, get_member_info, process_image
-from Profiles.ldap import ldap_update_profile, get_image, get_gravatar, ldap_get_active_members, ldap_get_all_members, ldap_get_member, ldap_search_members, ldap_is_active, ldap_get_eboard, _ldap_get_group_members
+from profiles.utils import before_request, get_member_info, process_image
+from profiles.ldap import ldap_update_profile, get_image, get_gravatar, ldap_get_active_members, ldap_get_all_members, ldap_get_member, ldap_search_members, ldap_is_active, ldap_get_eboard, _ldap_get_group_members
 
 
 @app.route("/", methods=["GET"])
