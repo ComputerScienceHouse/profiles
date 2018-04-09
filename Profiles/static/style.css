@@ -1,9 +1,30 @@
-.card {
-	margin-top: 15px;
-	margin-bottom: 15px;
-	margin-left: auto;
-	margin-right: auto;
-	background-color: #FFF
+ .card-custom-wide {
+  overflow: hidden;
+  border: 0;
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+
+.card-custom-wide-img {
+  height: 130px;
+  background-image: url("/static/assets/images/diamonds-light.png");
+  transition: all 0.5s ease;
+}
+
+.card-custom-wide .card-custom-avatar img {
+  border-radius: 50%;
+  border: 5px solid #fff;
+  background-color: #fff;
+  position: absolute;
+  top: 20px;
+  left: 43.3%;
+  left: calc(50% - 75px);
+  width: 150px;
+  height: 150px;
+}
+
+.card-custom-wide .card-body {
+  padding-top: 50px;
 }
 
 .img-circle {
@@ -27,12 +48,6 @@
 	width: 15rem;
 }
 
-.card-text {
-	margin-left: 30px;
-	margin-bottom: 10px;
-	margin-top: 10px;
-}
-
 .active {
 	color: #ccc;
 }
@@ -50,7 +65,12 @@
 	padding-bottom: 0;
 }
 
+.badge {
+	font-size: 85%;
+}
+
 body {
+	padding-top: 80px;
 	background-color: #eee;
 }
 

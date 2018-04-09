@@ -74,7 +74,8 @@ def ldap_get_groups(account):
     group_list = account.get("memberOf")
     groups = []
     for group_dn in group_list:
-        groups.append(group_dn.split(",")[0][3:])
+        if "cn=groups,cn=accounts" in group_dn:
+            groups.append(group_dn.split(",")[0][3:])
     return groups
 
 

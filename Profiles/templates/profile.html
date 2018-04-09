@@ -5,199 +5,450 @@
 
 <body>
 
-{% include "include/nav.html" %}
+	{% include "include/nav.html" %}
 
 
-{#Body#}
+	{#Body#}
 
-<div id="profile-container" class="container">
-	<div class="card">
-		<div class="card-block card-text">
-			<div class="row">
-				<div class="card-img-top card-img-top-crop" style="width:250px;height:250px;background-image: url('/image/{{ member_info.uid }}')">
+	<div id="profile-container" class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<div class="card card-custom-wide mb-3">
+					<div class="card-custom-wide-img">
+						<div class="card-custom-avatar">
+							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background>
+						</div>
 				</div>
-				<div class="card-block card-text">
-					{% if member_info.active %}
+					<div class="card-body">
+						<div style="text-align: center;">
+							<h2 class="card-title">{{ member_info.name }}</h2>
+							<h6 class="card-subtitle mb-2 text-muted">
+								{% if member_info.active %}
+								Active Member
+								{% elif "honorarymembers" in member_info.group_list %}
+								Honorary Member
+								{% else %}
+								Alumni Member
+								{% endif %}
 
-					<h1 class="name">{{member_info.name}} <span class="active">   Active Member</span> </h1>
+								{% if "onfloor" in member_info.group_list %}
+								with On-Floor Status
+								{% endif %}
+							</h6>
 
-					{% else %}
+							{% if "current_student" in member_info.group_list %}
+							<span class="badge badge-pill badge-secondary">Current Student</span>
+							{% endif %}
 
-					<h1 class="name">{{member_info.name}} <span class="active">   Alumni</span> </h1>
+							{% if "rtp" in member_info.group_list %}
+							<span class="badge badge-pill badge-warning">Root Type Person</span>
+							{% endif %}
 
-					{% endif %}
-					
-					<h3 class="uid">{{member_info.uid}}</h3>
+							{% if "webmaster" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Webmaster</span>
+							{% endif %}
 
-					<h6 class="info">{{ member_info.info_string  }}</h6>
+							{% if "eboard" in member_info.group_list %}
+							<span class="badge badge-pill badge-success">Executive Board</span>
+							{% endif %}
 
-					<br>
+							{% if "constitutional_maintainers" in member_info.group_list %}
+							<span class="badge badge-pill badge-danger">Constitutional Maintainer</span>
+							{% endif %}
 
-					{% if member_info.alumInfo %}
+							{% if "drink" in member_info.group_list %}
+							<span class="badge badge-pill badge-primary">Drink Admin</span>
+							{% endif %}
 
-					<h6 class="birthday">{{member_info.alumInfo}}</h6>
+							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName  %}
+							<hr>
+							
+							{% if member_info.user_obj.homepageURL %}
+							<a href="{{ member_info.user_obj.homepageURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.homepageURL }}">
+								<h2 style="display: inline" class="text-muted">
+									<i class="fas fa-globe" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.blogURL %}
+							<a href="{{ member_info.user_obj.blogURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
+								<h2 style="display: inline" class="text-warning">
+									<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.github %}
+							<a href="https://github.com/{{ member_info.user_obj.github }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.github }}">
+								<h2 style="display: inline; color: #6e5494;">
+									<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.googleScreenName %}
+							<h2 style="display: inline" class="text-success" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.googleScreenName }}">
+								<i class="fab fa-google" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+							</h2>
+							{% endif %}
+							{% if member_info.user_obj.twitterName %}
+							<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
+								<h2 style="display: inline; color: #00aced;">
+									<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							
+							{% endif %}
+						</div>
 
-					{% endif %}
-
-					<br>
-
-					{% if member_info.birthday %}
-
-					<h6 class="birthday">{{member_info.birthday}}</h6>
-
-					{% endif %}
-
-					{% if member_info.user_obj.mobile %}
-
-					<h6 class="email">E-Mail: {{member_info.user_obj.mail}}</h6>
-
-					{% endif %}
-
-					{% if member_info.user_obj.mobile %}
-
-					<h6 class="phone">Phone: {{member_info.user_obj.mobile}}</h6>
-
-					{% endif %}
-
-					{% if member_info.uid == info.uid %}
-
-					<button class="btn btn-success proxstar-actionbtn" id="edit">EDIT</button>
-
-					{% endif %}
-
-				</div>
-			</div>
-
-			<br>
-
-			<hr class="divider"></hr>
-
-			<div class="panel-heading">
-                    	<h3 class="panel-heading">Membership Info</h3>
-                	</div>
-			<div class="row">
-				<div class="col-sm-3 col-md-6">
-					<div class="card-block card-text">
-						<h5 class="info">Room Number: {{ member_info.rn }}</h5>
-						<br>
-
-						{% if member_info.user_obj.drinkBalance %} 
-						<h5 class="info">Drink Balance: {{ member_info.user_obj.drinkBalance }}</h5>
-						<br>
-						{% endif %}
-
-						{% if member_info.user_obj.loginShell %} 
-						<h5 class="info">Login Shell: {{ member_info.user_obj.loginShell }}</h5>
-						<br>
-						{% endif %}
-
-						{% if member_info.plex %}
-						<h5 class="info">Plex: {{ member_info.plex }}</h5>
-						<br>
-						{% endif %}
-					</div>
-				</div>
-				<div class="col-sm-3 col-md-6">
-					<div class="card-block card-text">
-
-						<h5 class="info">Housing Points: {{ member_info.hp }}</h5>
-						<br>
-
-						<h5 class="info">Member Since: {{ member_info.memberSince }}</h5>
-						<br>
-
-						{% if member_info.user_obj.ibutton and editable %} 
-						<h5 class="info">iButton: {{ member_info.user_obj.ibutton }}</h5>
-						{% endif %}
 					</div>
 				</div>
 			</div>
-
+			<div class="col-sm-12 col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h3 class="card-title">General</h3>
+						<div class="row" style="padding-top:10px;">
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-user"></i> Username
+								</h6>
+								<p class="card-text">{{ member_info.uid }}</p>
+							</div>
+							{% if member_info.birthday %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-calendar-alt"></i> Birthday
+								</h6>
+								<p class="card-text">{{ member_info.birthday }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.mobile %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-mobile-alt"></i> Mobile
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.mobile }}</p>
+							</div>
+							{% endif %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-envelope"></i> Email
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.mail }}</p>
+							</div>
+							<div class="col-12 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-users"></i> Groups
+								</h6>
+								{% for group in member_info.group_list %}
+								<a href="/group/{{ group }}" class="badge badge-pill badge-light">{{ group }}</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h3 class="card-title">Membership</h3>
+						<div class="row" style="padding-top:10px;">
+							{% if member_info.rn %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-bed"></i> Room Number
+								</h6>
+								<p class="card-text">{{ member_info.rn }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.drinkBalance %} 
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-beer"></i> Drink Balance
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.drinkBalance }}</p>
+							</div>
+							{% endif %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-home"></i> Housing Points
+								</h6>
+								<p class="card-text">{{ member_info.hp }}</p>
+							</div>
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="far fa-clock"></i> Member Since
+								</h6>
+								<p class="card-text">{{ member_info.memberSince }}</p>
+							</div>
+							{% if member_info.user_obj.loginShell %} 
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-terminal" data-fa-transform="shrink-9" data-fa-mask="fas fa-square"></i> Shell
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.loginShell }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.homeDirectory %} 
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-folder-open"></i> Home Directory
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.homeDirectory }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.plex %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-film"></i> Plex
+								</h6>
+								<p class="card-text">{{ member_info.plex }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.ibutton and member_info.uid == info["uid"]%} 
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-info-circle"></i> iButton
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.ibutton }}</p>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
 			{% if member_info.user_obj.ritAlumni or member_info.user_obj.ritDn or member_info.user_obj.major or member_info.user_obj.ritYear %}
-			<hr class="divider"></hr>
-
-			<div class="panel-heading">
-                    	<h3 class="panel-heading">Student Data</h3>
-                	</div>
-			<div class="row">
-				<div class="col-sm-3 col-md-6">
-					<div class="card-block card-text">
-						{% if member_info.user_obj.ritDn %} 
-						<h5 class="info">RIT Username: {{ member_info.ritUid }}</h5>
-						<br>
-						{% endif %}
-						
-						{% if member_info.user_obj.major %} 
-						<h5 class="info">Major: {{ member_info.user_obj.major }}</h5>
-						<br>
-						{% endif %}
-					</div>
-				</div>
-				<div class="col-sm-3 col-md-6">
-					<div class="card-block card-text">
-						{% if member_info.user_obj.ritYear %} 
-						<h5 class="info">RIT Year: {{ member_info.user_obj.ritYear }}</h5>
-						<br>
-						{% endif %}
-
-						{% if member_info.user_obj.ritAlumni %} 
-						<h5 class="info">RIT Alumni: {{ member_info.user_obj.ritAlumni }}</h5>
-						<br>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-			{%endif%}
-
-			{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName  %}
-			<hr class="divider"></hr>
-			<div class="panel-heading">
-                    	<h3 class="panel-heading">Social Media</h3>
-                	</div>
-			<div class="row">
-				<div class="col-sm-3 col-md-6">
-					<div class="card-block card-text">
-						{% if member_info.user_obj.homepageURL %} 
-						<h5 class="info">Homepage: {{ member_info.user_obj.homepageURL }}</h5>
-						<br>
-						{% endif %}
-						
-						{% if member_info.user_obj.github %} 
-						<h5 class="info">Github: {{ member_info.user_obj.github }}</h5>
-						<br>
-						{% endif %}
-
-						{% if member_info.user_obj.twitterName %} 
-						<h5 class="info">Twitter: {{ member_info.user_obj.twitterName }}</h5>
-						<br>
-						{% endif %}
-					</div>
-				</div>
-				<div class="col-sm-3 col-md-6">
-					<div class="card-block card-text">
-						{% if member_info.user_obj.blogURL %} 
-						<h5 class="info">Blog: {{ member_info.user_obj.blogURL }}</h5>
-						<br>
-						{% endif %}
-
-						{% if member_info.user_obj.googleScreenName %} 
-						<h5 class="info">Google: {{ member_info.user_obj.googleScreenName }}</h5>
-						<br>
-						{% endif %}
+			<div class="col-sm-12 col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h3 class="card-title">Student</h3>
+						<div class="row" style="padding-top:10px;">
+							{% if member_info.user_obj.ritDn %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-user"></i> RIT Username
+								</h6>
+								<p class="card-text">{{ member_info.ritUid }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.ritYear %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-calendar-alt"></i> Graduating Class
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.ritYear }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.major %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-graduation-cap"></i> Major
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.major }}</p>
+							</div>
+							{% endif %}
+							{% if member_info.user_obj.minor %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-file-alt"></i> Minor
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.minor }}</p>
+							</div>
+							{% endif %}
+						</div>
 					</div>
 				</div>
 			</div>
-			{%endif%}			
-			<br>
+			{% endif %}
+			<div style="display: none;" class="col-sm-12 col-md-6">
+				<div class="card">
+					<div class="card-block card-text">
+						<div class="row">
+							<div class="card-img-top card-img-top-crop" style="width:250px;height:250px;background-image: url('/image/{{ member_info.uid }}')">
+							</div>
+							<div class="card-block card-text">
+								{% if member_info.active %}
 
+								<h1 class="name">{{member_info.name}} <span class="active">   Active Member</span> </h1>
 
+								{% else %}
+
+								<h1 class="name">{{member_info.name}} <span class="active">   Alumni</span> </h1>
+
+								{% endif %}
+
+								<h3 class="uid">{{member_info.uid}}</h3>
+
+								<h6 class="info">{{ member_info.info_string  }}</h6>
+
+								<br>
+
+								{% if member_info.alumInfo %}
+
+								<h6 class="birthday">{{member_info.alumInfo}}</h6>
+
+								{% endif %}
+
+								<br>
+
+								{% if member_info.birthday %}
+
+								<h6 class="birthday">{{member_info.birthday}}</h6>
+
+								{% endif %}
+
+								{% if member_info.user_obj.mobile %}
+
+								<h6 class="email">E-Mail: {{member_info.user_obj.mail}}</h6>
+
+								{% endif %}
+
+								{% if member_info.user_obj.mobile %}
+
+								<h6 class="phone">Phone: {{member_info.user_obj.mobile}}</h6>
+
+								{% endif %}
+
+								{% if member_info.uid == info.uid %}
+
+								<button class="btn btn-success proxstar-actionbtn" id="edit">EDIT</button>
+
+								{% endif %}
+
+							</div>
+						</div>
+
+						<br>
+
+						<hr class="divider"></hr>
+
+						<div class="panel-heading">
+							<h3 class="panel-heading">Membership Info</h3>
+						</div>
+						<div class="row">
+							<div class="col-sm-3 col-md-6">
+								<div class="card-block card-text">
+									<h5 class="info">Room Number: {{ member_info.rn }}</h5>
+									<br>
+
+									{% if member_info.user_obj.drinkBalance %} 
+									<h5 class="info">Drink Balance: {{ member_info.user_obj.drinkBalance }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.user_obj.loginShell %} 
+									<h5 class="info">Login Shell: {{ member_info.user_obj.loginShell }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.plex %}
+									<h5 class="info">Plex: {{ member_info.plex }}</h5>
+									<br>
+									{% endif %}
+								</div>
+							</div>
+							<div class="col-sm-3 col-md-6">
+								<div class="card-block card-text">
+
+									<h5 class="info">Housing Points: {{ member_info.hp }}</h5>
+									<br>
+
+									<h5 class="info">Member Since: {{ member_info.memberSince }}</h5>
+									<br>
+
+									{% if member_info.user_obj.ibutton and editable %} 
+									<h5 class="info">iButton: {{ member_info.user_obj.ibutton }}</h5>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+
+						{% if member_info.user_obj.ritAlumni or member_info.user_obj.ritDn or member_info.user_obj.major or member_info.user_obj.ritYear %}
+						<hr class="divider"></hr>
+
+						<div class="panel-heading">
+							<h3 class="panel-heading">Student Data</h3>
+						</div>
+						<div class="row">
+							<div class="col-sm-3 col-md-6">
+								<div class="card-block card-text">
+									{% if member_info.user_obj.ritDn %} 
+									<h5 class="info">RIT Username: {{ member_info.ritUid }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.user_obj.major %} 
+									<h5 class="info">Major: {{ member_info.user_obj.major }}</h5>
+									<br>
+									{% endif %}
+								</div>
+							</div>
+							<div class="col-sm-3 col-md-6">
+								<div class="card-block card-text">
+									{% if member_info.user_obj.ritYear %} 
+									<h5 class="info">RIT Year: {{ member_info.user_obj.ritYear }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.user_obj.ritAlumni %} 
+									<h5 class="info">RIT Alumni: {{ member_info.user_obj.ritAlumni }}</h5>
+									<br>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+						{%endif%}
+
+						{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName  %}
+						<hr class="divider"></hr>
+						<div class="panel-heading">
+							<h3 class="panel-heading">Social Media</h3>
+						</div>
+						<div class="row">
+							<div class="col-sm-3 col-md-6">
+								<div class="card-block card-text">
+									{% if member_info.user_obj.homepageURL %} 
+									<h5 class="info">Homepage: {{ member_info.user_obj.homepageURL }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.user_obj.github %} 
+									<h5 class="info">Github: {{ member_info.user_obj.github }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.user_obj.twitterName %} 
+									<h5 class="info">Twitter: {{ member_info.user_obj.twitterName }}</h5>
+									<br>
+									{% endif %}
+								</div>
+							</div>
+							<div class="col-sm-3 col-md-6">
+								<div class="card-block card-text">
+									{% if member_info.user_obj.blogURL %} 
+									<h5 class="info">Blog: {{ member_info.user_obj.blogURL }}</h5>
+									<br>
+									{% endif %}
+
+									{% if member_info.user_obj.googleScreenName %} 
+									<h5 class="info">Google: {{ member_info.user_obj.googleScreenName }}</h5>
+									<br>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+						{%endif%}			
+						<br>
+
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 
-{% include "include/footer.html" %}
+	{% include "include/footer.html" %}
 
-{% include "include/scripts.html" %}
+	{% include "include/scripts.html" %}
 
 </body>
 
