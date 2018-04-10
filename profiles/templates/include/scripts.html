@@ -18,12 +18,13 @@
   $(document).ready(function(){
   	$('[data-toggle="tooltip"]').tooltip()
     $.adaptiveBackground.run({
-                    shadeVariation: 'blend',
-                    shadePercentage: .2,
-                    shadeColors: {
-                        dark: 'rgb(200,200,200)',
-                        light: 'rgb(255,255,255)'
-                    }
-                });
+    	exclude: [ 'rgb(0,0,0)', 'rgb(255,255,255)' ],
+        shadeVariation: 'blend',
+        shadePercentage: -.8,
+        shadeColors: {
+            dark: 'rgb(255,255,255)',
+            light: 'rgb(0,0,0)'
+        }
+    });
   });
 </script>

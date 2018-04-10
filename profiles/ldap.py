@@ -78,6 +78,15 @@ def ldap_get_groups(account):
             groups.append(group_dn.split(",")[0][3:])
     return groups
 
+@lru_cache(maxsize=1024)
+def ldap_get_group_desc(group):
+    con = _ldap.get_con()
+    results = con.search_s(
+        "cn=groups,cn=accounts,dc=csh,dc=rit,dc=edu",
+        ldap.SCOPE_SUBTREE,
+        "(cn=%s)" % group,
+        ['description'])
+    return results[0][1]['description'][0].decode('utf-8')
 
 @lru_cache(maxsize=1024)
 def ldap_get_eboard():
