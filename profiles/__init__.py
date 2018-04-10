@@ -23,15 +23,6 @@ else:
 auth = OIDCAuthentication(app, issuer=app.config["OIDC_ISSUER"],
                           client_registration_info=app.config["OIDC_CLIENT_CONFIG"])
 
-# Database setup
-db = SQLAlchemy(app)
-migrate = flask_migrate.Migrate(app, db)
-
-# Models
-
-
-# Disable SSL certificate verification warning
-requests.packages.urllib3.disable_warnings()
 
 # LDAP
 _ldap = csh_ldap.CSHLDAP(app.config['LDAP_BIND_DN'], app.config['LDAP_BIND_PASS'])
@@ -41,8 +32,8 @@ photos = UploadSet('photos', IMAGES)
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
 configure_uploads(app, photos)
 
-from Profiles.utils import before_request, get_member_info, process_image
-from Profiles.ldap import ldap_update_profile, get_image, get_gravatar, ldap_get_active_members, ldap_get_all_members, ldap_get_member, ldap_search_members, ldap_is_active, ldap_get_eboard, _ldap_get_group_members
+from profiles.utils import before_request, get_member_info, process_image
+from profiles.ldap import ldap_update_profile, get_image, get_gravatar, ldap_get_active_members, ldap_get_all_members, ldap_get_member, ldap_search_members, ldap_is_active, ldap_get_eboard, _ldap_get_group_members, ldap_get_group_desc
 
 
 @app.route("/", methods=["GET"])
@@ -51,16 +42,6 @@ from Profiles.ldap import ldap_update_profile, get_image, get_gravatar, ldap_get
 def home(info=None):
     return redirect("/profile/" + info["uid"],
                               code = 302)
-
-
-@app.route("/members", methods=["GET"])
-@auth.oidc_auth
-@before_request
-def members(info=None):
-    return render_template("members.html", 
-    						  info=info, 
-    						  title = "Active Members",
-    						  members=ldap_get_active_members())
 
 
 @app.route("/profile/<uid>", methods=["GET"])
@@ -78,10 +59,7 @@ def profile(uid=None, info=None):
 def results(uid=None, info=None):
     if request.method == "POST":
     	searched = request.form['query']
-    	return render_template("results.html", 
-    						    info=info, 
-    						    title = "Search Results: "+searched,
-    						    members=ldap_search_members(searched))
+    	return redirect("/search/{}".format(searched), 302)
 
 
 @app.route("/search/<searched>", methods=["GET"])
@@ -89,7 +67,7 @@ def results(uid=None, info=None):
 @before_request
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
-    return render_template("members.html", 
+    return render_template("listing.html", 
     						  info=info, 
     						  title = "Search Results: "+searched,
     						  members=ldap_search_members(searched))
@@ -99,25 +77,18 @@ def search(searched=None, info=None):
 @auth.oidc_auth
 @before_request
 def group(group=None, info=None):
-    if "eboard" in group:
-    	return render_template("members.html", 
+    group_desc = ldap_get_group_desc(group)
+
+    if "eboard" == group:
+    	return render_template("listing.html", 
     						    info=info,
-    						    title = "Group: " + group,
+    						    title = group_desc,
     						    members=ldap_get_eboard())
     else:
-    	return render_template("members.html", 
+    	return render_template("listing.html", 
     						    info=info, 
-    						    title = "Group: " + group,
+    						    title = group_desc,
     						    members=_ldap_get_group_members(group))
-
-
-@app.route("/edit", methods=["GET"])
-@auth.oidc_auth
-@before_request
-def edit(uid=None, info=None):
-    return render_template("edit.html", 
-                                        info=info, 
-                                        member_info=get_member_info(info['uid']))
 
 
 @app.route("/update", methods=["POST"])
