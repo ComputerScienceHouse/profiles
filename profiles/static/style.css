@@ -69,6 +69,14 @@
 	font-size: 85%;
 }
 
+.form-control-sm {
+	font-size: 13px !important;
+}
+
+.user-form-input {
+	display: none;
+}
+
 body {
 	padding-top: 80px;
 	background-color: #eee;

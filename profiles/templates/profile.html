@@ -18,10 +18,11 @@
 						<div class="card-custom-avatar">
 							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background>
 						</div>
-				</div>
+					</div>
 					<div class="card-body">
 						<div style="text-align: center;">
-							<h2 class="card-title">{{ member_info.name }}</h2>
+							<h2 class="card-title user-form-value">{{ member_info.name }}</h2>
+							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:20px;">
 							<h6 class="card-subtitle mb-2 text-muted">
 								{% if member_info.active %}
 								Active Member
@@ -103,6 +104,34 @@
 							{% endif %}
 							
 							{% endif %}
+							<div style="text-align: left;">
+								<div class="form-group user-form-input">
+									<label for="user-homepage">Homepage URL</label>
+									<input type="text" class="form-control form-control-sm" id="user-homepage" value="{{ member_info.user_obj.homepageURL }}" placeholder="Homepage URL">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-blog">Blog URL</label>
+									<input type="text" class="form-control form-control-sm" id="user-blog" value="{{ member_info.user_obj.blogURL }}" placeholder="Blog URL">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-github">GitHub Username</label>
+									<input type="text" class="form-control form-control-sm" id="user-github" value="{{ member_info.user_obj.github }}" placeholder="GitHub Username">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-google">Google Account</label>
+									<input type="text" class="form-control form-control-sm" id="user-google" value="{{ member_info.user_obj.googleScreenName }}" placeholder="Google Account">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-twitter">Twitter Username</label>
+									<input type="text" class="form-control form-control-sm" id="user-twitter" value="{{ member_info.user_obj.twitterName }}" placeholder="Twitter Username">
+								</div>
+							</div>
+
+							{% if member_info.uid == info["uid"] %}
+							<hr class="user-form-value">
+							<button type="button" id="edit" class="btn btn-primary">Edit Profile</button>
+							<button type="button" id="save" class="btn btn-success user-form-input">Save Changes</button>
+							{% endif %}
 						</div>
 
 					</div>
@@ -118,46 +147,56 @@
 									<i class="fas fa-user"></i> Username
 								</h6>
 								<p class="card-text">{{ member_info.uid }}</p>
+
 							</div>
-							{% if member_info.birthday %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-calendar-alt"></i> Birthday
 								</h6>
-								<p class="card-text">{{ member_info.birthday }}</p>
+								<p class="card-text user-form-value">{{ member_info.birthday }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-birthday" value="{{ member_info.user_obj.birthday }}">
 							</div>
-							{% endif %}
-							{% if member_info.user_obj.mobile %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-mobile-alt"></i> Mobile
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.mobile }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.mobile }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-mobile" value="{{ member_info.user_obj.mobile }}">
 							</div>
-							{% endif %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-envelope"></i> Email
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.mail }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.mail }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-mail" value="{{ member_info.user_obj.mail }}">
 							</div>
-							{% if member_info.user_obj.nickname %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-comments"></i> Nickname
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.nickname }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.nickname }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-nickname" value="{{ member_info.user_obj.nickname }}">
 							</div>
-							{% endif %}
-							<div class="col-12 mb-4">
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-lock"></i> Last Login
+								</h6>
+								<p class="card-text">{{ member_info.lastlogin }}</p>
+							</div>
+							<div class="col-12">
 								<h6 class="card-subtitle text-muted mb-3">
 									<i class="fas fa-users"></i> Groups
 								</h6>
 								<p class="card-text">
-								{% for group in member_info.group_list %}
-								<a href="/group/{{ group }}" class="badge badge-pill badge-light">{{ group }}</a>
-								{% endfor %}
-								<p class="card-text">
+									{% for group in member_info.group_list %}
+									<a href="/group/{{ group }}" class="badge badge-pill badge-light">{{ group }}</a>
+									{% endfor %}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -176,14 +215,14 @@
 								<p class="card-text">{{ member_info.rn }}</p>
 							</div>
 							{% endif %}
-							{% if member_info.user_obj.drinkBalance %} 
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-beer"></i> Drink Balance
 								</h6>
 								<p class="card-text">{{ member_info.user_obj.drinkBalance }}</p>
 							</div>
-							{% endif %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-home"></i> Housing Points
@@ -196,14 +235,15 @@
 								</h6>
 								<p class="card-text">{{ member_info.memberSince }}</p>
 							</div>
-							{% if member_info.user_obj.loginShell %} 
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-terminal" data-fa-transform="shrink-9" data-fa-mask="fas fa-square"></i> Shell
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.loginShell }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.loginShell }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-shell" value="{{ member_info.user_obj.loginShell }}">
 							</div>
-							{% endif %}
+
 							{% if member_info.user_obj.homeDirectory %} 
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
@@ -212,14 +252,13 @@
 								<p class="card-text">{{ member_info.user_obj.homeDirectory }}</p>
 							</div>
 							{% endif %}
-							{% if member_info.plex %}
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-film"></i> Plex
 								</h6>
-								<p class="card-text">{{ member_info.plex }}</p>
+								<p class="card-text user-form-value">{{ member_info.plex }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-plex" value="{{ member_info.user_obj.plex }}">
 							</div>
-							{% endif %}
 							{% if member_info.user_obj.ibutton and member_info.uid == info["uid"]%} 
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
@@ -246,30 +285,31 @@
 								<p class="card-text">{{ member_info.ritUid }}</p>
 							</div>
 							{% endif %}
-							{% if member_info.user_obj.ritYear %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-calendar-alt"></i> Graduating Class
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.ritYear }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.ritYear }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-rityear" value="{{ member_info.user_obj.ritYear }}">
 							</div>
-							{% endif %}
-							{% if member_info.user_obj.major %}
+
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-graduation-cap"></i> Major
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.major }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.major }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-major" value="{{ member_info.user_obj.major }}">
 							</div>
-							{% endif %}
-							{% if member_info.user_obj.minor %}
+
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-file-alt"></i> Minor
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.minor }}</p>
+								<p class="card-text user-form-value">{{ member_info.user_obj.minor }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-minor" value="{{ member_info.user_obj.minor }}">
 							</div>
-							{% endif %}
 						</div>
 					</div>
 				</div>

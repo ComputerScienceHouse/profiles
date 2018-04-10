@@ -59,6 +59,7 @@ def get_member_info(uid):
         "rn": ldap_get_roomnumber(account),
         "birthday": parse_date(account.birthday),
         "memberSince": parse_date(account.memberSince),
+        "lastlogin": parse_date(account.krblastsuccessfulauth),
         "year": parse_account_year(account.memberSince)
     }
     return member_info
