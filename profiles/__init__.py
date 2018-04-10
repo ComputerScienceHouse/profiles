@@ -119,7 +119,11 @@ def logout():
 
 @app.route("/image/<uid>", methods=["GET"])
 def image(uid):
-    image = get_image(uid)
+    try:
+        image = get_image(uid)
+    except KeyError:
+        return redirect(get_gravatar("dick"), code=302)
+
     if image: 
         return image
     else:

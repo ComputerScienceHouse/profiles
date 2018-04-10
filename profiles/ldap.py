@@ -5,6 +5,7 @@ import ldap
 
 from functools import lru_cache
 from profiles import _ldap
+from csh_ldap import CSHMember
 
 
 def _ldap_get_group_members(group):
@@ -94,7 +95,7 @@ def ldap_get_group_desc(group):
 @lru_cache(maxsize=1024)
 def ldap_get_eboard():
     members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations") + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members(
-        "eboard-history") + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm") + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social")
+        "eboard-history") + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm") + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social") + _ldap_get_group_members("eboard-secretary")
 
     return members
 
@@ -268,27 +269,25 @@ def ldap_get_roomnumber(account):
 
 @lru_cache(maxsize=1024)
 def ldap_search_members(query):
-  #   con = _ldap.get_con()
-  #   results= con.search_s(
-		# "dc=csh,dc=rit,dc=edu",
-		# ldap.SCOPE_SUBTREE,
-		# "(uid=%s)" % query,
-		# ['uid'])
+    con = _ldap.get_con()
+    filt = str("(|(description=*{0}*)(displayName=*{0}*)(mail=*{0}*)(nickName=*{0}*)(plex=*{0}*)(sn=*{0}*)(uid=*{0}*)(mobile=*{0}*)(twitterName=*{0}*)(github=*{0}*))").format(query)
 
-    active = ldap_get_all_members();
-    results = []
-    query = query.lower()
+    res= con.search_s(
+        "dc=csh,dc=rit,dc=edu",
+        ldap.SCOPE_SUBTREE,
+        filt,
+        ['uid'])
 
-    for account in active:
-        uid = account.uid.lower()
-        name = account.gecos
+    ret = []
 
-        if name:
-            name = name.lower()
-            if query in uid or query in name:
-                results.append(account)
+    for uid in res:
+        try:
+            mem = (str(uid[1]).split('\'')[3])
+            ret.append(ldap_get_member(mem))
+        except IndexError:
+            continue
 
-    return results
+    return ret
 
 
 # @lru_cache(maxsize=1024)
