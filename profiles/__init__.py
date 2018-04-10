@@ -62,11 +62,12 @@ def results(uid=None, info=None):
     	return redirect("/search/{}".format(searched), 302)
 
 
-@app.route("/search/<searched>", methods=["GET"])
+@app.route("/search", methods=["GET"])
 @auth.oidc_auth
 @before_request
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
+    searched = request.args.get("q")
     return render_template("listing.html", 
     						  info=info, 
     						  title = "Search Results: "+searched,
