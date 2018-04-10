@@ -16,11 +16,23 @@
 				<div class="card card-custom-wide mb-3">
 					<div class="card-custom-wide-img">
 						<div class="card-custom-avatar">
+							{% if member_info.uid == info["uid"] %}
+							<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
+							{% else %}
 							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background>
+							{% endif %}
 						</div>
 					</div>
 					<div class="card-body">
 						<div style="text-align: center;">
+							{% if member_info.uid == info["uid"] %}
+							<div id="upload-form" style="display: none; padding-bottom:10px;">
+								<form method="POST" accept="image/*" enctype="multipart/form-data" action="/upload">
+						    		<input type="file" name="photo">
+						    		<input type="submit">
+								</form>
+							</div>
+							{% endif %}
 							<h2 class="card-title user-form-value">{{ member_info.name }}</h2>
 							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:20px;">
 							<h6 class="card-subtitle mb-2 text-muted">

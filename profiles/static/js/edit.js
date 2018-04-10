@@ -8,6 +8,12 @@ $(function() {
 });
 
 $(function() {
+	$("#self-picture").on('click', function () {
+		$("#upload-form").toggle()
+	});
+});
+
+$(function() {
 	$("#save").on('click', function (e) {
 
 		var form_data = { 
