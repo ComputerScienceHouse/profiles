@@ -10,8 +10,8 @@ import io
 from flask import session
 from functools import wraps
 from functools import lru_cache
-from Profiles import _ldap
-from Profiles.ldap import *
+from profiles import _ldap
+from profiles.ldap import *
 from PIL import Image
 from resizeimage import resizeimage
 
@@ -59,6 +59,7 @@ def get_member_info(uid):
         "rn": ldap_get_roomnumber(account),
         "birthday": parse_date(account.birthday),
         "memberSince": parse_date(account.memberSince),
+        "lastlogin": parse_date(account.krblastsuccessfulauth),
         "year": parse_account_year(account.memberSince)
     }
     return member_info

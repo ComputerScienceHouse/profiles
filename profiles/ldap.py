@@ -1,9 +1,11 @@
-import hashlib, requests, ldap
+import hashlib
+import requests
+import ldap
 
 
 from functools import lru_cache
-from Profiles import _ldap
-
+from profiles import _ldap
+from csh_ldap import CSHMember
 
 
 def _ldap_get_group_members(group):
@@ -37,7 +39,7 @@ def _ldap_is_member_of_directorship(account, directorship):
     return False
 
 
-#Getters 
+# Getters
 
 
 def ldap_get_member(username):
@@ -74,16 +76,28 @@ def ldap_get_groups(account):
     group_list = account.get("memberOf")
     groups = []
     for group_dn in group_list:
-        groups.append(group_dn.split(",")[0][3:])
+        if "cn=groups,cn=accounts" in group_dn:
+            groups.append(group_dn.split(",")[0][3:])
     return groups
 
 
 @lru_cache(maxsize=1024)
+def ldap_get_group_desc(group):
+    con = _ldap.get_con()
+    results = con.search_s(
+        "cn=groups,cn=accounts,dc=csh,dc=rit,dc=edu",
+        ldap.SCOPE_SUBTREE,
+        "(cn=%s)" % group,
+        ['description'])
+    return results[0][1]['description'][0].decode('utf-8')
+
+
+@lru_cache(maxsize=1024)
 def ldap_get_eboard():
-    members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations") + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history") + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm") + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social")
+    members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations") + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members(
+        "eboard-history") + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm") + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social") + _ldap_get_group_members("eboard-secretary")
 
     return members
-
 
 
 # Status checkers
@@ -187,41 +201,63 @@ def ldap_set_non_current_student(account):
     ldap_get_member.cache_clear()
 
 
-def ldap_update_profile(dict, uid):
-	account = _ldap.get_member(uid, uid=True)
+def ldap_update_profile(form_dict, uid):
+    account = _ldap.get_member(uid, uid=True)
 
-	if not dict["name"] == account.cn:
-		account.cn = dict["name"]
+    form_input = form_dict.to_dict(flat=True)
+    for key, value in form_input.items():
+        if value == "None" or value == "":
+            form_input[key] = None
 
-	if not dict["birthday"] == account.birthday:
-		account.birthday = dict["birthday"]
+    if not form_input["name"] == account.cn:
+        account.cn = form_input["name"]
 
-	if not dict["phone"] == account.mobile:
-		account.mobile = dict["phone"]
+    if not form_input["birthday"] == account.birthday:
+        account.birthday = form_input["birthday"]
 
-	if not dict["plex"] == account.plex:
-		account.plex = dict["plex"]
+    if not form_input["phone"] == account.mobile:
+        account.mobile = form_input["phone"]
 
-	if not dict["major"] == account.major:
-		account.major = dict["major"]
+    if not form_input["plex"] == account.plex:
+        account.plex = form_input["plex"]
 
-	if not dict["ritYear"] == account.ritYear:
-		account.ritYear = dict["ritYear"]
+    if "major" in form_input.keys():
+        if not form_input["major"] == account.major:
+            account.major = form_input["major"]
 
-	if not dict["website"] == account.homepageURL:
-		account.homepageURL = dict["website"]
+    if "minor" in form_input.keys():
+        if not form_input["minor"] == account.minor:
+            account.minor = form_input["minor"]
 
-	if not dict["github"] == account.github:
-		account.github = dict["github"]
+    if "ritYear" in form_input.keys():
+        if not form_input["ritYear"] == account.ritYear:
+            account.ritYear = form_input["ritYear"]
 
-	if not dict["twitter"] == account.twitterName:
-		account.twitterName = dict["twitter"]
+    if not form_input["website"] == account.homepageURL:
+        account.homepageURL = form_input["website"]
 
-	if not dict["blog"] == account.blogURL:
-		account.blogURL = dict["blog"]
+    if not form_input["github"] == account.github:
+        account.github = form_input["github"]
 
-	if not dict["google"] == account.googleScreenName:
-		account.googleScreenName = dict["google"]
+    if not form_input["twitter"] == account.twitterName:
+        account.twitterName = form_input["twitter"]
+
+    if not form_input["blog"] == account.blogURL:
+        account.blogURL = form_input["blog"]
+
+    if not form_input["google"] == account.googleScreenName:
+        account.googleScreenName = form_input["google"]
+
+    if not form_input["mail"] == account.mail:
+        account.mail = form_input["mail"]
+
+    if not form_input["nickname"] == account.nickname:
+        account.nickname = form_input["nickname"]
+
+    if not form_input["shell"] == account.shell:
+        account.loginShell = form_input["shell"]
+
+
 
 
 def ldap_get_roomnumber(account):
@@ -233,27 +269,25 @@ def ldap_get_roomnumber(account):
 
 @lru_cache(maxsize=1024)
 def ldap_search_members(query):
-  #   con = _ldap.get_con()
-  #   results= con.search_s(
-		# "dc=csh,dc=rit,dc=edu",
-		# ldap.SCOPE_SUBTREE,
-		# "(uid=%s)" % query,
-		# ['uid'])
+    con = _ldap.get_con()
+    filt = str("(|(description=*{0}*)(displayName=*{0}*)(mail=*{0}*)(nickName=*{0}*)(plex=*{0}*)(sn=*{0}*)(uid=*{0}*)(mobile=*{0}*)(twitterName=*{0}*)(github=*{0}*))").format(query)
 
-    active = ldap_get_all_members();
-    results = []
-    query = query.lower()
+    res= con.search_s(
+        "dc=csh,dc=rit,dc=edu",
+        ldap.SCOPE_SUBTREE,
+        filt,
+        ['uid'])
 
-    for account in active:
-        uid = account.uid.lower()
-        name = account.gecos
+    ret = []
 
-        if name:
-            name = name.lower()
-            if query in uid or query in name:
-                results.append(account)
+    for uid in res:
+        try:
+            mem = (str(uid[1]).split('\'')[3])
+            ret.append(ldap_get_member(mem))
+        except IndexError:
+            continue
 
-    return results
+    return ret
 
 
 # @lru_cache(maxsize=1024)

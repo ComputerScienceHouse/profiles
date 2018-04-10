@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "include/head.html" %}
+
+<body>
+
+	{% include "include/nav.html" %}
+
+
+	{#Body#}
+
+	<div id="profile-container" class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+				<div class="card card-custom-wide mb-3">
+					<div class="card-custom-wide-img">
+						<div class="card-custom-avatar">
+							{% if member_info.uid == info["uid"] %}
+							<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
+							{% else %}
+							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background>
+							{% endif %}
+						</div>
+					</div>
+					<div class="card-body">
+						<div style="text-align: center;">
+							{% if member_info.uid == info["uid"] %}
+							<div id="upload-form" style="display: none; padding-bottom:10px;">
+								<form method="POST" accept="image/*" enctype="multipart/form-data" action="/upload">
+						    		<input type="file" name="photo">
+						    		<input type="submit">
+								</form>
+							</div>
+							{% endif %}
+							<h2 class="card-title user-form-value">{{ member_info.name }}</h2>
+							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:20px;">
+							<h6 class="card-subtitle mb-2 text-muted">
+								{% if member_info.active %}
+								Active Member
+								{% elif "honorarymembers" in member_info.group_list %}
+								Honorary Member
+								{% else %}
+								Alumni Member
+								{% endif %}
+
+								{% if "onfloor" in member_info.group_list %}
+								with On-Floor Status
+								{% endif %}
+							</h6>
+
+							{% if "current_student" in member_info.group_list %}
+							<span class="badge badge-pill badge-secondary">Current Student</span>
+							{% endif %}
+
+							{% if "rtp" in member_info.group_list %}
+							<span class="badge badge-pill badge-warning">Root Type Person</span>
+							{% endif %}
+
+							{% if "webmaster" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Webmaster</span>
+							{% endif %}
+
+							{% if "eboard" in member_info.group_list %}
+							<span class="badge badge-pill badge-success">Executive Board</span>
+							{% endif %}
+
+							{% if "constitutional_maintainers" in member_info.group_list %}
+							<span class="badge badge-pill badge-danger">Constitutional Maintainer</span>
+							{% endif %}
+
+							{% if "drink" in member_info.group_list %}
+							<span class="badge badge-pill badge-primary">Drink Admin</span>
+							{% endif %}
+
+							{% if member_info.user_obj.nsaccountlock == "TRUE" %}
+							<span class="badge badge-pill badge-dark">Disabled</span>
+							{% endif %}
+
+
+							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName  %}
+							<hr>
+							
+							{% if member_info.user_obj.homepageURL %}
+							<a href="{{ member_info.user_obj.homepageURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.homepageURL }}">
+								<h2 style="display: inline" class="text-muted">
+									<i class="fas fa-globe" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.blogURL %}
+							<a href="{{ member_info.user_obj.blogURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
+								<h2 style="display: inline" class="text-warning">
+									<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.github %}
+							<a href="https://github.com/{{ member_info.user_obj.github }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.github }}">
+								<h2 style="display: inline; color: #6e5494;">
+									<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.googleScreenName %}
+							<h2 style="display: inline" class="text-success" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.googleScreenName }}">
+								<i class="fab fa-google" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+							</h2>
+							{% endif %}
+							{% if member_info.user_obj.twitterName %}
+							<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
+								<h2 style="display: inline; color: #00aced;">
+									<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							
+							{% endif %}
+							<div style="text-align: left;">
+								<div class="form-group user-form-input">
+									<label for="user-homepage">Homepage URL</label>
+									<input type="text" class="form-control form-control-sm" id="user-homepage" value="{{ member_info.user_obj.homepageURL }}" placeholder="Homepage URL">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-blog">Blog URL</label>
+									<input type="text" class="form-control form-control-sm" id="user-blog" value="{{ member_info.user_obj.blogURL }}" placeholder="Blog URL">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-github">GitHub Username</label>
+									<input type="text" class="form-control form-control-sm" id="user-github" value="{{ member_info.user_obj.github }}" placeholder="GitHub Username">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-google">Google Account</label>
+									<input type="text" class="form-control form-control-sm" id="user-google" value="{{ member_info.user_obj.googleScreenName }}" placeholder="Google Account">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-twitter">Twitter Username</label>
+									<input type="text" class="form-control form-control-sm" id="user-twitter" value="{{ member_info.user_obj.twitterName }}" placeholder="Twitter Username">
+								</div>
+							</div>
+
+							{% if member_info.uid == info["uid"] %}
+							<hr class="user-form-value">
+							<button type="button" id="edit" class="btn btn-primary">Edit Profile</button>
+							<button type="button" id="save" class="btn btn-success user-form-input">Save Changes</button>
+							{% endif %}
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h3 class="card-title">General</h3>
+						<div class="row" style="padding-top:10px;">
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-user"></i> Username
+								</h6>
+								<p class="card-text">{{ member_info.uid }}</p>
+
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-calendar-alt"></i> Birthday
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.birthday }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-birthday" value="{{ member_info.user_obj.birthday }}">
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-mobile-alt"></i> Mobile
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.mobile }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-mobile" value="{{ member_info.user_obj.mobile }}">
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-envelope"></i> Email
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.mail }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-mail" value="{{ member_info.user_obj.mail }}">
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-comments"></i> Nickname
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.nickname }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-nickname" value="{{ member_info.user_obj.nickname }}">
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-lock"></i> Last Login
+								</h6>
+								<p class="card-text">{{ member_info.lastlogin }}</p>
+							</div>
+							<div class="col-12">
+								<h6 class="card-subtitle text-muted mb-3">
+									<i class="fas fa-users"></i> Groups
+								</h6>
+								<p class="card-text">
+									{% for group in member_info.group_list %}
+									<a href="/group/{{ group }}" class="badge badge-pill badge-light">{{ group }}</a>
+									{% endfor %}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h3 class="card-title">Membership</h3>
+						<div class="row" style="padding-top:10px;">
+							{% if member_info.rn %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-bed"></i> Room Number
+								</h6>
+								<p class="card-text">{{ member_info.rn }}</p>
+							</div>
+							{% endif %}
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-beer"></i> Drink Balance
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.drinkBalance }}</p>
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-home"></i> Housing Points
+								</h6>
+								<p class="card-text">{{ member_info.hp }}</p>
+							</div>
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="far fa-clock"></i> Member Since
+								</h6>
+								<p class="card-text">{{ member_info.memberSince }}</p>
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-terminal" data-fa-transform="shrink-9" data-fa-mask="fas fa-square"></i> Shell
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.loginShell }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-shell" value="{{ member_info.user_obj.loginShell }}">
+							</div>
+
+							{% if member_info.user_obj.homeDirectory %} 
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-folder-open"></i> Home Directory
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.homeDirectory }}</p>
+							</div>
+							{% endif %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-film"></i> Plex
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.plex }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-plex" value="{{ member_info.user_obj.plex }}">
+							</div>
+							{% if member_info.user_obj.ibutton and member_info.uid == info["uid"]%} 
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-info-circle"></i> iButton
+								</h6>
+								<p class="card-text">{{ member_info.user_obj.ibutton }}</p>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% if member_info.user_obj.ritAlumni or member_info.user_obj.ritDn or member_info.user_obj.major or member_info.user_obj.ritYear %}
+			<div class="col-sm-12 col-md-6">
+				<div class="card mb-3">
+					<div class="card-body">
+						<h3 class="card-title">Student</h3>
+						<div class="row" style="padding-top:10px;">
+							{% if member_info.user_obj.ritDn %}
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-user"></i> RIT Username
+								</h6>
+								<p class="card-text">{{ member_info.ritUid }}</p>
+							</div>
+							{% endif %}
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-calendar-alt"></i> Graduating Class
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.ritYear }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-rityear" value="{{ member_info.user_obj.ritYear }}">
+							</div>
+
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-graduation-cap"></i> Major
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.major }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-major" value="{{ member_info.user_obj.major }}">
+							</div>
+
+							<div class="col-6 mb-4">
+								<h6 class="card-subtitle text-muted mb-2">
+									<i class="fas fa-file-alt"></i> Minor
+								</h6>
+								<p class="card-text user-form-value">{{ member_info.user_obj.minor }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-minor" value="{{ member_info.user_obj.minor }}">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+
+	{% include "include/footer.html" %}
+
+	{% include "include/scripts.html" %}
+
+</body>
+
+</html>

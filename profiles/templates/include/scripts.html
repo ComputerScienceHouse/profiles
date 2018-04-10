@@ -9,5 +9,22 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
+<script src="/static/js/adaptive-background.js"></script>
+
 <script defer src="/static/js/search.js"></script>
 <script defer src="/static/js/edit.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+  	$('[data-toggle="tooltip"]').tooltip()
+    $.adaptiveBackground.run({
+    	exclude: [ 'rgb(0,0,0)', 'rgb(255,255,255)' ],
+        shadeVariation: 'blend',
+        shadePercentage: -.8,
+        shadeColors: {
+            dark: 'rgb(255,255,255)',
+            light: 'rgb(0,0,0)'
+        }
+    });
+  });
+</script>
