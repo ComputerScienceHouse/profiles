@@ -7,7 +7,7 @@ import ldap
 import io
 
 
-from flask import session
+from flask import session, request
 from functools import wraps
 from functools import lru_cache
 from profiles import _ldap
@@ -28,7 +28,8 @@ def before_request(func):
             "uuid": uuid,
             "uid": uid,
             "user_obj": user_obj,
-            "member_info": get_member_info(uid)
+            "member_info": get_member_info(uid),
+            "color": requests.get('https://themeswitcher.csh.rit.edu/api/colour').content
         }
         kwargs["info"] = info
         return func(*args, **kwargs)

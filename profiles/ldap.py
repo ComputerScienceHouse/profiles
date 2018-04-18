@@ -6,6 +6,8 @@ import ldap
 from functools import lru_cache
 from profiles import _ldap
 from csh_ldap import CSHMember
+from flask import redirect
+import urllib.request
 
 
 def _ldap_get_group_members(group):
@@ -290,15 +292,36 @@ def ldap_search_members(query):
     return ret
 
 
-# @lru_cache(maxsize=1024)
+@lru_cache(maxsize=1024)
 def get_image(uid):
-	return ldap_get_member(uid).jpegPhoto
+    try:
+        account = ldap_get_member(uid)
+        image = account.jpegPhoto
+        github = account.github
+    except KeyError:
+        return redirect(get_gravatar("null"), code=302)
+
+    if image: 
+        return image
+
+    elif github:
+        url = "https://github.com/" + github + ".png?size=250"
+        
+        try:
+            conn = urllib.request.urlopen(url)
+            return redirect(url, code=302)
+        except urllib.error.HTTPError:
+            return redirect(get_gravatar("null"), code=302)
+
+    else: 
+        return redirect(get_gravatar("null"), code=302)
 
 
 @lru_cache(maxsize=1024)
 def get_gravatar(uid):
-	addr = uid + "@csh.rit.edu"
-	url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=mm&s=250"
+    addr = uid + "@csh.rit.edu"
+    url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=mm&s=250"
 
-	return url
+    return url
+
 

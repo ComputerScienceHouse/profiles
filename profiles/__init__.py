@@ -33,7 +33,7 @@ app.config['UPLOADED_PHOTOS_DEST'] = 'static/img'
 configure_uploads(app, photos)
 
 from profiles.utils import before_request, get_member_info, process_image
-from profiles.ldap import ldap_update_profile, get_image, get_gravatar, ldap_get_active_members, ldap_get_all_members, ldap_get_member, ldap_search_members, ldap_is_active, ldap_get_eboard, _ldap_get_group_members, ldap_get_group_desc
+from profiles.ldap import ldap_update_profile, get_image, ldap_get_active_members, ldap_get_all_members, ldap_get_member, ldap_search_members, ldap_is_active, ldap_get_eboard, _ldap_get_group_members, ldap_get_group_desc
 
 
 @app.route("/", methods=["GET"])
@@ -120,12 +120,4 @@ def logout():
 
 @app.route("/image/<uid>", methods=["GET"])
 def image(uid):
-    try:
-        image = get_image(uid)
-    except KeyError:
-        return redirect(get_gravatar("dick"), code=302)
-
-    if image: 
-        return image
-    else:
-        return redirect(get_gravatar(uid), code=302)
+    return get_image(uid);
