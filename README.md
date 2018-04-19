@@ -10,7 +10,7 @@ CSH Avatar
 
 Users can get the profile pictures of people by going to this url:
 ```html
-<img src="https://profiles.csh.rit.edu/image/:uid">
+<img src="https://profiles.csh.rit.edu/image/uid">
 ```
 
 This will get the user's picture from LDAP or if they do not have one, will 
