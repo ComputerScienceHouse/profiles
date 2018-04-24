@@ -1,13 +1,13 @@
 import hashlib
-import requests
-import ldap
-
 
 from functools import lru_cache
-from profiles import _ldap
-from csh_ldap import CSHMember
-from flask import redirect
+
 import urllib.request
+
+from flask import redirect
+from profiles import _ldap
+
+import ldap
 
 
 def _ldap_get_group_members(group):
@@ -96,8 +96,11 @@ def ldap_get_group_desc(group):
 
 @lru_cache(maxsize=1024)
 def ldap_get_eboard():
-    members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations") + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members(
-        "eboard-history") + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm") + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social") + _ldap_get_group_members("eboard-secretary")
+    members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations"
+        ) + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history"
+        ) + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm"
+        ) + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social"
+        ) + _ldap_get_group_members("eboard-secretary")
 
     return members
 
@@ -203,6 +206,7 @@ def ldap_set_non_current_student(account):
     ldap_get_member.cache_clear()
 
 
+# pylint: disable=too-many-branches
 def ldap_update_profile(form_dict, uid):
     account = _ldap.get_member(uid, uid=True)
 
@@ -272,9 +276,18 @@ def ldap_get_roomnumber(account):
 @lru_cache(maxsize=1024)
 def ldap_search_members(query):
     con = _ldap.get_con()
-    filt = str("(|(description=*{0}*)(displayName=*{0}*)(mail=*{0}*)(nickName=*{0}*)(plex=*{0}*)(sn=*{0}*)(uid=*{0}*)(mobile=*{0}*)(twitterName=*{0}*)(github=*{0}*))").format(query)
+    filt = str("(|(description=*{0}*)"
+                    "(displayName=*{0}*)"
+                    "(mail=*{0}*)"
+                    "(nickName=*{0}*)"
+                    "(plex=*{0}*)"
+                    "(sn=*{0}*)"
+                    "(uid=*{0}*)"
+                    "(mobile=*{0}*)"
+                    "(twitterName=*{0}*)"
+                    "(github=*{0}*))").format(query)
 
-    res= con.search_s(
+    res = con.search_s(
         "dc=csh,dc=rit,dc=edu",
         ldap.SCOPE_SUBTREE,
         filt,
@@ -303,12 +316,13 @@ def get_image(uid):
 
     if image: 
         return image
+    
 
     elif github:
         url = "https://github.com/" + github + ".png?size=250"
         
         try:
-            conn = urllib.request.urlopen(url)
+            urllib.request.urlopen(url)
             return redirect(url, code=302)
         except urllib.error.HTTPError:
             return redirect(get_gravatar("null"), code=302)
@@ -323,5 +337,3 @@ def get_gravatar(uid):
     url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=mm&s=250"
 
     return url
-
-

@@ -27,9 +27,13 @@
 						<div style="text-align: center;">
 							{% if member_info.uid == info["uid"] %}
 							<div id="upload-form" style="display: none; padding-bottom:10px;">
-								<form method="POST" accept="image/*" enctype="multipart/form-data" action="/upload">
-						    		<input type="file" name="photo">
-						    		<input type="submit">
+						    			<div id="upload-image"></div>
+
+						    			<form method="POST" accept="image/*" enctype="multipart/form-data" action="/upload">
+						    			<input type="file" name="photo" id="images">
+						    			<input type="submit">
+
+						    			<div id="upload-image-i"></div>
 								</form>
 							</div>
 							{% endif %}
@@ -335,5 +339,8 @@
 	{% include "include/scripts.html" %}
 
 </body>
+
+<link rel="stylesheet" href="/static/croppie.css" />
+<script src="/static/js/croppie.js"></script>
 
 </html>

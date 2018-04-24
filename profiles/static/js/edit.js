@@ -50,13 +50,14 @@ $(function() {
 
 $(function() {
 	$("#photo-button").on('click', function (e) {
-
-
-			var photo = $("#photo").val();
+		$image_crop.croppie('result', {
+			type: 'canvas',
+			size: 'viewport'
+		}).then(function (response) {
 			$.ajax({
 				url: '/upload',
 				data: {
-					"photo": photo
+					"photo": response
 				},
 				method: 'POST',
 				success: function (data, textStatus, jqXHR) {
@@ -66,6 +67,31 @@ $(function() {
 					console.log(error);
 				}
 			});
-		
+		});
 	});
+});
+
+$image_crop = $('#upload-image').croppie({
+	enableExif: true,
+	viewport: {
+		width: 300,
+		height: 300,
+		type: 'square'
+	},
+	boundary: {
+		width: 300,
+		height: 300
+	}
+});
+
+$('#images').on('change', function () { 
+	var reader = new FileReader();
+	reader.onload = function (e) {
+		$image_crop.croppie('bind', {
+			url: e.target.result
+		}).then(function(){
+			console.log('jQuery bind complete');
+		});			
+	}
+	reader.readAsDataURL(this.files[0]);
 });
