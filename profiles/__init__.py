@@ -51,13 +51,13 @@ from profiles.ldap import(ldap_update_profile,
 @auth.oidc_auth
 @before_request
 def home(info=None):
-    return redirect("/profile/" + info["uid"], code=302)
+    return redirect("/user/" + info["uid"], code=302)
 
 
-@app.route("/profile/<uid>", methods=["GET"])
+@app.route("/user/<uid>", methods=["GET"])
 @auth.oidc_auth
 @before_request
-def profile(uid=None, info=None):
+def user(uid=None, info=None):
     return render_template("profile.html",
     						  info=info,
     						  member_info=get_member_info(uid))
