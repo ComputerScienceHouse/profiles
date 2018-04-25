@@ -117,6 +117,7 @@ def update(uid=None, info=None):
 @before_request
 def upload(info=None):
     if request.method == 'POST' and 'photo' in request.files and process_image(request.files['photo'], info['uid']):
+        get_image.cache_clear()
         return redirect('/', 302)
     return redirect('/', 302)
 
