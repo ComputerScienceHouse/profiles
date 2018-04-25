@@ -5,9 +5,10 @@ from functools import lru_cache
 import urllib.request
 
 from flask import redirect
-from profiles import _ldap
 
 import ldap
+
+from profiles import _ldap
 
 
 def _ldap_get_group_members(group):
@@ -314,20 +315,18 @@ def get_image(uid):
     except KeyError:
         return redirect(get_gravatar("null"), code=302)
 
-    if image: 
+    if image:
         return image
-    
 
     elif github:
         url = "https://github.com/" + github + ".png?size=250"
-        
         try:
             urllib.request.urlopen(url)
             return redirect(url, code=302)
         except urllib.error.HTTPError:
             return redirect(get_gravatar("null"), code=302)
 
-    else: 
+    else:
         return redirect(get_gravatar("null"), code=302)
 
 

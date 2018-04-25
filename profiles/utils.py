@@ -11,23 +11,24 @@ from flask import session
 
 import requests
 
+import ldap
+
 from profiles import _ldap
-from profiles.ldap import (ldap_get_member, 
-                                          ldap_is_active, 
-                                          ldap_is_onfloor, 
-                                          ldap_get_roomnumber, 
-                                          ldap_get_groups, 
-                                          ldap_is_intromember, 
-                                          ldap_is_eboard, 
-                                          ldap_is_rtp, 
-                                          ldap_is_chairman, 
-                                          ldap_is_history, 
-                                          ldap_is_imps, 
-                                          ldap_is_rd, 
-                                          ldap_is_financial_director, 
+from profiles.ldap import (ldap_get_member,
+                                          ldap_is_active,
+                                          ldap_is_onfloor,
+                                          ldap_get_roomnumber,
+                                          ldap_get_groups,
+                                          ldap_is_intromember,
+                                          ldap_is_eboard,
+                                          ldap_is_rtp,
+                                          ldap_is_chairman,
+                                          ldap_is_history,
+                                          ldap_is_imps,
+                                          ldap_is_rd,
+                                          ldap_is_financial_director,
                                           ldap_is_eval_director)
 
-import ldap
 
 
 def before_request(func):
@@ -116,9 +117,8 @@ def parse_date(date):
         month = date[4:6]
         day = date[6:8]
         return month + "-" + day + "-" + year
-    
     return False
-   
+
 
 def parse_rit_uid(dn):
     if dn:
@@ -150,7 +150,7 @@ def process_image(photo, uid):
         icon = resizeimage.resize_contain(image, [300, 300])
         icon = icon.convert("RGB")
         bin_icon = io.BytesIO()
-        icon.save(bin_icon, format='JPEG') 
+        icon.save(bin_icon, format='JPEG')
 
         con = _ldap.get_con()
 

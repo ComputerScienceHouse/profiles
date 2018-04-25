@@ -1,7 +1,7 @@
 import os
 import subprocess
 import requests
-import csh_ldap 
+import csh_ldap
 
 import flask_migrate
 from flask import Flask, render_template, jsonify, request, redirect, send_from_directory
@@ -35,15 +35,15 @@ configure_uploads(app, photos)
 # Import ldap model after instantiating object
 # pylint: disable=wrong-import-position
 from profiles.utils import before_request, get_member_info, process_image
-from profiles.ldap import(ldap_update_profile, 
-                                        get_image, 
-                                        ldap_get_active_members, 
-                                        ldap_get_all_members, 
-                                        ldap_get_member, 
-                                        ldap_search_members, 
-                                        ldap_is_active, 
-                                        ldap_get_eboard, 
-                                        _ldap_get_group_members, 
+from profiles.ldap import(ldap_update_profile,
+                                        get_image,
+                                        ldap_get_active_members,
+                                        ldap_get_all_members,
+                                        ldap_get_member,
+                                        ldap_search_members,
+                                        ldap_is_active,
+                                        ldap_get_eboard,
+                                        _ldap_get_group_members,
                                         ldap_get_group_desc)
 
 
@@ -58,8 +58,8 @@ def home(info=None):
 @auth.oidc_auth
 @before_request
 def profile(uid=None, info=None):
-    return render_template("profile.html", 
-    						  info=info, 
+    return render_template("profile.html",
+    						  info=info,
     						  member_info=get_member_info(uid))
 
 
@@ -77,8 +77,8 @@ def results():
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
     searched = request.args.get("q")
-    return render_template("listing.html", 
-    						  info=info, 
+    return render_template("listing.html",
+    						  info=info,
     						  title="Search Results: "+searched,
     						  members=ldap_search_members(searched))
 
@@ -90,13 +90,13 @@ def group(_group=None, info=None):
     group_desc = ldap_get_group_desc(_group)
 
     if _group == "eboard":
-        return render_template("listing.html", 
+        return render_template("listing.html",
     						    info=info,
     						    title=group_desc,
     						    members=ldap_get_eboard())
 
-    return render_template("listing.html", 
-    						    info=info, 
+    return render_template("listing.html",
+    						    info=info,
     						    title=group_desc,
     						    members=_ldap_get_group_members(_group))
 
