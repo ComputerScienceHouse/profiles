@@ -312,27 +312,53 @@ def get_image(uid):
         account = ldap_get_member(uid)
         image = account.jpegPhoto
         github = account.github
+        twitter = account.twitterName
     except KeyError:
-        return redirect(get_gravatar("null"), code=302)
+        return redirect(get_gravatar(), code=302)
 
+    # Return stored Image
     if image:
         return image
 
-    elif github:
+    # Get Gravitar
+    url = get_gravatar(uid)
+    try:
+        gravitar = urllib.request.urlopen(url)
+        if gravitar.getcode() == 200:
+            return redirect(url, code=302)
+        else:
+            pass
+    except urllib.error.HTTPError:
+        pass
+
+    # Get GitHub Photo
+    if github:
         url = "https://github.com/" + github + ".png?size=250"
         try:
             urllib.request.urlopen(url)
             return redirect(url, code=302)
         except urllib.error.HTTPError:
-            return redirect(get_gravatar("null"), code=302)
+            pass
 
-    else:
-        return redirect(get_gravatar("null"), code=302)
+    # Get Twitter Photo
+    if twitter:
+        url = "https://twitter.com/" + twitter + "/profile_image?size=original"
+        try:
+            urllib.request.urlopen(url)
+            return redirect(url, code=302)
+        except urllib.error.HTTPError:
+            pass
+
+    # Fall back to default
+    return redirect(get_gravatar(), code=302)
 
 
 @lru_cache(maxsize=1024)
-def get_gravatar(uid):
-    addr = uid + "@csh.rit.edu"
-    url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=mm&s=250"
-
+def get_gravatar(uid=None):
+    if uid:
+        addr = uid + "@csh.rit.edu"
+        url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=404&s=250"
+    else:
+        addr = "null@csh.rit.edu"
+        url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() + ".jpg?d=mm&s=250"
     return url
