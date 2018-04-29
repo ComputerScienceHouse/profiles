@@ -252,6 +252,9 @@ def ldap_update_profile(form_dict, uid):
     if not form_input["blog"] == account.blogURL:
         account.blogURL = form_input["blog"]
 
+    if not form_input["resume"] == account.resumeURL:
+        account.resumeURL = form_input["resume"]
+
     if not form_input["google"] == account.googleScreenName:
         account.googleScreenName = form_input["google"]
 
@@ -263,8 +266,6 @@ def ldap_update_profile(form_dict, uid):
 
     if not form_input["shell"] == account.shell:
         account.loginShell = form_input["shell"]
-
-
 
 
 def ldap_get_roomnumber(account):

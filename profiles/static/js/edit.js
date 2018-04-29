@@ -24,6 +24,7 @@ $(function() {
 			"major": $("#user-major").val(),
 			"ritYear": $("#user-rityear").val(),
 			"website": $("#user-homepage").val(),
+			"resume": $("#user-resume").val(),
 			"github": $("#user-github").val(),
 			"twitter": $("#user-twitter").val(),
 			"blog": $("#user-blog").val(),
