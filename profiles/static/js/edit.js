@@ -52,8 +52,12 @@ $(function() {
 	$("#photo-button").on('click', function (e) {
 		$image_crop.croppie('result', {
 			type: 'canvas',
-			size: 'viewport'
+			size: {
+				width: 300,
+				height: 300,
+			}
 		}).then(function (response) {
+			console.log(response);
 			$.ajax({
 				url: '/upload',
 				data: {
@@ -61,7 +65,7 @@ $(function() {
 				},
 				method: 'POST',
 				success: function (data, textStatus, jqXHR) {
-				      
+					location.reload();
 				},
 				error: function(error) {
 					console.log(error);

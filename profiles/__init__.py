@@ -116,9 +116,9 @@ def update(uid=None, info=None):
 @auth.oidc_auth
 @before_request
 def upload(info=None):
-    if request.method == 'POST' and 'photo' in request.files and process_image(request.files['photo'], info['uid']):
+    if request.method == 'POST' and 'photo' in request.form:
+        process_image(request.form['photo'][22:], info['uid'])
         get_image.cache_clear()
-        return redirect('/', 302)
     return redirect('/', 302)
 
 

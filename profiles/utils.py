@@ -1,12 +1,11 @@
 # Credit to Liam Middlebrook and Ram Zallan
 # https://github.com/liam-middlebrook/gallery
 import subprocess
-import imghdr
+import base64
 import io
 
 from functools import wraps
 from PIL import Image
-from resizeimage import resizeimage
 from flask import session
 
 import requests
@@ -143,17 +142,11 @@ def parse_alum_name(gecos):
 
 
 def process_image(photo, uid):
-    if imghdr.what(photo):
+    if base64.b64decode(photo):
         key = 'jpegPhoto'
         account = ldap_get_member(uid)
-        image = Image.open(photo)
-        icon = resizeimage.resize_contain(image, [300, 300])
-        icon = icon.convert("RGB")
-        bin_icon = io.BytesIO()
-        icon.save(bin_icon, format='JPEG')
-
+        bin_icon = base64.b64decode(photo)
         con = _ldap.get_con()
-
         exists = account.jpegPhoto
 
         if not exists:
@@ -161,10 +154,8 @@ def process_image(photo, uid):
         else:
             ldap_mod = ldap.MOD_REPLACE
 
-        mod = (ldap_mod, key, bin_icon.getvalue())
-
+        mod = (ldap_mod, key, bin_icon)
         mod_attrs = [mod]
-
         con.modify_s(account.get_dn(), mod_attrs)
 
         return True
