@@ -2,10 +2,8 @@
 # https://github.com/liam-middlebrook/gallery
 import subprocess
 import base64
-import io
 
 from functools import wraps
-from PIL import Image
 from flask import session
 
 import requests
