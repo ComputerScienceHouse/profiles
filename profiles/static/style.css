@@ -94,3 +94,8 @@ a:active {
 	color: #222;
     	text-decoration: none;
 }
+
+.badge-pink {
+  color: #fff;
+  background-color: #cb42a9;
+}
