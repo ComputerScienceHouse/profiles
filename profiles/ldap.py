@@ -320,11 +320,11 @@ def get_image(uid):
     if image:
         return image
 
-    # Get Gravitar
+    # Get Gravatar
     url = get_gravatar(uid)
     try:
-        gravitar = urllib.request.urlopen(url)
-        if gravitar.getcode() == 200:
+        gravatar = urllib.request.urlopen(url)
+        if gravatar.getcode() == 200:
             return redirect(url, code=302)
         else:
             pass
