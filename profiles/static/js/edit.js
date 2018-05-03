@@ -1,3 +1,4 @@
+//show edit forms 
 $(function() {
 	$("#edit").on('click', function () {
 		$(".user-form-input").show()
@@ -7,12 +8,14 @@ $(function() {
 	});
 });
 
+//show image upload on click
 $(function() {
 	$("#self-picture").on('click', function () {
 		$("#upload-form").toggle()
 	});
 });
 
+//upload form data
 $(function() {
 	$("#save").on('click', function (e) {
 
@@ -49,6 +52,8 @@ $(function() {
 	});
 });
 
+//************* PROFILE PICTURE *************
+//upload croppie image
 $(function() {
 	$("#photo-button").on('click', function (e) {
 		$image_crop.croppie('result', {
@@ -63,6 +68,62 @@ $(function() {
 				url: '/upload',
 				data: {
 					"photo": response
+				},
+				method: 'POST',
+				success: function (data, textStatus, jqXHR) {
+					location.reload();
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		});
+	});
+});
+
+//profile crop
+$image_crop = $('#upload-image').croppie({
+	enableExif: true,
+	viewport: {
+		width: 300,
+		height: 300,
+		type: 'square'
+	},
+	boundary: {
+		width: 300,
+		height: 300
+	}
+});
+
+//update profile box
+$('#images').on('change', function () { 
+	var reader = new FileReader();
+	reader.onload = function (e) {
+		$image_crop.croppie('bind', {
+			url: e.target.result
+		}).then(function(){
+			console.log('jQuery bind complete');
+		});			
+	}
+	reader.readAsDataURL(this.files[0]);
+});
+
+//************* COVER PHOTO *************
+
+$(function() {
+	$("#cover-button").on('click', function (e) {
+		$image_crop.croppie('result', {
+			type: 'canvas',
+			size: {
+				width: 600,
+				height: 130,
+			}
+		}).then(function (response) {
+			console.log(response);
+			$.ajax({
+				url: '/upload',
+				data: {
+					"cover": response
 				},
 				method: 'POST',
 				success: function (data, textStatus, jqXHR) {

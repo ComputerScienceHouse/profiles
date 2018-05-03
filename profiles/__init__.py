@@ -104,19 +104,20 @@ def group(_group=None, info=None):
 @app.route("/update", methods=["POST"])
 @auth.oidc_auth
 @before_request
-def update(uid=None, info=None):
-    if request.method == "POST"  and 'photo' in request.files:
-        return process_image(request.files['photo'], uid)
+def update(info=None):
+    if 'photo' in request.form:
+        process_image(request.form['photo'][22:], info['uid'])
+        get_image.cache_clear()
 
     ldap_update_profile(request.form, info['uid'])
     return ""
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['POST'])
 @auth.oidc_auth
 @before_request
 def upload(info=None):
-    if request.method == 'POST' and 'photo' in request.form:
+    if 'photo' in request.form:
         process_image(request.form['photo'][22:], info['uid'])
         get_image.cache_clear()
     return redirect('/', 302)
