@@ -44,7 +44,8 @@ from profiles.ldap import(ldap_update_profile,
                                         ldap_is_active,
                                         ldap_get_eboard,
                                         _ldap_get_group_members,
-                                        ldap_get_group_desc)
+                                        ldap_get_group_desc,
+                                        ldap_get_year)
 
 
 @app.route("/", methods=["GET"])
@@ -99,6 +100,16 @@ def group(_group=None, info=None):
     						    info=info,
     						    title=group_desc,
     						    members=_ldap_get_group_members(_group))
+
+
+@app.route("/year/<_year>", methods=["GET"])
+@auth.oidc_auth
+@before_request
+def year(_year=None, info=None):
+    return render_template("listing.html",
+                                     info=info,
+                                     title="Year: "+_year,
+                                     members=ldap_get_year(_year))
 
 
 @app.route("/update", methods=["POST"])

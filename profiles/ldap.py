@@ -308,6 +308,29 @@ def ldap_search_members(query):
 
 
 @lru_cache(maxsize=1024)
+def ldap_get_year(year):
+    con = _ldap.get_con()
+    filt = str("(&(memberSince>={}0801010101-0400)(memberSince<={}0801010101-0400))").format(year, str(int(year) + 1))
+
+    res = con.search_s(
+        "dc=csh,dc=rit,dc=edu",
+        ldap.SCOPE_SUBTREE,
+        filt,
+        ['uid'])
+
+    ret = []
+
+    for uid in res:
+        try:
+            mem = (str(uid[1]).split('\'')[3])
+            ret.append(ldap_get_member(mem))
+        except IndexError:
+            continue
+
+    return ret
+
+
+@lru_cache(maxsize=1024)
 def get_image(uid):
     try:
         account = ldap_get_member(uid)

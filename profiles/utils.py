@@ -2,6 +2,7 @@
 # https://github.com/liam-middlebrook/gallery
 import subprocess
 import base64
+import datetime
 
 from functools import wraps
 from flask import session
@@ -41,7 +42,8 @@ def before_request(func):
             "uid": uid,
             "user_obj": user_obj,
             "member_info": get_member_info(uid),
-            "color": requests.get('https://themeswitcher.csh.rit.edu/api/colour').content
+            "color": requests.get('https://themeswitcher.csh.rit.edu/api/colour').content,
+            "current_year": parse_account_year(str(datetime.datetime.now().strftime("%Y%m")))
         }
         kwargs["info"] = info
         return func(*args, **kwargs)
