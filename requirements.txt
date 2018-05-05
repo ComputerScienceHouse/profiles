@@ -1,5 +1,5 @@
 requests
-csh_ldap
+csh_ldap==2.0.2
 flask
 flask_sqlalchemy
 flask_migrate
@@ -7,6 +7,5 @@ flask-pyoidc
 flask-optimize
 PyMySQL
 pyGravatar
-pillow
 Flask_Uploads
-python-resize-image
+pylint

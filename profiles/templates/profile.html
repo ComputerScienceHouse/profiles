@@ -27,9 +27,13 @@
 						<div style="text-align: center;">
 							{% if member_info.uid == info["uid"] %}
 							<div id="upload-form" style="display: none; padding-bottom:10px;">
-								<form method="POST" accept="image/*" enctype="multipart/form-data" action="/upload">
-						    		<input type="file" name="photo">
-						    		<input type="submit">
+						    			<div id="upload-image"></div>
+
+						    			<form accept="image/*" enctype="multipart/form-data" >
+						    			<input type="file" name="photo" id="images">
+						    			<button type="button" id="photo-button" class="btn btn-primary">Upload Image</button>
+
+						    			<div id="upload-image-i"></div>
 								</form>
 							</div>
 							{% endif %}
@@ -61,6 +65,10 @@
 							<span class="badge badge-pill badge-info">Webmaster</span>
 							{% endif %}
 
+							{% if "3da" in member_info.group_list %}
+							<span class="badge badge-pill badge-pink">3D Printer Admin</span>
+							{% endif %}
+
 							{% if "eboard" in member_info.group_list %}
 							<span class="badge badge-pill badge-success">Executive Board</span>
 							{% endif %}
@@ -78,7 +86,7 @@
 							{% endif %}
 
 
-							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName  %}
+							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName or member_info.user_obj.resumeURL %}
 							<hr>
 							
 							{% if member_info.user_obj.homepageURL %}
@@ -92,6 +100,13 @@
 							<a href="{{ member_info.user_obj.blogURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
 								<h2 style="display: inline" class="text-warning">
 									<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+								</h2>
+							</a>
+							{% endif %}
+							{% if member_info.user_obj.resumeURL %}
+							<a href="{{ member_info.user_obj.resumeURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.resumeURL }}">
+								<h2 style="display: inline" class="text-info">
+									<i class="far fa-file-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
 								</h2>
 							</a>
 							{% endif %}
@@ -119,11 +134,15 @@
 							<div style="text-align: left;">
 								<div class="form-group user-form-input">
 									<label for="user-homepage">Homepage URL</label>
-									<input type="text" class="form-control form-control-sm" id="user-homepage" value="{{ member_info.user_obj.homepageURL }}" placeholder="Homepage URL">
+									<input type="url" class="form-control form-control-sm" id="user-homepage" value="{{ member_info.user_obj.homepageURL }}" placeholder="Homepage URL">
 								</div>
 								<div class="form-group user-form-input">
 									<label for="user-blog">Blog URL</label>
-									<input type="text" class="form-control form-control-sm" id="user-blog" value="{{ member_info.user_obj.blogURL }}" placeholder="Blog URL">
+									<input type="url" class="form-control form-control-sm" id="user-blog" value="{{ member_info.user_obj.blogURL }}" placeholder="Blog URL">
+								</div>
+								<div class="form-group user-form-input">
+									<label for="user-resume">Resume URL</label>
+									<input type="url" class="form-control form-control-sm" id="user-resume" value="{{ member_info.user_obj.resumeURL }}" placeholder="Resume URL">
 								</div>
 								<div class="form-group user-form-input">
 									<label for="user-github">GitHub Username</label>
@@ -167,7 +186,7 @@
 									<i class="fas fa-calendar-alt"></i> Birthday
 								</h6>
 								<p class="card-text user-form-value">{{ member_info.birthday }}</p>
-								<input type="text" class="form-control form-control-sm user-form-input" id="user-birthday" value="{{ member_info.user_obj.birthday }}">
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-birthday" value="{{ member_info.user_obj.birthday }}" data-placement="auto" data-toggle="tooltip" title="Format: yyyymmdd">
 							</div>
 
 							<div class="col-6 mb-4">
@@ -335,5 +354,8 @@
 	{% include "include/scripts.html" %}
 
 </body>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js"></script>
 
 </html>

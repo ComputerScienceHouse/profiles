@@ -1,11 +1,14 @@
 import hashlib
-import requests
-import ldap
-
 
 from functools import lru_cache
+
+import urllib.request
+
+from flask import redirect
+
+import ldap
+
 from profiles import _ldap
-from csh_ldap import CSHMember
 
 
 def _ldap_get_group_members(group):
@@ -94,8 +97,11 @@ def ldap_get_group_desc(group):
 
 @lru_cache(maxsize=1024)
 def ldap_get_eboard():
-    members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations") + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members(
-        "eboard-history") + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm") + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social") + _ldap_get_group_members("eboard-secretary")
+    members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations"
+        ) + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history"
+        ) + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm"
+        ) + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social"
+        ) + _ldap_get_group_members("eboard-secretary")
 
     return members
 
@@ -201,6 +207,7 @@ def ldap_set_non_current_student(account):
     ldap_get_member.cache_clear()
 
 
+# pylint: disable=too-many-branches
 def ldap_update_profile(form_dict, uid):
     account = _ldap.get_member(uid, uid=True)
 
@@ -245,6 +252,9 @@ def ldap_update_profile(form_dict, uid):
     if not form_input["blog"] == account.blogURL:
         account.blogURL = form_input["blog"]
 
+    if not form_input["resume"] == account.resumeURL:
+        account.resumeURL = form_input["resume"]
+
     if not form_input["google"] == account.googleScreenName:
         account.googleScreenName = form_input["google"]
 
@@ -258,8 +268,6 @@ def ldap_update_profile(form_dict, uid):
         account.loginShell = form_input["shell"]
 
 
-
-
 def ldap_get_roomnumber(account):
     try:
         return account.roomNumber
@@ -270,9 +278,18 @@ def ldap_get_roomnumber(account):
 @lru_cache(maxsize=1024)
 def ldap_search_members(query):
     con = _ldap.get_con()
-    filt = str("(|(description=*{0}*)(displayName=*{0}*)(mail=*{0}*)(nickName=*{0}*)(plex=*{0}*)(sn=*{0}*)(uid=*{0}*)(mobile=*{0}*)(twitterName=*{0}*)(github=*{0}*))").format(query)
+    filt = str("(|(description=*{0}*)"
+                    "(displayName=*{0}*)"
+                    "(mail=*{0}*)"
+                    "(nickName=*{0}*)"
+                    "(plex=*{0}*)"
+                    "(sn=*{0}*)"
+                    "(uid=*{0}*)"
+                    "(mobile=*{0}*)"
+                    "(twitterName=*{0}*)"
+                    "(github=*{0}*))").format(query)
 
-    res= con.search_s(
+    res = con.search_s(
         "dc=csh,dc=rit,dc=edu",
         ldap.SCOPE_SUBTREE,
         filt,
@@ -290,15 +307,59 @@ def ldap_search_members(query):
     return ret
 
 
-# @lru_cache(maxsize=1024)
+@lru_cache(maxsize=1024)
 def get_image(uid):
-	return ldap_get_member(uid).jpegPhoto
+    try:
+        account = ldap_get_member(uid)
+        image = account.jpegPhoto
+        github = account.github
+        twitter = account.twitterName
+    except KeyError:
+        return redirect(get_gravatar(), code=302)
+
+    # Return stored Image
+    if image:
+        return image
+
+    # Get Gravatar
+    url = get_gravatar(uid)
+    try:
+        gravatar = urllib.request.urlopen(url)
+        if gravatar.getcode() == 200:
+            return redirect(url, code=302)
+        else:
+            pass
+    except urllib.error.HTTPError:
+        pass
+
+    # Get GitHub Photo
+    if github:
+        url = "https://github.com/" + github + ".png?size=250"
+        try:
+            urllib.request.urlopen(url)
+            return redirect(url, code=302)
+        except urllib.error.HTTPError:
+            pass
+
+    # Get Twitter Photo
+    if twitter:
+        url = "https://twitter.com/" + twitter + "/profile_image?size=original"
+        try:
+            urllib.request.urlopen(url)
+            return redirect(url, code=302)
+        except urllib.error.HTTPError:
+            pass
+
+    # Fall back to default
+    return redirect(get_gravatar(), code=302)
 
 
 @lru_cache(maxsize=1024)
-def get_gravatar(uid):
-	addr = uid + "@csh.rit.edu"
-	url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=mm&s=250"
-
-	return url
-
+def get_gravatar(uid=None):
+    if uid:
+        addr = uid + "@csh.rit.edu"
+        url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() +".jpg?d=404&s=250"
+    else:
+        addr = "null@csh.rit.edu"
+        url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() + ".jpg?d=mm&s=250"
+    return url
