@@ -44,7 +44,8 @@ from profiles.ldap import(ldap_update_profile,
                                         ldap_is_active,
                                         ldap_get_eboard,
                                         _ldap_get_group_members,
-                                        ldap_get_group_desc)
+                                        ldap_get_group_desc,
+                                        ldap_get_year)
 
 
 @app.route("/", methods=["GET"])
@@ -101,6 +102,16 @@ def group(_group=None, info=None):
     						    members=_ldap_get_group_members(_group))
 
 
+@app.route("/year/<_year>", methods=["GET"])
+@auth.oidc_auth
+@before_request
+def year(_year=None, info=None):
+    return render_template("listing.html",
+                                     info=info,
+                                     title="Year: "+_year,
+                                     members=ldap_get_year(_year))
+
+
 @app.route("/update", methods=["POST"])
 @auth.oidc_auth
 @before_request
@@ -109,8 +120,8 @@ def update(info=None):
         process_image(request.form['photo'][22:], info['uid'])
         get_image.cache_clear()
 
-    ldap_update_profile(request.form, info['uid'])
-    return ""
+    ldap_update_profile(request.json, info['uid'])
+    return jsonify({"success": True}), 200
 
 
 @app.route('/upload', methods=['POST'])

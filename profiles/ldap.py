@@ -206,14 +206,37 @@ def ldap_set_non_current_student(account):
     ldap_get_current_students.cache_clear()
     ldap_get_member.cache_clear()
 
+def ldap_multi_update(uid, attribute, value):
+    dn = "uid={},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu".format(
+        uid
+    )
+
+    current = _ldap.get_member(uid, uid=True).get(attribute)
+
+    remove = list(set(current) - set(value))
+    add = list(set(value) - set(current))
+
+    conn = _ldap.get_con()
+    mod_list = []
+
+    for entry in remove:
+        mod = (ldap.MOD_DELETE, attribute, entry.encode('utf-8'))
+        mod_list.append(mod)
+
+    for entry in add:
+        if entry:
+            mod = (ldap.MOD_ADD, attribute, entry.encode('utf-8'))
+            mod_list.append(mod)
+
+    conn.modify_s(dn, mod_list)
+
 
 # pylint: disable=too-many-branches
-def ldap_update_profile(form_dict, uid):
+def ldap_update_profile(form_input, uid):
     account = _ldap.get_member(uid, uid=True)
-
-    form_input = form_dict.to_dict(flat=True)
+    empty = ["None", ""]
     for key, value in form_input.items():
-        if value == "None" or value == "":
+        if value in empty:
             form_input[key] = None
 
     if not form_input["name"] == account.cn:
@@ -222,8 +245,9 @@ def ldap_update_profile(form_dict, uid):
     if not form_input["birthday"] == account.birthday:
         account.birthday = form_input["birthday"]
 
-    if not form_input["phone"] == account.mobile:
-        account.mobile = form_input["phone"]
+    if not form_input["phone"] == account.get("mobile"):
+        ldap_multi_update(uid, "mobile", form_input["phone"])
+
 
     if not form_input["plex"] == account.plex:
         account.plex = form_input["plex"]
@@ -259,10 +283,10 @@ def ldap_update_profile(form_dict, uid):
         account.googleScreenName = form_input["google"]
 
     if not form_input["mail"] == account.mail:
-        account.mail = form_input["mail"]
+        ldap_multi_update(uid, "mail", form_input["mail"])
 
     if not form_input["nickname"] == account.nickname:
-        account.nickname = form_input["nickname"]
+        ldap_multi_update(uid, "nickname", form_input["nickname"])
 
     if not form_input["shell"] == account.shell:
         account.loginShell = form_input["shell"]
@@ -308,6 +332,29 @@ def ldap_search_members(query):
 
 
 @lru_cache(maxsize=1024)
+def ldap_get_year(year):
+    con = _ldap.get_con()
+    filt = str("(&(memberSince>={}0801010101-0400)(memberSince<={}0801010101-0400))").format(year, str(int(year) + 1))
+
+    res = con.search_s(
+        "dc=csh,dc=rit,dc=edu",
+        ldap.SCOPE_SUBTREE,
+        filt,
+        ['uid'])
+
+    ret = []
+
+    for uid in res:
+        try:
+            mem = (str(uid[1]).split('\'')[3])
+            ret.append(ldap_get_member(mem))
+        except IndexError:
+            continue
+
+    return ret
+
+
+@lru_cache(maxsize=1024)
 def get_image(uid):
     try:
         account = ldap_get_member(uid)
@@ -327,8 +374,6 @@ def get_image(uid):
         gravatar = urllib.request.urlopen(url)
         if gravatar.getcode() == 200:
             return redirect(url, code=302)
-        else:
-            pass
     except urllib.error.HTTPError:
         pass
 

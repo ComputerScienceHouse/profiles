@@ -4,7 +4,7 @@ import string
 from os import environ as env
 
 # Flask config
-DEBUG = True
+DEBUG = False
 IP = os.environ.get('PROFILES_IP', 'localhost')
 PORT = os.environ.get('PROFILES_PORT', 8080)
 SERVER_NAME = os.environ.get('PROFILES_SERVER_NAME', 'profiles.csh.rit.edu')

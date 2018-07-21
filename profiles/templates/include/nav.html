@@ -14,9 +14,20 @@
                 <a class="nav-link" href="/group/active">Active Members</a>
             </li>
 
-           <!--  <li class="nav-item">
-                <a class="nav-link" href="#">Years</a>
-            </li> -->
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="groups">
+                    Years
+                    <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="user01">
+                    {% for y in range (1994, info.current_year + 1) %}
+                    <a class="dropdown-item" href="/year/{{y}}">{{y}}</a>
+                    {% endfor %}
+                </div>
+
+            </li>
 
             <li class="nav-item dropdown">
 
