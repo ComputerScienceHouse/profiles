@@ -53,19 +53,12 @@ def before_request(func):
 def get_member_info(uid):
     account = ldap_get_member(uid)
 
-    if ldap_is_active(account):
-        alum_info = None
-    else:
-        alum_info = parse_alum_name(account.gecos)
-
     member_info = {
         "user_obj": account,
         "group_list": ldap_get_groups(account),
-        "info_string": get_member_info_string(uid),
         "uid": account.uid,
         "ritUid": parse_rit_uid(account.ritDn),
         "name": account.cn,
-        "alum_info": alum_info,
         "active": ldap_is_active(account),
         "onfloor": ldap_is_onfloor(account),
         "room": ldap_get_roomnumber(account),
@@ -77,36 +70,6 @@ def get_member_info(uid):
         "lastlogin": parse_date(account.krblastsuccessfulauth),
         "year": parse_account_year(account.memberSince)
     }
-    return member_info
-
-
-def get_member_info_string(uid):
-    account = ldap_get_member(uid)
-    member_info = ""
-    if ldap_is_onfloor(account) and ldap_is_active(account):
-        member_info += ("On Floor")
-    if not ldap_is_onfloor(account) and ldap_is_active(account):
-        member_info += ("Off Floor")
-    if ldap_is_intromember(account):
-        member_info += (", Freshman")
-    if ldap_is_eboard(account):
-        member_info += (", Eboard")
-    if ldap_is_financial_director(account):
-        member_info += (", Financial")
-    if ldap_is_eval_director(account):
-        member_info += (", Evals")
-    if ldap_is_rtp(account):
-        member_info += (", RTP")
-    if ldap_is_chairman(account):
-        member_info += (", Chairman")
-    if ldap_is_history(account):
-        member_info += (", History")
-    if ldap_is_imps(account):
-        member_info += (", House Improvements")
-    # if ldap_is_social(account):
-    #     member_info += (", Social")
-    if ldap_is_rd(account):
-        member_info += (", R&D")
     return member_info
 
 
@@ -135,10 +98,6 @@ def parse_account_year(date):
         return year
     else:
         return None
-
-
-def parse_alum_name(gecos):
-    return gecos.split(",")
 
 
 def process_image(photo, uid):

@@ -22,7 +22,9 @@ $(function() {
 		var form_data = { 
 			"name": $("#user-name").val(),
 			"birthday": $("#user-birthday").val(),
-			"phone": $("#user-mobile").val(),
+			"phone": $(".user-mobile").map(function() {
+				return $(this).val();
+			}).get(),
 			"plex": $("#user-plex").val(),
 			"major": $("#user-major").val(),
 			"ritYear": $("#user-rityear").val(),
@@ -32,16 +34,23 @@ $(function() {
 			"twitter": $("#user-twitter").val(),
 			"blog": $("#user-blog").val(),
 			"google": $("#user-google").val(),
-			"mail": $("#user-mail").val(),
-			"nickname": $("#user-nickname").val(),
+			"mail": $(".user-mail").map(function() {
+				return $(this).val();
+			}).get(),
+			"nickname": $(".user-nickname").map(function() {
+				return $(this).val();
+			}).get(),
 			"shell": $("#user-shell").val(),
 			"minor": $("#user-minor").val(),
 		};
+		console.log(form_data);
 
 		$.ajax({
 			url: '/update',
-			data: form_data,
-			method: 'POST',
+			dataType: 'json',
+		    type: 'post',
+		    contentType: 'application/json',
+		    data: JSON.stringify(form_data),
 			success: function (data, textStatus, jqXHR) {
 				location.reload();
 			},
@@ -49,6 +58,7 @@ $(function() {
 				console.log(error);
 			}
 		});
+
 	});
 });
 

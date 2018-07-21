@@ -119,9 +119,9 @@ def update(info=None):
     if 'photo' in request.form:
         process_image(request.form['photo'][22:], info['uid'])
         get_image.cache_clear()
-
-    ldap_update_profile(request.form, info['uid'])
-    return ""
+    print(request.json)
+    ldap_update_profile(request.json, info['uid'])
+    return jsonify({"success": True}), 200
 
 
 @app.route('/upload', methods=['POST'])

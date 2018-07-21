@@ -193,24 +193,39 @@
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-mobile-alt"></i> Mobile
 								</h6>
-								<p class="card-text user-form-value">{{ member_info.user_obj.mobile }}</p>
-								<input type="text" class="form-control form-control-sm user-form-input" id="user-mobile" value="{{ member_info.user_obj.mobile }}">
+								{% if member_info.user_obj.mobile %}
+								{% for number in member_info.user_obj.get("mobile") %}
+								<p class="card-text user-form-value mb-0">{{ number }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input user-mobile" id="user-mobile" value="{{ number }}">
+								{% endfor %}
+								{% endif %}
+								<input type="text" class="form-control form-control-sm user-form-input user-mobile" id="user-mobile">
 							</div>
 
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-envelope"></i> Email
 								</h6>
-								<p class="card-text user-form-value">{{ member_info.user_obj.mail }}</p>
-								<input type="text" class="form-control form-control-sm user-form-input" id="user-mail" value="{{ member_info.user_obj.mail }}">
+								{% if member_info.user_obj.mail %}
+								{% for email in member_info.user_obj.get("mail") %}
+								<p class="card-text user-form-value mb-0">{{ email }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input user-mail" id="user-mail" value="{{ email }}">
+								{% endfor %}
+								{% endif %}
+								<input type="text" class="form-control form-control-sm user-form-input user-mail" id="user-mail">
 							</div>
 
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-comments"></i> Nickname
 								</h6>
-								<p class="card-text user-form-value">{{ member_info.user_obj.nickname }}</p>
-								<input type="text" class="form-control form-control-sm user-form-input" id="user-nickname" value="{{ member_info.user_obj.nickname }}">
+								{% if member_info.user_obj.nickname %}
+								{% for nickname in member_info.user_obj.get("nickname") %}
+								<p class="card-text user-form-value mb-0">{{ nickname }}</p>
+								<input type="text" class="form-control form-control-sm user-form-input user-nickname" id="user-nickname" value="{{ nickname }}">
+								{% endfor %}
+								{% endif %}
+								<input type="text" class="form-control form-control-sm user-form-input user-nickname" id="user-nickname">
 							</div>
 
 							<div class="col-6 mb-4">
@@ -295,7 +310,9 @@
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-info-circle"></i> iButton
 								</h6>
-								<p class="card-text">{{ member_info.user_obj.ibutton }}</p>
+								{% for ibutton in member_info.user_obj.get("ibutton") %}
+								<p class="card-text mb-0">{{ ibutton }}</p>
+								{% endfor %}
 							</div>
 							{% endif %}
 						</div>
