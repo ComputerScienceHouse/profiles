@@ -43,7 +43,6 @@ $(function() {
 			"shell": $("#user-shell").val(),
 			"minor": $("#user-minor").val(),
 		};
-		console.log(form_data);
 
 		$.ajax({
 			url: '/update',

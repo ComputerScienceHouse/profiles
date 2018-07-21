@@ -119,7 +119,7 @@ def update(info=None):
     if 'photo' in request.form:
         process_image(request.form['photo'][22:], info['uid'])
         get_image.cache_clear()
-    print(request.json)
+
     ldap_update_profile(request.json, info['uid'])
     return jsonify({"success": True}), 200
 

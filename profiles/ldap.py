@@ -234,9 +234,9 @@ def ldap_multi_update(uid, attribute, value):
 # pylint: disable=too-many-branches
 def ldap_update_profile(form_input, uid):
     account = _ldap.get_member(uid, uid=True)
-
+    empty = ["None", ""]
     for key, value in form_input.items():
-        if value == "None" or value == "":
+        if value in empty:
             form_input[key] = None
 
     if not form_input["name"] == account.cn:
@@ -374,8 +374,6 @@ def get_image(uid):
         gravatar = urllib.request.urlopen(url)
         if gravatar.getcode() == 200:
             return redirect(url, code=302)
-        else:
-            pass
     except urllib.error.HTTPError:
         pass
 

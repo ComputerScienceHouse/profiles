@@ -16,16 +16,7 @@ from profiles.ldap import (ldap_get_member,
                                           ldap_is_active,
                                           ldap_is_onfloor,
                                           ldap_get_roomnumber,
-                                          ldap_get_groups,
-                                          ldap_is_intromember,
-                                          ldap_is_eboard,
-                                          ldap_is_rtp,
-                                          ldap_is_chairman,
-                                          ldap_is_history,
-                                          ldap_is_imps,
-                                          ldap_is_rd,
-                                          ldap_is_financial_director,
-                                          ldap_is_eval_director)
+                                          ldap_get_groups)
 
 
 
@@ -96,8 +87,7 @@ def parse_account_year(date):
         if month <= 8:
             year = year - 1
         return year
-    else:
-        return None
+    return None
 
 
 def process_image(photo, uid):
