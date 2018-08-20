@@ -211,7 +211,10 @@ def ldap_multi_update(uid, attribute, value):
         uid
     )
 
-    current = _ldap.get_member(uid, uid=True).get(attribute)
+    try:
+        current = _ldap.get_member(uid, uid=True).get(attribute)
+    except KeyError:
+        current = []
 
     remove = list(set(current) - set(value))
     add = list(set(value) - set(current))
@@ -245,7 +248,10 @@ def ldap_update_profile(form_input, uid):
     if not form_input["birthday"] == account.birthday:
         account.birthday = form_input["birthday"]
 
-    if not form_input["phone"] == account.get("mobile"):
+    try:
+        if not form_input["phone"] == account.get("mobile"):
+            ldap_multi_update(uid, "mobile", form_input["phone"])
+    except KeyError:
         ldap_multi_update(uid, "mobile", form_input["phone"])
 
 
@@ -282,10 +288,16 @@ def ldap_update_profile(form_input, uid):
     if not form_input["google"] == account.googleScreenName:
         account.googleScreenName = form_input["google"]
 
-    if not form_input["mail"] == account.mail:
+    try:
+        if not form_input["mail"] == account.mail:
+            ldap_multi_update(uid, "mail", form_input["mail"])
+    except KeyError:
         ldap_multi_update(uid, "mail", form_input["mail"])
 
-    if not form_input["nickname"] == account.nickname:
+    try:
+        if not form_input["nickname"] == account.nickname:
+            ldap_multi_update(uid, "nickname", form_input["nickname"])
+    except KeyError:
         ldap_multi_update(uid, "nickname", form_input["nickname"])
 
     if not form_input["shell"] == account.shell:

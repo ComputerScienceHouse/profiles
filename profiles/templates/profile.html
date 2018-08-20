@@ -195,7 +195,9 @@
 								</h6>
 								{% if member_info.user_obj.mobile %}
 								{% for number in member_info.user_obj.get("mobile") %}
-								<p class="card-text user-form-value mb-0">{{ number }}</p>
+								<p class="card-text user-form-value mb-0">
+									<a href="tel:{{ number }}">{{ number }}</a>
+								</p>
 								<input type="text" class="form-control form-control-sm user-form-input user-mobile" id="user-mobile" value="{{ number }}">
 								{% endfor %}
 								{% endif %}
@@ -208,7 +210,9 @@
 								</h6>
 								{% if member_info.user_obj.mail %}
 								{% for email in member_info.user_obj.get("mail") %}
-								<p class="card-text user-form-value mb-0">{{ email }}</p>
+								<p class="card-text user-form-value mb-0">
+									<a href="mailto:{{ email }}">{{ email }}</a>
+								</p>
 								<input type="text" class="form-control form-control-sm user-form-input user-mail" id="user-mail" value="{{ email }}">
 								{% endfor %}
 								{% endif %}
