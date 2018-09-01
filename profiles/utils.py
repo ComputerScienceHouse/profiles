@@ -48,7 +48,7 @@ def get_member_info(uid):
         "user_obj": account,
         "group_list": ldap_get_groups(account),
         "uid": account.uid,
-        "ritUid": parse_rit_uid(account.ritDn),
+        "ritUid": account.ritDn,
         "name": account.cn,
         "active": ldap_is_active(account),
         "onfloor": ldap_is_onfloor(account),
@@ -71,13 +71,6 @@ def parse_date(date):
         day = date[6:8]
         return month + "-" + day + "-" + year
     return False
-
-
-def parse_rit_uid(dn):
-    if dn:
-        return dn.split(",")[0][4:]
-
-    return None
 
 
 def parse_account_year(date):
