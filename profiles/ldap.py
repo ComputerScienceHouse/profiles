@@ -1,4 +1,4 @@
-import hashlib 
+import hashlib
 
 from functools import lru_cache
 
@@ -394,7 +394,7 @@ def get_image(uid):
             return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
-        
+
 
     # Get GitHub Photo
     if github:
