@@ -9,3 +9,4 @@ PyMySQL
 pyGravatar
 Flask_Uploads
 pylint
+pillow

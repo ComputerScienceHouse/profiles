@@ -1,8 +1,14 @@
-import hashlib
+import hashlib 
 
 from functools import lru_cache
 
 import urllib.request
+
+from io import BytesIO
+
+import requests
+
+from PIL import Image
 
 from flask import redirect
 
@@ -98,10 +104,10 @@ def ldap_get_group_desc(group):
 @lru_cache(maxsize=1024)
 def ldap_get_eboard():
     members = _ldap_get_group_members("eboard-chairman") + _ldap_get_group_members("eboard-evaluations"
-        ) + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history"
-        ) + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm"
-        ) + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social"
-        ) + _ldap_get_group_members("eboard-secretary")
+            ) + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history"
+            ) + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm"
+            ) + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social"
+            ) + _ldap_get_group_members("eboard-secretary")
 
     return members
 
@@ -388,23 +394,24 @@ def get_image(uid):
             return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
+        
 
     # Get GitHub Photo
     if github:
         url = "https://github.com/" + github + ".png?size=250"
         try:
-            urllib.request.urlopen(url)
-            return redirect(url, code=302)
-        except urllib.error.HTTPError:
+            img = proxy_image(url)
+            return img
+        except OSError:
             pass
 
     # Get Twitter Photo
     if twitter:
         url = "https://twitter.com/" + twitter + "/profile_image?size=original"
         try:
-            urllib.request.urlopen(url)
-            return redirect(url, code=302)
-        except urllib.error.HTTPError:
+            img = proxy_image(url)
+            return img
+        except OSError:
             pass
 
     # Fall back to default
@@ -420,3 +427,13 @@ def get_gravatar(uid=None):
         addr = "null@csh.rit.edu"
         url = "https://gravatar.com/avatar/" + hashlib.md5(addr.encode('utf8')).hexdigest() + ".jpg?d=mm&s=250"
     return url
+
+
+@lru_cache(maxsize=1024)
+def proxy_image(url):
+    response = requests.get(url)
+    img = Image.open(BytesIO(response.content))
+    with BytesIO() as output:
+        img.save(output, format="png")
+        contents = output.getvalue()
+    return contents
