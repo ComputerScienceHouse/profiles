@@ -252,7 +252,8 @@ def ldap_update_profile(form_input, uid):
         account.cn = form_input["name"]
 
     if not form_input["birthday"] == account.birthday:
-        account.birthday = form_input["birthday"]
+        date = form_input["birthday"].split('/')
+        account.birthday = date[2] + date[0] + date[1]
 
     try:
         if not form_input["phone"] == account.get("mobile"):

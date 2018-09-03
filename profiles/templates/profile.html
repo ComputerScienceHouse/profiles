@@ -186,7 +186,7 @@
 									<i class="fas fa-calendar-alt"></i> Birthday
 								</h6>
 								<p class="card-text user-form-value">{{ member_info.birthday }}</p>
-								<input type="text" class="form-control form-control-sm user-form-input" id="user-birthday" value="{{ member_info.user_obj.birthday }}" data-placement="auto" data-toggle="tooltip" title="Format: yyyymmdd">
+								<input type="text" class="form-control form-control-sm user-form-input" id="user-birthday" value="{{ member_info.user_obj.birthday }}">
 							</div>
 
 							<div class="col-6 mb-4">
@@ -378,5 +378,13 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.js"></script>
+<script>
+  $( function() {
+    $( "#user-birthday" ).datepicker({
+    	changeYear: true,
+    	changeMonth: true
+    });
+  } );
+</script>
 
 </html>

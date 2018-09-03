@@ -69,7 +69,7 @@ def parse_date(date):
         year = date[0:4]
         month = date[4:6]
         day = date[6:8]
-        return month + "-" + day + "-" + year
+        return month + "/" + day + "/" + year
     return False
 
 
