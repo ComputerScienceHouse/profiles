@@ -4,7 +4,7 @@ import requests
 import csh_ldap
 
 import flask_migrate
-from flask import Flask, render_template, jsonify, request, redirect, send_from_directory
+from flask import Flask, render_template, jsonify, request, redirect, send_from_directory, send_file
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_sqlalchemy import SQLAlchemy
