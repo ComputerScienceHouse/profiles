@@ -3,7 +3,7 @@ csh_ldap==2.0.2
 flask
 flask_sqlalchemy
 flask_migrate
-flask-pyoidc
+flask-pyoidc>=2.0.0
 flask-optimize
 PyMySQL
 pyGravatar
