@@ -1,4 +1,5 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+    
     <div class="container">
     <a class="navbar-brand" href="/">Profiles</a>
 
@@ -48,6 +49,21 @@
 
             </li>
 
+            {% if info.rtp %}
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="groups">
+                    Admin
+                    <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="user01">
+                    <a class="dropdown-item" href="/clearcache">Clear Cache</a>
+                </div>
+
+            </li>
+            {% endif %}
+
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <form id="search" action="/search" method="GET">
@@ -74,3 +90,14 @@
     </div>
 </div>
 </nav>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+
+        <span class="glyphicon">&#xe013;</span>
+           {% for message in messages %}
+           {{ message }}
+           {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}

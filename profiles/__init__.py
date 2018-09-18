@@ -4,7 +4,7 @@ import requests
 import csh_ldap
 
 import flask_migrate
-from flask import Flask, render_template, jsonify, request, redirect, send_from_directory, send_file
+from flask import Flask, render_template, jsonify, request, redirect, send_from_directory, send_file, flash
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_sqlalchemy import SQLAlchemy
@@ -36,16 +36,25 @@ configure_uploads(app, photos)
 # pylint: disable=wrong-import-position
 from profiles.utils import before_request, get_member_info, process_image
 from profiles.ldap import(ldap_update_profile,
-                                        get_image,
-                                        ldap_get_active_members,
-                                        ldap_get_all_members,
                                         ldap_get_member,
-                                        ldap_search_members,
                                         ldap_is_active,
-                                        ldap_get_eboard,
                                         _ldap_get_group_members,
                                         ldap_get_group_desc,
-                                        ldap_get_year)
+                                        ldap_get_year,
+                                        ldap_get_active_members,
+                                        ldap_get_intro_members,
+                                        ldap_get_onfloor_members,
+                                        ldap_get_current_students,
+                                        ldap_get_all_members,
+                                        ldap_get_groups,
+                                        ldap_get_group_desc,
+                                        ldap_get_eboard,
+                                        ldap_search_members,
+                                        ldap_get_year,
+                                        ldap_is_rtp,
+                                        get_image,
+                                        get_gravatar,
+                                        proxy_image)
 
 
 @app.route("/", methods=["GET"])
@@ -143,3 +152,29 @@ def logout():
 @app.route("/image/<uid>", methods=["GET"])
 def image(uid):
     return get_image(uid)
+
+
+@app.route('/clearcache')
+@auth.oidc_auth('app')
+@before_request
+def clear_cache(info=None):
+    if not ldap_is_rtp(info['user_obj']):
+        return redirect("/")
+
+    ldap_get_active_members.cache_clear()
+    ldap_get_intro_members.cache_clear()
+    ldap_get_onfloor_members.cache_clear()
+    ldap_get_current_students.cache_clear()
+    ldap_get_all_members.cache_clear()
+    ldap_get_groups.cache_clear()
+    ldap_get_group_desc.cache_clear()
+    ldap_get_eboard.cache_clear()
+    ldap_search_members.cache_clear()
+    ldap_get_year.cache_clear()
+    get_image.cache_clear()
+    get_gravatar.cache_clear()
+    proxy_image.cache_clear()
+
+    flash('Cache cleared!')
+
+    return redirect(request.referrer, 302)

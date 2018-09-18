@@ -16,7 +16,8 @@ from profiles.ldap import (ldap_get_member,
                                           ldap_is_active,
                                           ldap_is_onfloor,
                                           ldap_get_roomnumber,
-                                          ldap_get_groups)
+                                          ldap_get_groups,
+                                          ldap_is_rtp)
 
 
 
@@ -34,7 +35,8 @@ def before_request(func):
             "user_obj": user_obj,
             "member_info": get_member_info(uid),
             "color": requests.get('https://themeswitcher.csh.rit.edu/api/colour').content,
-            "current_year": parse_account_year(str(datetime.datetime.now().strftime("%Y%m")))
+            "current_year": parse_account_year(str(datetime.datetime.now().strftime("%Y%m"))),
+            "rtp": ldap_is_rtp(user_obj)
         }
         kwargs["info"] = info
         return func(*args, **kwargs)
