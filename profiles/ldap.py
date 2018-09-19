@@ -1,18 +1,12 @@
 import hashlib
-
-from functools import lru_cache
-
 import urllib.request
-
+from functools import lru_cache
 from io import BytesIO
 
-import requests
-
-from PIL import Image
-
-from flask import redirect
-
 import ldap
+import requests
+from PIL import Image
+from flask import redirect
 
 from profiles import _ldap
 
@@ -178,7 +172,6 @@ def ldap_is_rd(account):
 def ldap_set_housingpoints(account, housing_points):
     account.housingPoints = housing_points
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_roomnumber(account, room_number):
@@ -186,31 +179,27 @@ def ldap_set_roomnumber(account, room_number):
         room_number = None
     account.roomNumber = room_number
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_active(account):
     _ldap_add_member_to_group(account, 'active')
     ldap_get_active_members.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_inactive(account):
     _ldap_remove_member_from_group(account, 'active')
     ldap_get_active_members.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_current_student(account):
     _ldap_add_member_to_group(account, 'current_student')
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_non_current_student(account):
     _ldap_remove_member_from_group(account, 'current_student')
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
+
 
 def ldap_multi_update(uid, attribute, value):
     dn = "uid={},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu".format(
@@ -260,7 +249,6 @@ def ldap_update_profile(form_input, uid):
             ldap_multi_update(uid, "mobile", form_input["phone"])
     except KeyError:
         ldap_multi_update(uid, "mobile", form_input["phone"])
-
 
     if not form_input["plex"] == account.plex:
         account.plex = form_input["plex"]
@@ -395,7 +383,6 @@ def get_image(uid):
             return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
-
 
     # Get GitHub Photo
     if github:

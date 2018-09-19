@@ -1,15 +1,9 @@
 import os
-import subprocess
-import requests
+
 import csh_ldap
-
-import flask_migrate
-from flask import Flask, render_template, jsonify, request, redirect, send_from_directory, send_file, flash
-from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask import Flask, render_template, jsonify, request, redirect, flash
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -153,7 +147,7 @@ def image(uid):
 
 
 @app.route('/clearcache')
-@auth.oidc_auth('app')
+@auth.oidc_auth
 @before_request
 def clear_cache(info=None):
     if not ldap_is_rtp(info['user_obj']):
