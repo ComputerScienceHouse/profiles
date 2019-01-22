@@ -30,7 +30,6 @@ $(function() {
 			"ritYear": $("#user-rityear").val(),
 			"website": $("#user-homepage").val(),
 			"resume": $("#user-resume").val(),
-			"github": $("#user-github").val(),
 			"twitter": $("#user-twitter").val(),
 			"blog": $("#user-blog").val(),
 			"google": $("#user-google").val(),
@@ -84,6 +83,7 @@ $(function() {
 				},
 				error: function(error) {
 					console.log(error);
+					location.reload();
 				}
 			});
 		});

@@ -44,6 +44,8 @@
 								Active Member
 								{% elif "honorarymembers" in member_info.group_list %}
 								Honorary Member
+								{% elif "failed" in member_info.group_list %}
+								Former Member
 								{% else %}
 								Alumni Member
 								{% endif %}
@@ -143,10 +145,6 @@
 								<div class="form-group user-form-input">
 									<label for="user-resume">Resume URL</label>
 									<input type="url" class="form-control form-control-sm" id="user-resume" value="{{ member_info.user_obj.resumeURL }}" placeholder="Resume URL">
-								</div>
-								<div class="form-group user-form-input">
-									<label for="user-github">GitHub Username</label>
-									<input type="text" class="form-control form-control-sm" id="user-github" value="{{ member_info.user_obj.github }}" placeholder="GitHub Username">
 								</div>
 								<div class="form-group user-form-input">
 									<label for="user-google">Google Account</label>

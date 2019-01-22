@@ -1,18 +1,12 @@
 import hashlib
-
-from functools import lru_cache
-
 import urllib.request
-
+from functools import lru_cache
 from io import BytesIO
 
-import requests
-
-from PIL import Image
-
-from flask import redirect
-
 import ldap
+import requests
+from PIL import Image
+from flask import redirect
 
 from profiles import _ldap
 
@@ -107,10 +101,9 @@ def ldap_get_eboard():
             ) + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history"
             ) + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm"
             ) + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social"
-            ) + _ldap_get_group_members("eboard-secretary") + _ldap_get_group_members("eboard-pr")
+            ) + _ldap_get_group_members("eboard-secretary")
 
     return members
-
 
 # Status checkers
 
@@ -178,7 +171,6 @@ def ldap_is_rd(account):
 def ldap_set_housingpoints(account, housing_points):
     account.housingPoints = housing_points
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_roomnumber(account, room_number):
@@ -186,31 +178,27 @@ def ldap_set_roomnumber(account, room_number):
         room_number = None
     account.roomNumber = room_number
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_active(account):
     _ldap_add_member_to_group(account, 'active')
     ldap_get_active_members.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_inactive(account):
     _ldap_remove_member_from_group(account, 'active')
     ldap_get_active_members.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_current_student(account):
     _ldap_add_member_to_group(account, 'current_student')
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
 
 
 def ldap_set_non_current_student(account):
     _ldap_remove_member_from_group(account, 'current_student')
     ldap_get_current_students.cache_clear()
-    ldap_get_member.cache_clear()
+
 
 def ldap_multi_update(uid, attribute, value):
     dn = "uid={},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu".format(
@@ -261,7 +249,6 @@ def ldap_update_profile(form_input, uid):
     except KeyError:
         ldap_multi_update(uid, "mobile", form_input["phone"])
 
-
     if not form_input["plex"] == account.plex:
         account.plex = form_input["plex"]
 
@@ -279,9 +266,6 @@ def ldap_update_profile(form_input, uid):
 
     if not form_input["website"] == account.homepageURL:
         account.homepageURL = form_input["website"]
-
-    if not form_input["github"] == account.github:
-        account.github = form_input["github"]
 
     if not form_input["twitter"] == account.twitterName:
         account.twitterName = form_input["twitter"]
@@ -395,7 +379,6 @@ def get_image(uid):
             return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
-
 
     # Get GitHub Photo
     if github:
