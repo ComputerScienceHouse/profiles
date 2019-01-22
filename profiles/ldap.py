@@ -267,9 +267,6 @@ def ldap_update_profile(form_input, uid):
     if not form_input["website"] == account.homepageURL:
         account.homepageURL = form_input["website"]
 
-    if not form_input["github"] == account.github:
-        account.github = form_input["github"]
-
     if not form_input["twitter"] == account.twitterName:
         account.twitterName = form_input["twitter"]
 
