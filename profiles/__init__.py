@@ -79,10 +79,13 @@ def results():
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
     searched = request.args.get("q")
+    members = ldap_search_members(searched)
+    if len(members) == 1:
+        return redirect("/user/" + members[0]["uid"], 302)
     return render_template("listing.html",
     						  info=info,
     						  title="Search Results: "+searched,
-    						  members=ldap_search_members(searched))
+    						  members=members)
 
 
 @app.route("/group/<_group>", methods=["GET"])
