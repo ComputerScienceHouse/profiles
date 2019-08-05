@@ -103,5 +103,4 @@ def process_image(photo, uid):
         con.modify_s(account.get_dn(), mod_attrs)
 
         return True
-    else:
-        return False
+    return False
