@@ -369,7 +369,7 @@ def get_image(uid):
 
     # Return stored Image
     if image:
-        return image, 200, {'Content-Type': 'image/jpeg'}
+        return image, 200, {'Content-Type': 'image/jpeg', 'Cache-Control': 'max-age=31536000'}
 
     # Get Gravatar
     url = get_gravatar(uid)
@@ -385,7 +385,7 @@ def get_image(uid):
         url = "https://github.com/" + github + ".png?size=250"
         try:
             img = proxy_image(url)
-            return img, 200, {'Content-Type': 'image/png'}
+            return img, 200, {'Content-Type': 'image/png', 'Cache-Control': 'max-age=31536000'}
         except OSError:
             pass
 
@@ -394,7 +394,7 @@ def get_image(uid):
         url = "https://twitter.com/" + twitter + "/profile_image?size=original"
         try:
             img = proxy_image(url)
-            return img, 200, {'Content-Type': 'image/png'}
+            return img, 200, {'Content-Type': 'image/png', 'Cache-Control': 'max-age=31536000'}
         except OSError:
             pass
 
