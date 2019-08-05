@@ -376,7 +376,9 @@ def get_image(uid):
     try:
         gravatar = urllib.request.urlopen(url)
         if gravatar.getcode() == 200:
-            return redirect(url, code=302)
+            gravitar_url = redirect(url, code=302)
+            gravitar_url.headers = {'Cache-Control': 'max-age=31536000'}
+            return gravitar_url
     except urllib.error.HTTPError:
         pass
 
@@ -399,7 +401,9 @@ def get_image(uid):
             pass
 
     # Fall back to default
-    return redirect(get_gravatar(), code=302)
+    default_icon = redirect(get_gravatar(), code=302)
+    default_icon.headers = {'Cache-Control': 'max-age=31536000'}
+    return default_icon
 
 
 @lru_cache(maxsize=1024)
