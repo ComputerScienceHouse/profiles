@@ -81,7 +81,7 @@ def search(searched=None, info=None):
     searched = request.args.get("q")
     members = ldap_search_members(searched)
     if len(members) == 1:
-        return redirect("/user/" + members[0]["uid"], 302)
+        return redirect("/user/" + members[0].uid, 302)
     return render_template("listing.html",
     						  info=info,
     						  title="Search Results: "+searched,
