@@ -5,6 +5,7 @@ from io import BytesIO
 
 import ldap
 import requests
+import re
 from PIL import Image
 from flask import redirect
 
@@ -265,7 +266,7 @@ def ldap_update_profile(form_input, uid):
             account.ritYear = form_input["ritYear"]
 
     if not form_input["website"] == account.homepageURL:
-        if not form_input["website"].startsWith("http"):
+        if type(None) == type(re.search("^https?:\/\/.+",form_input["website"] ))
             account.homepageURL = "http://" + form_input["website"]
         else:
             account.homepageURL = form_input["website"]
@@ -274,13 +275,13 @@ def ldap_update_profile(form_input, uid):
         account.twitterName = form_input["twitter"]
 
     if not form_input["blog"] == account.blogURL:
-        if not form_input["blog"].startsWith("http"):
+        if type(None) == type(re.search("^https?:\/\/.+",form_input["blog"] ))
             account.blogURL = "http://" + form_input["blog"]
         else:
             account.blogURL = form_input["blog"]
 
     if not form_input["resume"] == account.resumeURL:
-        if not form_input["resume"].startsWith("http"):
+        if type(None) == type(re.search("^https?:\/\/.+",form_input["resume"] ))
             account.resumeURL = "http://" + form_input["resume"]
         else:
             account.resumeURL = form_input["resume"]
