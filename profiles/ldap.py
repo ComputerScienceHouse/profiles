@@ -265,17 +265,26 @@ def ldap_update_profile(form_input, uid):
             account.ritYear = form_input["ritYear"]
 
     if not form_input["website"] == account.homepageURL:
-        account.homepageURL = form_input["website"]
-
+        if not form_input["website"].startsWith("http"):
+            account.homepageURL = "http://" + form_input["website"]
+        else:
+            account.homepageURL = form_input["website"]
+            
     if not form_input["twitter"] == account.twitterName:
         account.twitterName = form_input["twitter"]
 
     if not form_input["blog"] == account.blogURL:
-        account.blogURL = form_input["blog"]
+        if not form_input["blog"].startsWith("http"):
+            account.blogURL = "http://" + form_input["blog"]
+        else:
+            account.blogURL = form_input["blog"]
 
     if not form_input["resume"] == account.resumeURL:
-        account.resumeURL = form_input["resume"]
-
+        if not form_input["resume"].startsWith("http"):
+            account.resumeURL = "http://" + form_input["resume"]
+        else:
+            account.resumeURL = form_input["resume"]
+            
     if not form_input["google"] == account.googleScreenName:
         account.googleScreenName = form_input["google"]
 
