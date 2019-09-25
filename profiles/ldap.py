@@ -3,6 +3,7 @@ import urllib.request
 from functools import lru_cache
 from io import BytesIO
 
+import re
 import ldap
 import requests
 from PIL import Image
@@ -228,7 +229,7 @@ def ldap_multi_update(uid, attribute, value):
     conn.modify_s(dn, mod_list)
 
 
-# pylint: disable=too-many-branches
+# pylint: disable=too-many-branches,too-many-statements
 def ldap_update_profile(form_input, uid):
     account = _ldap.get_member(uid, uid=True)
     empty = ["None", ""]
@@ -265,16 +266,25 @@ def ldap_update_profile(form_input, uid):
             account.ritYear = form_input["ritYear"]
 
     if not form_input["website"] == account.homepageURL:
-        account.homepageURL = form_input["website"]
+        if re.search(r"^https?:\/\/.+", form_input["website"]):
+            account.homepageURL = form_input["website"]
+        else:
+            account.homepageURL = "http://" + form_input["website"]
 
     if not form_input["twitter"] == account.twitterName:
         account.twitterName = form_input["twitter"]
 
     if not form_input["blog"] == account.blogURL:
-        account.blogURL = form_input["blog"]
+        if re.search(r"^https?:\/\/.+", form_input["blog"]):
+            account.blogURL = form_input["blog"]
+        else:
+            account.blogURL = "http://" + form_input["blog"]
 
     if not form_input["resume"] == account.resumeURL:
-        account.resumeURL = form_input["resume"]
+        if re.search(r"^https?:\/\/.+", form_input["resume"]):
+            account.resumeURL = form_input["resume"]
+        else:
+            account.resumeURL = "http://" + form_input["resume"]
 
     if not form_input["google"] == account.googleScreenName:
         account.googleScreenName = form_input["google"]
