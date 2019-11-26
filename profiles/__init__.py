@@ -1,9 +1,17 @@
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+
 import csh_ldap
 from flask import Flask, render_template, jsonify, request, redirect, flash
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_uploads import UploadSet, configure_uploads, IMAGES
+
+sentry_sdk.init(
+    dsn="https://<key>@sentry.io/<project>",
+    integrations=[FlaskIntegrations()]
+)
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
