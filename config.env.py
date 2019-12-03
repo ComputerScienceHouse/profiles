@@ -3,6 +3,12 @@ import random
 import string
 from os import environ as env
 
+# Sentry DSN
+SENTRY_DSN = env.get("PROFILES_SENTRY_DSN", "")
+SENTRY_CONFIG = {
+    'dsn': env.get("PROFILES_SENTRY_DSN", "")
+}
+
 # Flask config
 DEBUG = False
 IP = os.environ.get('PROFILES_IP', 'localhost')

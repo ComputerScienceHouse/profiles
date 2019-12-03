@@ -2,16 +2,12 @@ import os
 
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 import csh_ldap
 from flask import Flask, render_template, jsonify, request, redirect, flash
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_uploads import UploadSet, configure_uploads, IMAGES
-
-sentry_sdk.init(
-    dsn="https://<key>@sentry.io/<project>",
-    integrations=[FlaskIntegrations()]
-)
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -25,6 +21,12 @@ else:
 auth = OIDCAuthentication(app, issuer=app.config["OIDC_ISSUER"],
                           client_registration_info=app.config["OIDC_CLIENT_CONFIG"])
 
+# Sentry
+sentry = Sentry(app)
+sentry_sdk.init(
+    dsn=app.config['SENTRY_DSN'],
+    integrations=[FlaskIntegrations(), SqlalchemyIntegration()]
+)
 
 # LDAP
 _ldap = csh_ldap.CSHLDAP(app.config['LDAP_BIND_DN'], app.config['LDAP_BIND_PASS'])
