@@ -3,11 +3,14 @@ import random
 import string
 from os import environ as env
 
+# Sentry DSN
+SENTRY_DSN = env.get("PROFILES_SENTRY_DSN", "")
+
 # Flask config
 DEBUG = False
 IP = os.environ.get('PROFILES_IP', 'localhost')
 PORT = os.environ.get('PROFILES_PORT', 8080)
-SERVR_NAME = os.environ.get('PROFILES_SERVER_NAME', 'profiles.csh.rit.edu')
+SERVER_NAME = os.environ.get('PROFILES_SERVER_NAME', 'profiles.csh.rit.edu')
 
 # DB Info
 SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI', 'sqlite:///{}'.format(os.path.join(os.getcwd(), "data.db")))

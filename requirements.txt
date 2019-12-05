@@ -10,4 +10,4 @@ pyGravatar
 Flask_Uploads
 pylint
 pillow
-sentry-sdk[flask]==0.13.2
+sentry-sdk[flask]~=0.13.4
