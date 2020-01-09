@@ -327,7 +327,7 @@ def ldap_search_members(query):
                     "(github=*{0}*))").format(query)
 
     res = con.search_s(
-        "dc=csh,dc=rit,dc=edu",
+        "cn=users,cn=accounts,dc=csh,dc=rit,dc=edu",
         ldap.SCOPE_SUBTREE,
         filt,
         ['uid'])
