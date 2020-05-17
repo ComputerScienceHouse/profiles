@@ -22,10 +22,9 @@ auth = OIDCAuthentication(app, issuer=app.config["OIDC_ISSUER"],
                           client_registration_info=app.config["OIDC_CLIENT_CONFIG"])
 
 # Sentry
-sentry = Sentry(app)
 sentry_sdk.init(
     dsn=app.config['SENTRY_DSN'],
-    integrations=[FlaskIntegrations(), SqlalchemyIntegration()]
+    integrations=[FlaskIntegration(), SqlalchemyIntegration()]
 )
 
 # LDAP

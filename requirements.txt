@@ -11,3 +11,4 @@ Flask_Uploads
 pylint
 pillow
 sentry-sdk[flask]~=0.13.4
+werkzeug==0.16.0
