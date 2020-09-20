@@ -1,5 +1,9 @@
 import os
 
+import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+
 import csh_ldap
 from flask import Flask, render_template, jsonify, request, redirect, flash
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
@@ -17,6 +21,11 @@ else:
 auth = OIDCAuthentication(app, issuer=app.config["OIDC_ISSUER"],
                           client_registration_info=app.config["OIDC_CLIENT_CONFIG"])
 
+# Sentry
+sentry_sdk.init(
+    dsn=app.config['SENTRY_DSN'],
+    integrations=[FlaskIntegration(), SqlalchemyIntegration()]
+)
 
 # LDAP
 _ldap = csh_ldap.CSHLDAP(app.config['LDAP_BIND_DN'], app.config['LDAP_BIND_PASS'])
