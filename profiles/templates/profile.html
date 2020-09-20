@@ -79,6 +79,10 @@
 							<span class="badge badge-pill badge-danger">Constitutional Maintainer</span>
 							{% endif %}
 
+							{% if "wiki_maintainers" in member_info.group_list %}
+							<span class="badge badge-pill badge-purple">Wiki Maintainer</span>
+							{% endif %}
+
 							{% if "drink" in member_info.group_list %}
 							<span class="badge badge-pill badge-primary">Drink Admin</span>
 							{% endif %}

@@ -46,7 +46,7 @@
 }
 
 .card-profile-pic {
-	margin:auto; 
+	margin:auto;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -81,6 +81,11 @@ a:active {
 .badge-pink {
   color: #fff;
   background-color: #cb42a9;
+}
+
+.badge-purple {
+  color: #fff;
+  background-color: #b19cd9;
 }
 
 .profile-link,
