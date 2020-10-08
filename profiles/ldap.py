@@ -56,8 +56,8 @@ def _ldap_is_member_of_directorship(account, directorship):
 def ldap_get_member(username):
     try:
         return _ldap.get_member(username, uid=True)
-    except KeyError:
-        raise BadQueryError("invalid user")
+    except KeyError as kerr:
+        raise BadQueryError("invalid user") from kerr
 
 
 @lru_cache(maxsize=1024)
@@ -105,8 +105,8 @@ def ldap_get_group_desc(group):
             "(cn=%s)" % group,
             ['description'])
         return results[0][1]['description'][0].decode('utf-8')
-    except IndexError:
-        raise BadQueryError("invalid group name")
+    except IndexError as inderr:
+        raise BadQueryError("invalid group name") from inderr
 
 
 
@@ -364,8 +364,8 @@ def ldap_get_year(year):
     try:
         filt = str("(&(memberSince>={}0801010101-0400)(memberSince<={}0801010101-0400))").format(
             year, str(int(year) + 1))
-    except ValueError:
-        raise BadQueryError("invalid year")
+    except ValueError as verr:
+        raise BadQueryError("invalid year") from verr
 
     res = con.search_s(
         "dc=csh,dc=rit,dc=edu",
