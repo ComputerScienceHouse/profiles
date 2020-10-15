@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Error 404</title>
+
+</head>
+<body>
+    <style>
+        html{
+            height:100%;
+            overflow:hidden;
+        }
+        h1 {
+            color:#384040;
+            font-size:4vh;
+        }
+        h2 {
+            color:#853d4b;
+            font-size:3vh;
+        }
+        #message {
+            color:#b0197e;
+            font-size:3vh;
+        }
+        h1, h2, h3{
+            width:100%;
+        }
+        .center {
+            text-align:center;
+            display:block;
+            margin-left: auto;
+            margin-right:auto;
+        }
+        img {
+            width:30vh;
+        }
+        body{
+            margin: 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #eee;
+        }
+    </style>
+    <div>
+    <h1 class="center">Error 404</h1>
+    <h2 class="center">Page does not exist!</h2>
+    <img class="center" src="{{ url_for('static', filename='/assets/images/tvstatic.gif') }}">
+    <h2 id="message" class="center">Message: "{{ message }}"</h2>
+    </div>
+</body>
+</html>

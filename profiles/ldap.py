@@ -12,8 +12,15 @@ from flask import redirect
 from profiles import _ldap
 
 
+class BadQueryError(Exception):
+    pass
+
+
 def _ldap_get_group_members(group):
-    return _ldap.get_group(group).get_members()
+    try:
+        return _ldap.get_group(group).get_members()
+    except ldap.FILTER_ERROR:
+        return None
 
 
 def _ldap_is_member_of_group(member, group):
@@ -47,7 +54,10 @@ def _ldap_is_member_of_directorship(account, directorship):
 
 
 def ldap_get_member(username):
-    return _ldap.get_member(username, uid=True)
+    try:
+        return _ldap.get_member(username, uid=True)
+    except KeyError as kerr:
+        raise BadQueryError("invalid user") from kerr
 
 
 @lru_cache(maxsize=1024)
@@ -88,12 +98,16 @@ def ldap_get_groups(account):
 @lru_cache(maxsize=1024)
 def ldap_get_group_desc(group):
     con = _ldap.get_con()
-    results = con.search_s(
-        "cn=groups,cn=accounts,dc=csh,dc=rit,dc=edu",
-        ldap.SCOPE_SUBTREE,
-        "(cn=%s)" % group,
-        ['description'])
-    return results[0][1]['description'][0].decode('utf-8')
+    try:
+        results = con.search_s(
+            "cn=groups,cn=accounts,dc=csh,dc=rit,dc=edu",
+            ldap.SCOPE_SUBTREE,
+            "(cn=%s)" % group,
+            ['description'])
+        return results[0][1]['description'][0].decode('utf-8')
+    except IndexError as inderr:
+        raise BadQueryError("invalid group name") from inderr
+
 
 
 @lru_cache(maxsize=1024)
@@ -347,7 +361,11 @@ def ldap_search_members(query):
 @lru_cache(maxsize=1024)
 def ldap_get_year(year):
     con = _ldap.get_con()
-    filt = str("(&(memberSince>={}0801010101-0400)(memberSince<={}0801010101-0400))").format(year, str(int(year) + 1))
+    try:
+        filt = str("(&(memberSince>={}0801010101-0400)(memberSince<={}0801010101-0400))").format(
+            year, str(int(year) + 1))
+    except ValueError as verr:
+        raise BadQueryError("invalid year") from verr
 
     res = con.search_s(
         "dc=csh,dc=rit,dc=edu",

@@ -20,7 +20,6 @@ from profiles.ldap import (ldap_get_member,
                                           ldap_is_rtp)
 
 
-
 def before_request(func):
     @wraps(func)
     def wrapped_function(*args, **kwargs):

@@ -55,7 +55,8 @@ from profiles.ldap import(ldap_update_profile,
                                         ldap_is_rtp,
                                         get_image,
                                         get_gravatar,
-                                        proxy_image)
+                                        proxy_image,
+                                        BadQueryError)
 
 
 @app.route("/", methods=["GET"])
@@ -182,3 +183,10 @@ def clear_cache(info=None):
     flash('Cache cleared!')
 
     return redirect(request.referrer, 302)
+
+
+@app.errorhandler(500)
+def handle_internal_error(e):
+    if isinstance(e.original_exception, BadQueryError):
+        return render_template("404.html", message=e.original_exception), 404
+    raise e.original_exception
