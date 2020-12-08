@@ -190,3 +190,11 @@ def handle_internal_error(e):
     if isinstance(e.original_exception, BadQueryError):
         return render_template("404.html", message=e.original_exception), 404
     raise e.original_exception
+
+
+@app.route("/health")
+def health():
+    """
+    Shows an ok status if the application is up and running
+    """
+    return {"status": "ok"}
