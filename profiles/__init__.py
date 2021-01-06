@@ -1,4 +1,5 @@
 import os
+
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
@@ -212,8 +213,8 @@ def health_check():
         }
     }
     try:
-        cshldap = csh_ldap.CSHLDAP(app.config['LDAP_BIND_DN'], app.config['LDAP_BIND_PASS'])
-        jsonout["ldap"]["server"] = cshldap.server_uri
+        jsonout["ldap"]["server"] = _ldap.server_uri
+        ldap_get_active_members()
     except ldap.LDAPError:
         jsonout["ldap"]["status"] = False
         return_code = 512
