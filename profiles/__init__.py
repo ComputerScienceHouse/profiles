@@ -187,6 +187,7 @@ def clear_cache(info=None):
     return redirect(request.referrer, 302)
 
 
+@app.errorhandler(404)
 @app.errorhandler(500)
 def handle_internal_error(e):
     if isinstance(e.original_exception, BadQueryError):
