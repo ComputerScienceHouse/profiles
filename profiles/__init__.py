@@ -3,9 +3,11 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
-
+from sqlalchemy.exc import SQLAlchemyError
+import ldap
 import csh_ldap
 from flask import Flask, render_template, jsonify, request, redirect, flash
+from flask_sqlalchemy import SQLAlchemy
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
@@ -192,9 +194,36 @@ def handle_internal_error(e):
     raise e.original_exception
 
 
-@app.route("/health")
-def health():
-    """
-    Shows an ok status if the application is up and running
-    """
-    return {"status": "ok"}
+@app.route('/api/v1/healthcheck', methods=["GET"])
+def health_check():
+    #   Return codes
+    #       200 - Success
+    #       512 - LDAP failure
+    #       513 - DB failure
+    #       514 - LDAP & DB failure
+    return_code = 200
+    jsonout = {
+        "ldap": {
+            "status": True,
+            "server": None,
+        },
+        "database": {
+            "status": True,
+            "server": None,
+        }
+    }
+    try:
+        jsonout["ldap"]["server"] = _ldap.server_uri
+        ldap_get_active_members()
+    except ldap.LDAPError:
+        jsonout["ldap"]["status"] = False
+        return_code = 512
+    try:
+        test_db = SQLAlchemy(app)
+        test_db.engine.connect()
+        jsonout["database"]["server"] = app.config['SQLALCHEMY_DATABASE_URI']
+    except SQLAlchemyError:
+        jsonout["database"]["status"] = False
+        return_code = 514 if return_code == 512 else 513
+
+    return jsonify(jsonout), return_code
