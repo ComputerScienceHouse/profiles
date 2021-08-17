@@ -259,7 +259,7 @@ def ldap_update_profile(form_input, uid):
         if len(full_name.split()) <=1:
             account.sn = full_name
         else:
-            account.sn = "".join(full_name.split().pop(0))
+            account.sn = full_name.removeprefix(account.givenname).strip() # thanks mom
         initial_string = ""
         for i in full_name.split():
             initial_string += i[0].upper()
