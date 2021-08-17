@@ -252,7 +252,19 @@ def ldap_update_profile(form_input, uid):
             form_input[key] = None
 
     if not form_input["name"] == account.cn:
-        account.cn = form_input["name"]
+        full_name = form_input["name"]
+        account.cn = full_name
+        account.gecos = full_name
+        account.givenname = full_name.split()[0]
+        if len(full_name.split()) <=1:
+            account.sn = full_name
+        else:
+            account.sn = "".join(full_name.split().pop(0))
+        initial_string = ""
+        for i in full_name.split():
+            initial_string += i[0].upper()
+        account.initials = initial_string
+        account.displayname = full_name + " (" + uid + ")"
 
     if not form_input["birthday"] == account.birthday:
         date = form_input["birthday"].split('/')
