@@ -51,6 +51,7 @@ def get_member_info(uid):
         "uid": account.uid,
         "ritUid": account.ritDn,
         "name": account.cn,
+        "initials": account.initials,
         "active": ldap_is_active(account),
         "onfloor": ldap_is_onfloor(account),
         "room": ldap_get_roomnumber(account),

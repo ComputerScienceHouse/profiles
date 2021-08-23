@@ -21,6 +21,7 @@ $(function() {
 
 		var form_data = { 
 			"name": $("#user-name").val(),
+			"initials": $("#user-initials").val(),
 			"birthday": $("#user-birthday").val(),
 			"phone": $(".user-mobile").map(function() {
 				return $(this).val();

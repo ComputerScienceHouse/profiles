@@ -259,12 +259,13 @@ def ldap_update_profile(form_input, uid):
         if len(full_name.split()) <=1:
             account.sn = full_name
         else:
-            account.sn = full_name.removeprefix(account.givenname).strip() # thanks mom
-        initial_string = ""
-        for i in full_name.split():
-            initial_string += i[0].upper()
-        account.initials = initial_string
+            account.sn = "".join(full_name.split().pop(0))
+            # account.sn = full_name.removeprefix(account.givenname).strip() # thanks mom
+            # use above when upgraded to python 3.9
         account.displayname = full_name + " (" + uid + ")"
+
+    if not form_input["initials"] == account.initials:
+        account.initials = form_input["initials"]
 
     if not form_input["birthday"] == account.birthday:
         date = form_input["birthday"].split('/')
