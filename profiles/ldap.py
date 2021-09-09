@@ -259,9 +259,8 @@ def ldap_update_profile(form_input, uid):
         if len(full_name.split()) <=1:
             account.sn = full_name
         else:
-            account.sn = "".join(full_name.split().pop(0))
-            # account.sn = full_name.removeprefix(account.givenname).strip() # thanks mom
-            # use above when upgraded to python 3.9
+            account.sn = full_name.removeprefix(account.givenname).strip() 
+
         account.displayname = full_name + " (" + uid + ")"
 
     if not form_input["initials"] == account.initials:
@@ -415,9 +414,9 @@ def get_image(uid):
     # Get Gravatar
     url = get_gravatar(uid)
     try:
-        gravatar = urllib.request.urlopen(url)
-        if gravatar.getcode() == 200:
-            return redirect(url, code=302)
+        with urllib.request.urlopen(url) as gravatar:
+            if gravatar.getcode() == 200:
+                return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
 
