@@ -280,7 +280,9 @@ def ldap_update_profile(form_input, uid):
             account.ritYear = form_input["ritYear"]
 
     if not form_input["website"] == account.homepageURL:
-        if re.search(r"^https?:\/\/.+", form_input["website"]):
+        if form_input["website"] is None or form_input["website"].strip() == "":
+            account.homepageURL = None
+        elif re.search(r"^https?:\/\/.+", form_input["website"]):
             account.homepageURL = form_input["website"]
         else:
             account.homepageURL = "http://" + form_input["website"]
@@ -289,12 +291,16 @@ def ldap_update_profile(form_input, uid):
         account.twitterName = form_input["twitter"]
 
     if not form_input["blog"] == account.blogURL:
-        if re.search(r"^https?:\/\/.+", form_input["blog"]):
+        if form_input["blog"] is None or form_input["blog"].strip() == "":
+            account.blogURL = None
+        elif re.search(r"^https?:\/\/.+", form_input["blog"]):
             account.blogURL = form_input["blog"]
         else:
             account.blogURL = "http://" + form_input["blog"]
 
     if not form_input["resume"] == account.resumeURL:
+        if form_input["resume"] is None or form_input["resume"].strip() == "":
+            account.resumeURL = None
         if re.search(r"^https?:\/\/.+", form_input["resume"]):
             account.resumeURL = form_input["resume"]
         else:
