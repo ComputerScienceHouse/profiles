@@ -53,6 +53,11 @@
 	background-size: cover;
 }
 
+.dropdown-menu {
+	max-height: 20em;
+	overflow-y: auto;
+}
+
 .badge {
 	font-size: 85%;
 }
