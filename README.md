@@ -88,5 +88,5 @@ Reach out to an RTP to get OIDC credentials that will allow you to develop local
 Code Standards
 ------------
 
-Use Pylint to ensure your code follows standards. Commits will be pylinted by Travis CI, if your
+Use Pylint to ensure your code follows standards. Commits will be pylinted by GitHub Actions, if your
 build fails you must fix whatever it tells you is wrong before it will be merged.

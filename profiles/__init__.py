@@ -24,6 +24,7 @@ auth = OIDCAuthentication(app, issuer=app.config["OIDC_ISSUER"],
                           client_registration_info=app.config["OIDC_CLIENT_CONFIG"])
 
 # Sentry
+# pylint: disable=abstract-class-instantiated
 sentry_sdk.init(
     dsn=app.config['SENTRY_DSN'],
     integrations=[FlaskIntegration(), SqlalchemyIntegration()]
@@ -82,7 +83,7 @@ def user(uid=None, info=None):
 @before_request
 def results():
     searched = request.form['query']
-    return redirect("/search/{}".format(searched), 302)
+    return redirect(f"/search/{searched}", 302)
 
 
 @app.route("/search", methods=["GET"])

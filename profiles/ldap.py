@@ -102,7 +102,7 @@ def ldap_get_group_desc(group):
         results = con.search_s(
             "cn=groups,cn=accounts,dc=csh,dc=rit,dc=edu",
             ldap.SCOPE_SUBTREE,
-            "(cn=%s)" % group,
+            f"(cn={group})",
             ['description'])
         return results[0][1]['description'][0].decode('utf-8')
     except IndexError as inderr:
@@ -216,9 +216,7 @@ def ldap_set_non_current_student(account):
 
 
 def ldap_multi_update(uid, attribute, value):
-    dn = "uid={},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu".format(
-        uid
-    )
+    dn = f"uid={uid},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu"
 
     try:
         current = _ldap.get_member(uid, uid=True).get(attribute)
@@ -280,7 +278,9 @@ def ldap_update_profile(form_input, uid):
             account.ritYear = form_input["ritYear"]
 
     if not form_input["website"] == account.homepageURL:
-        if re.search(r"^https?:\/\/.+", form_input["website"]):
+        if form_input["website"] is None or form_input["website"].strip() == "":
+            account.homepageURL = None
+        elif re.search(r"^https?:\/\/.+", form_input["website"]):
             account.homepageURL = form_input["website"]
         else:
             account.homepageURL = "http://" + form_input["website"]
@@ -289,12 +289,16 @@ def ldap_update_profile(form_input, uid):
         account.twitterName = form_input["twitter"]
 
     if not form_input["blog"] == account.blogURL:
-        if re.search(r"^https?:\/\/.+", form_input["blog"]):
+        if form_input["blog"] is None or form_input["blog"].strip() == "":
+            account.blogURL = None
+        elif re.search(r"^https?:\/\/.+", form_input["blog"]):
             account.blogURL = form_input["blog"]
         else:
             account.blogURL = "http://" + form_input["blog"]
 
     if not form_input["resume"] == account.resumeURL:
+        if form_input["resume"] is None or form_input["resume"].strip() == "":
+            account.resumeURL = None
         if re.search(r"^https?:\/\/.+", form_input["resume"]):
             account.resumeURL = form_input["resume"]
         else:
@@ -402,9 +406,9 @@ def get_image(uid):
     # Get Gravatar
     url = get_gravatar(uid)
     try:
-        gravatar = urllib.request.urlopen(url)
-        if gravatar.getcode() == 200:
-            return redirect(url, code=302)
+        with urllib.request.urlopen(url) as gravatar:
+            if gravatar.getcode() == 200:
+                return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
 
