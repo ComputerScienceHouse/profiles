@@ -102,7 +102,7 @@ def ldap_get_group_desc(group):
         results = con.search_s(
             "cn=groups,cn=accounts,dc=csh,dc=rit,dc=edu",
             ldap.SCOPE_SUBTREE,
-            "(cn=%s)" % group,
+            f"(cn={group})",
             ['description'])
         return results[0][1]['description'][0].decode('utf-8')
     except IndexError as inderr:
@@ -216,9 +216,7 @@ def ldap_set_non_current_student(account):
 
 
 def ldap_multi_update(uid, attribute, value):
-    dn = "uid={},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu".format(
-        uid
-    )
+    dn = f"uid={uid},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu"
 
     try:
         current = _ldap.get_member(uid, uid=True).get(attribute)
@@ -402,9 +400,9 @@ def get_image(uid):
     # Get Gravatar
     url = get_gravatar(uid)
     try:
-        gravatar = urllib.request.urlopen(url)
-        if gravatar.getcode() == 200:
-            return redirect(url, code=302)
+        with urllib.request.urlopen(url) as gravatar:
+            if gravatar.getcode() == 200:
+                return redirect(url, code=302)
     except urllib.error.HTTPError:
         pass
 

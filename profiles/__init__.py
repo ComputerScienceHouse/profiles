@@ -82,7 +82,7 @@ def user(uid=None, info=None):
 @before_request
 def results():
     searched = request.form['query']
-    return redirect("/search/{}".format(searched), 302)
+    return redirect(f"/search/{searched}", 302)
 
 
 @app.route("/search", methods=["GET"])
