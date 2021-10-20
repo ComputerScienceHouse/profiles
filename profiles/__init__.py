@@ -8,11 +8,12 @@ import ldap
 import csh_ldap
 from flask import Flask, render_template, jsonify, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_pyoidc.flask_pyoidc import OIDCAuthentication
+from flask_pyoidc import OIDCAuthentication
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata, ClientRegistrationInfo
 from flask_uploads import UploadSet, configure_uploads, IMAGES
+from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Get app config from absolute file path
 if os.path.exists(os.path.join(os.getcwd(), "config.py")):
@@ -20,8 +21,24 @@ if os.path.exists(os.path.join(os.getcwd(), "config.py")):
 else:
     app.config.from_pyfile(os.path.join(os.getcwd(), "config.env.py"))
 
-auth = OIDCAuthentication(app, issuer=app.config["OIDC_ISSUER"],
-                          client_registration_info=app.config["OIDC_CLIENT_CONFIG"])
+def get_redirect_uri():
+    scheme = app.config.get("PREFERRED_URL_SCHEME", "http")
+    server_name = app.config.get("SERVER_NAME")
+    return scheme + "://" + server_name + "/callback"
+
+app.config.update(
+    OIDC_REDIRECT_URI = get_redirect_uri(),
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+)
+
+auth = OIDCAuthentication({
+    "default": ProviderConfiguration(
+        issuer=app.config["OIDC_ISSUER"],
+        client_metadata=ClientMetadata(
+            **app.config["OIDC_CLIENT_CONFIG"]
+        ),
+    )
+}, app=app)
 
 # Sentry
 # pylint: disable=abstract-class-instantiated
@@ -63,23 +80,22 @@ from profiles.ldap import(ldap_update_profile,
 
 
 @app.route("/", methods=["GET"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def home(info=None):
     return redirect("/user/" + info["uid"], code=302)
 
 
 @app.route("/user/<uid>", methods=["GET"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def user(uid=None, info=None):
-    return render_template("profile.html",
-    						  info=info,
-    						  member_info=get_member_info(uid))
+    return render_template("profile.html", info=info,
+                           member_info=get_member_info(uid))
 
 
 @app.route("/results", methods=["POST"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def results():
     searched = request.form['query']
@@ -87,7 +103,7 @@ def results():
 
 
 @app.route("/search", methods=["GET"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
@@ -102,7 +118,7 @@ def search(searched=None, info=None):
 
 
 @app.route("/group/<_group>", methods=["GET"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def group(_group=None, info=None):
     group_desc = ldap_get_group_desc(_group)
@@ -120,7 +136,7 @@ def group(_group=None, info=None):
 
 
 @app.route("/year/<_year>", methods=["GET"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def year(_year=None, info=None):
     return render_template("listing.html",
@@ -130,7 +146,7 @@ def year(_year=None, info=None):
 
 
 @app.route("/update", methods=["POST"])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def update(info=None):
     if 'photo' in request.form:
@@ -142,7 +158,7 @@ def update(info=None):
 
 
 @app.route('/upload', methods=['POST'])
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def upload(info=None):
     if 'photo' in request.form:
@@ -163,7 +179,7 @@ def image(uid):
 
 
 @app.route('/clearcache')
-@auth.oidc_auth
+@auth.oidc_auth("default")
 @before_request
 def clear_cache(info=None):
     if not ldap_is_rtp(info['user_obj']):
@@ -191,9 +207,10 @@ def clear_cache(info=None):
 @app.errorhandler(404)
 @app.errorhandler(500)
 def handle_internal_error(e):
-    if isinstance(e.original_exception, BadQueryError):
-        return render_template("404.html", message=e.original_exception), 404
-    raise e.original_exception
+    original_exception = getattr(e, "original_exception", e)
+    if isinstance(original_exception, (BadQueryError, NotFound)):
+        return render_template("404.html", message=original_exception), 404
+    raise original_exception
 
 
 @app.route('/api/v1/healthcheck', methods=["GET"])
