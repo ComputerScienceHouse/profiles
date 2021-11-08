@@ -12,7 +12,6 @@ from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Get app config from absolute file path
 if os.path.exists(os.path.join(os.getcwd(), "config.py")):
@@ -201,15 +200,9 @@ def health_check():
     #   Return codes
     #       200 - Success
     #       512 - LDAP failure
-    #       513 - DB failure
-    #       514 - LDAP & DB failure
     return_code = 200
     jsonout = {
         "ldap": {
-            "status": True,
-            "server": None,
-        },
-        "database": {
             "status": True,
             "server": None,
         }
@@ -220,12 +213,5 @@ def health_check():
     except ldap.LDAPError:
         jsonout["ldap"]["status"] = False
         return_code = 512
-    try:
-        test_db = SQLAlchemy(app)
-        test_db.engine.connect()
-        jsonout["database"]["server"] = app.config['SQLALCHEMY_DATABASE_URI']
-    except SQLAlchemyError:
-        jsonout["database"]["status"] = False
-        return_code = 514 if return_code == 512 else 513
 
     return jsonify(jsonout), return_code
