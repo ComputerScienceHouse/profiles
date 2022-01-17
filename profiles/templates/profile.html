@@ -17,9 +17,9 @@
 					<div class="card-custom-wide-img">
 						<div class="card-custom-avatar">
 							{% if member_info.uid == info["uid"] %}
-							<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
+							<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
 							{% else %}
-							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" data-adaptive-background>
+							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background>
 							{% endif %}
 						</div>
 					</div>
