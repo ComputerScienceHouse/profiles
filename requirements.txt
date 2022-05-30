@@ -30,7 +30,7 @@ click==7.1.2
     #   pip-tools
 cryptography==37.0.2
     # via pyopenssl
-csh-ldap==2.3.1
+csh-ldap==2.4.0.dev4
     # via -r requirements.in
 ddsketch==2.0.3
     # via ddtrace
@@ -130,7 +130,7 @@ pyopenssl==22.0.0
     # via oic
 pyparsing==3.0.9
     # via packaging
-python-ldap==3.0.0
+python-ldap==3.4.0
     # via csh-ldap
 requests==2.27.1
     # via
