@@ -11,6 +11,8 @@ RUN mkdir /opt/profiles
 
 WORKDIR /opt/profiles
 
+RUN pip install --upgrade pip
+
 COPY requirements.txt /opt/profiles
 
 RUN pip install -r requirements.txt
