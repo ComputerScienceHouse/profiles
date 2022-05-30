@@ -65,6 +65,8 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
+greenlet==1.1.2
+    # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
 htmlmin==0.1.12
@@ -136,7 +138,7 @@ requests==2.27.1
     #   -r requirements.in
     #   oic
     #   pyjwkest
-sentry-sdk[flask]==0.19.5
+sentry-sdk[flask]==1.5.12
     # via -r requirements.in
 six==1.16.0
     # via
@@ -155,10 +157,6 @@ tenacity==8.0.1
 tomli==2.0.1
     # via
     #   pep517
-    #   pylint
-typing-extensions==4.2.0
-    # via
-    #   astroid
     #   pylint
 urllib3==1.26.9
     # via
