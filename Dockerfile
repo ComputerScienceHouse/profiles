@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.9-slim-bullseye
 MAINTAINER Galen Guyer <galen@galenguyer.com>
 
 RUN ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
@@ -17,4 +17,4 @@ RUN pip install -r requirements.txt
 
 COPY . /opt/profiles
 
-ENTRYPOINT ["gunicorn", "profiles:app",  "--bind=0.0.0.0:8080", "--access-logfile=-", "--timeout=600"]
+ENTRYPOINT ["ddtrace-run", "gunicorn", "profiles:app",  "--bind=0.0.0.0:8080", "--access-logfile=-", "--timeout=600"]
