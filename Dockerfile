@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.9-slim-buster
 MAINTAINER Galen Guyer <galen@galenguyer.com>
 
 RUN ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
@@ -10,6 +10,8 @@ RUN apt-get -yq update && \
 RUN mkdir /opt/profiles
 
 WORKDIR /opt/profiles
+
+RUN pip install --upgrade pip
 
 COPY requirements.txt /opt/profiles
 
