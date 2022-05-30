@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.9-slim-buster
 MAINTAINER Galen Guyer <galen@galenguyer.com>
 
 RUN ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
