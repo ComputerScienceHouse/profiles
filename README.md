@@ -1,7 +1,7 @@
 CSH Profiles
 ========
 
-[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
 
 The Computer Science House @ RIT's web interface to our LDAP server containing
 all of our members' data. Users are able to view other users information that
@@ -45,23 +45,11 @@ The server uses heavy caching via lru_cache to speed up the results as much as p
 Setup
 -------------
 
-Profiles has the following dependencies:
+Profiles has dependencies as defined in `requirements.in`.
 
-```
-requests
-csh_ldap==2.0.2
-flask
-flask_sqlalchemy
-flask_migrate
-flask-pyoidc
-flask-optimize
-PyMySQL
-pyGravatar
-Flask_Uploads
-pylint
-pillow
-```
 You can install them by running ```pip install -r requirements.txt``` in the program directory.
+
+You can update the installed dependencies by editing `requirements.in` and then running `pip-compile requirements.in`.
 
 Create a copy of config.env.py named config.py and make the following modifications:
 
