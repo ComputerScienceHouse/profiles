@@ -334,7 +334,7 @@ def ldap_get_roomnumber(account):
 
 def ldap_get_calendar(account):
     try:
-        return account.get('icallink')[0]
+        return account.icallink
     except KeyError:
         return ""
 
