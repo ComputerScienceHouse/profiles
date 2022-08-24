@@ -25,6 +25,7 @@ $(function() {
 			"phone": $(".user-mobile").map(function() {
 				return $(this).val();
 			}).get(),
+			"calendar": $("#user-calendar").val(),
 			"plex": $("#user-plex").val(),
 			"major": $("#user-major").val(),
 			"ritYear": $("#user-rityear").val(),
