@@ -329,6 +329,11 @@ def ldap_get_roomnumber(account):
     except AttributeError:
         return ""
 
+def ldap_get_calendar(account):
+    try:
+        return account.get('icallink')
+    except KeyError:
+        return ""
 
 @lru_cache(maxsize=1024)
 def ldap_search_members(query):
