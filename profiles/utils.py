@@ -12,18 +12,20 @@ import requests
 import ldap
 
 from profiles import _ldap
-from profiles.ldap import (ldap_get_member,
-                                          ldap_is_active,
-                                          ldap_is_onfloor,
-                                          ldap_get_roomnumber,
-                                          ldap_get_groups,
-                                          ldap_is_rtp)
+from profiles.ldap import (ldap_get_calendar,
+                           ldap_get_member,
+                           ldap_is_active,
+                           ldap_is_onfloor,
+                           ldap_get_roomnumber,
+                           ldap_get_groups,
+                           ldap_is_rtp)
 
 
 def before_request(func):
     @wraps(func)
     def wrapped_function(*args, **kwargs):
-        git_revision = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('utf-8').rstrip()
+        git_revision = subprocess.check_output(
+            ['git', 'rev-parse', '--short', 'HEAD']).decode('utf-8').rstrip()
         uuid = str(session["userinfo"].get("sub", ""))
         uid = str(session["userinfo"].get("preferred_username", ""))
         user_obj = _ldap.get_member(uid, uid=True)
@@ -42,6 +44,7 @@ def before_request(func):
 
     return wrapped_function
 
+
 def get_member_info(uid):
     account = ldap_get_member(uid)
 
@@ -58,6 +61,7 @@ def get_member_info(uid):
         "plex": account.plex,
         "rn": ldap_get_roomnumber(account),
         "birthday": parse_date(account.birthday),
+        "ics": ldap_get_calendar(account),
         "memberSince": parse_date(account.memberSince),
         "lastlogin": parse_date(account.krblastsuccessfulauth),
         "year": parse_account_year(account.memberSince)

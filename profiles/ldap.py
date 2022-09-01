@@ -262,6 +262,9 @@ def ldap_update_profile(form_input, uid):
     except KeyError:
         ldap_multi_update(uid, "mobile", form_input["phone"])
 
+    if not form_input["calendar"] == account.icallink:
+        account.icallink = form_input["calendar"]
+
     if not form_input["plex"] == account.plex:
         account.plex = form_input["plex"]
 
@@ -329,6 +332,11 @@ def ldap_get_roomnumber(account):
     except AttributeError:
         return ""
 
+def ldap_get_calendar(account):
+    try:
+        return account.icallink
+    except KeyError:
+        return ""
 
 @lru_cache(maxsize=1024)
 def ldap_search_members(query):
