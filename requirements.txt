@@ -65,6 +65,8 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
+greenlet==1.1.3
+    # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
 htmlmin==0.1.12
@@ -102,7 +104,7 @@ pip-tools==6.6.2
     # via -r requirements.in
 platformdirs==2.5.2
     # via pylint
-protobuf==3.20.1
+protobuf==3.20.2
     # via
     #   ddsketch
     #   ddtrace
@@ -156,10 +158,6 @@ tenacity==8.0.1
 tomli==2.0.1
     # via
     #   pep517
-    #   pylint
-typing-extensions==4.2.0
-    # via
-    #   astroid
     #   pylint
 urllib3==1.26.9
     # via
