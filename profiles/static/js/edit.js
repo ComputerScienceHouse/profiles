@@ -26,6 +26,7 @@ $(function() {
 				return $(this).val();
 			}).get(),
 			"calendar": $("#user-calendar").val(),
+			"pronouns": $("#user-pronouns").val(),
 			"plex": $("#user-plex").val(),
 			"major": $("#user-major").val(),
 			"ritYear": $("#user-rityear").val(),
