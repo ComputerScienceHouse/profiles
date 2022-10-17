@@ -14,6 +14,7 @@ import ldap
 from profiles import _ldap
 from profiles.ldap import (ldap_get_calendar,
                            ldap_get_member,
+                           ldap_get_pronouns,
                            ldap_is_active,
                            ldap_is_onfloor,
                            ldap_get_roomnumber,
@@ -62,6 +63,7 @@ def get_member_info(uid):
         "rn": ldap_get_roomnumber(account),
         "birthday": parse_date(account.birthday),
         "ics": ldap_get_calendar(account),
+        "pronouns": ldap_get_pronouns(account),
         "memberSince": parse_date(account.memberSince),
         "lastlogin": parse_date(account.krblastsuccessfulauth),
         "year": parse_account_year(account.memberSince)
