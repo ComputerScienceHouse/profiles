@@ -65,6 +65,8 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
+greenlet==2.0.0
+    # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
 htmlmin==0.1.12
@@ -96,7 +98,7 @@ packaging==21.3
     # via ddtrace
 pep517==0.12.0
     # via pip-tools
-pillow==8.4.0
+pillow==9.3.0
     # via -r requirements.in
 pip-tools==6.6.2
     # via -r requirements.in
@@ -156,10 +158,6 @@ tenacity==8.0.1
 tomli==2.0.1
     # via
     #   pep517
-    #   pylint
-typing-extensions==4.2.0
-    # via
-    #   astroid
     #   pylint
 urllib3==1.26.9
     # via
