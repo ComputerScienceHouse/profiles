@@ -16,7 +16,7 @@ beaker==1.11.0
     # via oic
 blinker==1.4
     # via sentry-sdk
-certifi==2022.5.18.1
+certifi==2022.12.7
     # via
     #   requests
     #   sentry-sdk
@@ -65,6 +65,8 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
+greenlet==2.0.1
+    # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
 htmlmin==0.1.12
@@ -154,13 +156,7 @@ srvlookup==2.0.0
 tenacity==8.0.1
     # via ddtrace
 tomli==2.0.1
-    # via
-    #   pep517
-    #   pylint
-typing-extensions==4.2.0
-    # via
-    #   astroid
-    #   pylint
+    # via pep517
 urllib3==1.26.9
     # via
     #   requests
