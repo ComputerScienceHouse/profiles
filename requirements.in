@@ -10,7 +10,7 @@ pip-tools~=6.6.2
 PyMySQL==1.0.2
 pyGravatar==0.0.6
 git+https://github.com/maxcountryman/flask-uploads@master
-pylint~=2.13.9
+pylint~=2.15.10
 Pillow==8.4.0
 requests~=2.27.1
 sentry-sdk[flask]~=1.5.12
