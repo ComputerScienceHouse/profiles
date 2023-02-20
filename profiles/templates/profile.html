@@ -71,6 +71,10 @@
 							<span class="badge badge-pill badge-info">Webmaster</span>
 							{% endif %}
 
+							{% if "mpa" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Media PC Admin</span>
+							{% endif %}
+
 							{% if "3da" in member_info.group_list %}
 							<span class="badge badge-pill badge-pink">3D Printer Admin</span>
 							{% endif %}
