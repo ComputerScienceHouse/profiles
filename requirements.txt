@@ -65,6 +65,8 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
+greenlet==2.0.1
+    # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
 htmlmin==0.1.12
@@ -83,7 +85,7 @@ mako==1.2.0
     # via
     #   alembic
     #   oic
-markupsafe==2.0.1
+markupsafe==2.1.2
     # via
     #   -r requirements.in
     #   jinja2
@@ -154,13 +156,7 @@ srvlookup==2.0.0
 tenacity==8.0.1
     # via ddtrace
 tomli==2.0.1
-    # via
-    #   pep517
-    #   pylint
-typing-extensions==4.2.0
-    # via
-    #   astroid
-    #   pylint
+    # via pep517
 urllib3==1.26.9
     # via
     #   requests
