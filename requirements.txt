@@ -65,6 +65,8 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
+greenlet==1.1.2
+    # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
 htmlmin==0.1.12
@@ -157,15 +159,11 @@ tomli==2.0.1
     # via
     #   pep517
     #   pylint
-typing-extensions==4.2.0
-    # via
-    #   astroid
-    #   pylint
 urllib3==1.26.9
     # via
     #   requests
     #   sentry-sdk
-werkzeug==0.16.0
+werkzeug==1.0.1
     # via
     #   -r requirements.in
     #   flask
