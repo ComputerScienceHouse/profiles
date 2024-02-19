@@ -67,10 +67,11 @@ Reach out to an RTP to get OIDC credentials that will allow you to develop local
 
 ```uid={CSH User Name},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu```
 
+```LDAP_BIND_PASS``` is your CSH password.
 
- ```LDAP_BIND_PASS``` is your CSH password.
+Disable DataDog monitoring by setting the `DD_TRACE_ENABLED=false` environment variable.
 
- If you did everything right, you should be able to run ```python app.py``` and develop locally.
+If you did everything right, you should be able to run ```python app.py``` and develop locally.
 
 
 Code Standards
