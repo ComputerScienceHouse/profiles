@@ -106,48 +106,51 @@
 
 							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName or member_info.user_obj.resumeURL %}
 							<hr>
-							
-							{% if member_info.user_obj.homepageURL %}
-							<a href="{{ member_info.user_obj.homepageURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.homepageURL }}">
-								<h2 style="display: inline" class="text-muted">
-									<i class="fas fa-globe" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+							<div id="social-media" style="position: relative;">
+								{% if member_info.user_obj.homepageURL %}
+								<a href="{{ member_info.user_obj.homepageURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.homepageURL }}">
+									<h2 style="display: inline" class="text-muted">
+										<i class="fas fa-globe" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.blogURL %}
+								<a href="{{ member_info.user_obj.blogURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
+									<h2 style="display: inline" class="text-warning">
+										<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.resumeURL %}
+								<a href="{{ member_info.user_obj.resumeURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.resumeURL }}">
+									<h2 style="display: inline" class="text-info">
+										<i class="far fa-file-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.github %}
+								<a href="https://github.com/{{ member_info.user_obj.github }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.github }}">
+									<h2 style="display: inline; color: #6e5494;">
+										<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.googleScreenName %}
+								<h2 style="display: inline" class="text-success" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.googleScreenName }}">
+									<i class="fab fa-google" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
 								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.blogURL %}
-							<a href="{{ member_info.user_obj.blogURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
-								<h2 style="display: inline" class="text-warning">
-									<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.resumeURL %}
-							<a href="{{ member_info.user_obj.resumeURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.resumeURL }}">
-								<h2 style="display: inline" class="text-info">
-									<i class="far fa-file-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.github %}
-							<a href="https://github.com/{{ member_info.user_obj.github }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.github }}">
-								<h2 style="display: inline; color: #6e5494;">
-									<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.googleScreenName %}
-							<h2 style="display: inline" class="text-success" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.googleScreenName }}">
-								<i class="fab fa-google" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-							</h2>
-							{% endif %}
-							{% if member_info.user_obj.twitterName %}
-							<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
-								<h2 style="display: inline; color: #00aced;">
-									<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							
+								{% endif %}
+								{% if member_info.user_obj.twitterName %}
+								<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
+									<h2 style="display: inline; color: #00aced;">
+										<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								<button class="add-socials user-form-input" style="position: absolute; right: 0; bottom: 0;">
+									<span>+</span>
+								</button>
+							</div>
 							{% endif %}
 							<div style="text-align: left;">
 								<div class="form-group user-form-input">
