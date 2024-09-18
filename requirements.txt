@@ -136,7 +136,7 @@ pyparsing==3.0.9
     # via packaging
 python-ldap==3.4.0
     # via csh-ldap
-requests==2.27.1
+requests==2.32.2
     # via
     #   -r requirements.in
     #   oic
