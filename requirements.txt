@@ -16,7 +16,7 @@ beaker==1.11.0
     # via oic
 blinker==1.4
     # via sentry-sdk
-certifi==2022.5.18.1
+certifi==2024.7.4
     # via
     #   requests
     #   sentry-sdk
@@ -158,6 +158,10 @@ tenacity==8.0.1
 tomli==2.0.1
     # via
     #   pep517
+    #   pylint
+typing-extensions==4.12.2
+    # via
+    #   astroid
     #   pylint
 urllib3==1.26.9
     # via
