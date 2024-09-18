@@ -71,7 +71,7 @@ gunicorn==22.0.0
     # via -r requirements.in
 htmlmin==0.1.12
     # via flask-optimize
-idna==3.3
+idna==3.7
     # via requests
 isort==5.10.1
     # via pylint
