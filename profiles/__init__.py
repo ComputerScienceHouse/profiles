@@ -90,7 +90,7 @@ def results():
 @before_request
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
-    searched = request.args.get("q")
+    searched = request.args.get("q").strip()
     members = ldap_search_members(searched)
     if len(members) == 1:
         return redirect("/user/" + members[0].uid, 302)
