@@ -8,7 +8,7 @@ alabaster==0.7.12
     # via oic
 alembic==1.7.7
     # via flask-migrate
-astroid==2.11.5
+astroid==3.2.4
     # via pylint
 attrs==21.4.0
     # via ddtrace
@@ -79,8 +79,6 @@ itsdangerous==1.1.0
     # via flask
 jinja2==2.11.3
     # via flask
-lazy-object-proxy==1.7.1
-    # via astroid
 mako==1.2.2
     # via
     #   alembic
@@ -126,7 +124,7 @@ pygravatar==0.0.6
     # via -r requirements.in
 pyjwkest==1.4.2
     # via oic
-pylint==2.13.9
+pylint==3.2.7
     # via -r requirements.in
 pymysql==1.1.1
     # via -r requirements.in
@@ -161,6 +159,8 @@ tomli==2.0.1
     # via
     #   pep517
     #   pylint
+tomlkit==0.13.2
+    # via pylint
 typing-extensions==4.12.2
     # via
     #   astroid
@@ -175,8 +175,6 @@ werkzeug==1.0.1
     #   flask
 wheel==0.38.1
     # via pip-tools
-wrapt==1.14.1
-    # via astroid
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
