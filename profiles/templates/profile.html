@@ -71,6 +71,10 @@
 							<span class="badge badge-pill badge-info">Webmaster</span>
 							{% endif %}
 
+							{% if "mediapcadmin" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Media PC Admin</span>
+							{% endif %}
+
 							{% if "3da" in member_info.group_list %}
 							<span class="badge badge-pill badge-pink">3D Printer Admin</span>
 							{% endif %}
@@ -85,6 +89,10 @@
 
 							{% if "wiki_maintainers" in member_info.group_list %}
 							<span class="badge badge-pill badge-purple">Wiki Maintainer</span>
+							{% endif %}
+
+							{% if "devcade" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Devcade Admin</span>
 							{% endif %}
 
 							{% if "drink" in member_info.group_list %}

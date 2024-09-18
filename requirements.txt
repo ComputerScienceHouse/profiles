@@ -81,7 +81,7 @@ jinja2==2.11.3
     # via flask
 lazy-object-proxy==1.7.1
     # via astroid
-mako==1.2.0
+mako==1.2.2
     # via
     #   alembic
     #   oic
@@ -104,7 +104,7 @@ pip-tools==6.6.2
     # via -r requirements.in
 platformdirs==2.5.2
     # via pylint
-protobuf==3.20.1
+protobuf==3.20.2
     # via
     #   ddsketch
     #   ddtrace
@@ -156,12 +156,14 @@ srvlookup==2.0.0
 tenacity==8.0.1
     # via ddtrace
 tomli==2.0.1
-    # via pep517
+    # via
+    #   pep517
+    #   pylint
 urllib3==1.26.9
     # via
     #   requests
     #   sentry-sdk
-werkzeug==0.16.0
+werkzeug==1.0.1
     # via
     #   -r requirements.in
     #   flask
