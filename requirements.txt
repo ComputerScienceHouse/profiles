@@ -38,7 +38,7 @@ ddtrace==1.1.4
     # via -r requirements.in
 dill==0.3.5.1
     # via pylint
-dnspython==2.2.1
+dnspython==2.6.1
     # via srvlookup
 flask==1.1.4
     # via
@@ -158,6 +158,10 @@ tenacity==8.0.1
 tomli==2.0.1
     # via
     #   pep517
+    #   pylint
+typing-extensions==4.12.2
+    # via
+    #   astroid
     #   pylint
 urllib3==1.26.9
     # via
