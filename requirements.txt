@@ -61,7 +61,7 @@ flask-sqlalchemy==2.5.1
     #   flask-migrate
 flask-uploads @ git+https://github.com/maxcountryman/flask-uploads@master
     # via -r requirements.in
-future==0.18.2
+future==0.18.3
     # via
     #   oic
     #   pyjwkest
