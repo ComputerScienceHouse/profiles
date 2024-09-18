@@ -28,7 +28,7 @@ click==7.1.2
     # via
     #   flask
     #   pip-tools
-cryptography==37.0.2
+cryptography==39.0.1
     # via pyopenssl
 csh-ldap==2.4.0
     # via -r requirements.in
@@ -65,7 +65,7 @@ future==0.18.2
     # via
     #   oic
     #   pyjwkest
-greenlet==2.0.1
+greenlet==2.0.2
     # via sqlalchemy
 gunicorn==20.1.0
     # via -r requirements.in
