@@ -116,7 +116,7 @@ def ldap_get_eboard():
             ) + _ldap_get_group_members("eboard-financial") + _ldap_get_group_members("eboard-history"
             ) + _ldap_get_group_members("eboard-imps") + _ldap_get_group_members("eboard-opcomm"
             ) + _ldap_get_group_members("eboard-research") + _ldap_get_group_members("eboard-social"
-            ) + _ldap_get_group_members("eboard-secretary")
+            ) + _ldap_get_group_members("eboard-pr") + _ldap_get_group_members("eboard-secretary")
 
     return members
 
@@ -268,6 +268,9 @@ def ldap_update_profile(form_input, uid):
     if not form_input["plex"] == account.plex:
         account.plex = form_input["plex"]
 
+    if not form_input["pronouns"] == account.pronouns:
+        account.pronouns = form_input["pronouns"]
+
     if "major" in form_input.keys():
         if not form_input["major"] == account.major:
             account.major = form_input["major"]
@@ -334,7 +337,13 @@ def ldap_get_roomnumber(account):
 
 def ldap_get_calendar(account):
     try:
-        return account.icallink
+        return account.icallink if account.icallink else ""
+    except KeyError:
+        return ""
+
+def ldap_get_pronouns(account):
+    try:
+        return account.pronouns if account.pronouns else ""
     except KeyError:
         return ""
 

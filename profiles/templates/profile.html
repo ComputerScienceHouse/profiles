@@ -37,8 +37,12 @@
 								</form>
 							</div>
 							{% endif %}
-							<h2 class="card-title user-form-value">{{ member_info.name }}</h2>
-							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:20px;">
+							<h2 class="card-title user-form-value" style="margin-bottom: 4px;">{{ member_info.name }}</h2>
+							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:8px;">
+							{% if  member_info.pronouns %}
+							<h5 class="card-subtitle user-form-value mb-3 text-muted">{{ member_info.pronouns }}</h5>
+							{% endif %}
+							<input type="text" class="form-control form-control-sm user-form-input" id="user-pronouns" placeholder="Pronouns" value="{{ member_info.pronouns }}" style="font-size: 16px !important; text-align: center; margin-bottom:20px;">
 							<h6 class="card-subtitle mb-2 text-muted">
 								{% if member_info.active %}
 								Active Member
@@ -67,6 +71,10 @@
 							<span class="badge badge-pill badge-info">Webmaster</span>
 							{% endif %}
 
+							{% if "mediapcadmin" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Media PC Admin</span>
+							{% endif %}
+
 							{% if "3da" in member_info.group_list %}
 							<span class="badge badge-pill badge-pink">3D Printer Admin</span>
 							{% endif %}
@@ -81,6 +89,10 @@
 
 							{% if "wiki_maintainers" in member_info.group_list %}
 							<span class="badge badge-pill badge-purple">Wiki Maintainer</span>
+							{% endif %}
+
+							{% if "devcade" in member_info.group_list %}
+							<span class="badge badge-pill badge-info">Devcade Admin</span>
 							{% endif %}
 
 							{% if "drink" in member_info.group_list %}
