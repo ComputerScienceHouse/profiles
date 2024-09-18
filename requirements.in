@@ -5,7 +5,7 @@ Flask-Migrate==3.1.0
 flask-optimize==0.2.9.8
 Flask-pyoidc==1.3.0
 Flask-SQLAlchemy==2.5.1
-gunicorn==20.1.0
+gunicorn==22.0.0
 pip-tools~=6.6.2
 PyMySQL==1.1.1
 pyGravatar==0.0.6
