@@ -3,6 +3,7 @@ import os
 import csh_ldap
 import ldap
 import sentry_sdk
+
 from flask import Flask, flash, jsonify, redirect, render_template, request
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_pyoidc.provider_configuration import ProviderConfiguration
@@ -45,6 +46,8 @@ photos = UploadSet("photos", IMAGES)
 app.config["UPLOADED_PHOTOS_DEST"] = "static/img"
 configure_uploads(app, photos)
 
+# Import ldap model after instantiating object
+# pylint: disable=wrong-import-position
 from profiles.ldap import (BadQueryError, _ldap_get_group_members,
                            get_gravatar, get_image, ldap_get_active_members,
                            ldap_get_all_members, ldap_get_current_students,
@@ -54,9 +57,8 @@ from profiles.ldap import (BadQueryError, _ldap_get_group_members,
                            ldap_get_year, ldap_is_active, ldap_is_rtp,
                            ldap_search_members, ldap_update_profile,
                            proxy_image)
-# Import ldap model after instantiating object
-# pylint: disable=wrong-import-position
 from profiles.utils import before_request, get_member_info, process_image
+# pylint: enable=wrong-import-position
 
 
 @app.route("/", methods=["GET"])
