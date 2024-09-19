@@ -83,7 +83,7 @@ mako==1.2.2
     # via
     #   alembic
     #   oic
-markupsafe==2.1.2
+markupsafe==2.0.1
     # via
     #   -r requirements.in
     #   jinja2
