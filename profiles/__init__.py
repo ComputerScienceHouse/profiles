@@ -8,7 +8,7 @@ import ldap
 import csh_ldap
 from flask import Flask, render_template, jsonify, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_pyoidc.flask_pyoidc import OIDCAuthentication, ProviderConfiguration
+from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 app = Flask(__name__)
@@ -19,7 +19,15 @@ if os.path.exists(os.path.join(os.getcwd(), "config.py")):
 else:
     app.config.from_pyfile(os.path.join(os.getcwd(), "config.env.py"))
 
-auth = OIDCAuthentication({'default': ProviderConfiguration(issuer=app.config["OIDC_ISSUER"], client_registration_info=app.config["OIDC_CLIENT_CONFIG"])}, app)
+auth = OIDCAuthentication(
+    {
+        'default': ProviderConfiguration(
+            issuer=app.config["OIDC_ISSUER"],
+            client_registration_info=app.config["OIDC_CLIENT_CONFIG"]
+        )
+    },
+    app
+)
 
 # Sentry
 # pylint: disable=abstract-class-instantiated
