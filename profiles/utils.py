@@ -36,7 +36,7 @@ def before_request(func):
             "uid": uid,
             "user_obj": user_obj,
             "member_info": get_member_info(uid),
-            "color": requests.get('https://themeswitcher.csh.rit.edu/api/colour').content,
+            "color": requests.get('https://themeswitcher.csh.rit.edu/api/colour', timeout=10).content,
             "current_year": parse_account_year(str(datetime.datetime.now().strftime("%Y%m"))),
             "rtp": ldap_is_rtp(user_obj)
         }
