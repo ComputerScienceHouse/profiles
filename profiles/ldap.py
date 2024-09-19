@@ -371,7 +371,7 @@ def ldap_search_members(query):
 
     for uid in res:
         try:
-            mem = (str(uid[1]).split('\'')[3])
+            mem = str(uid[1]).split('\'')[3]
             ret.append(ldap_get_member(mem))
         except IndexError:
             continue
@@ -398,7 +398,7 @@ def ldap_get_year(year):
 
     for uid in res:
         try:
-            mem = (str(uid[1]).split('\'')[3])
+            mem = str(uid[1]).split('\'')[3]
             ret.append(ldap_get_member(mem))
         except IndexError:
             continue
@@ -464,7 +464,7 @@ def get_gravatar(uid=None):
 
 @lru_cache(maxsize=1024)
 def proxy_image(url):
-    response = requests.get(url)
+    response = requests.get(url, timeout=10)
     img = Image.open(BytesIO(response.content))
     with BytesIO() as output:
         img.save(output, format="png")
