@@ -65,7 +65,7 @@ future==0.18.3
     # via pyjwkest
 greenlet==2.0.2
     # via sqlalchemy
-gunicorn==22.0.0
+gunicorn==23.0.0
     # via -r requirements.in
 htmlmin==0.1.12
     # via flask-optimize
@@ -83,7 +83,7 @@ mako==1.2.2
     # via
     #   alembic
     #   oic
-markupsafe==2.0.1
+markupsafe==2.1.2
     # via
     #   -r requirements.in
     #   jinja2
