@@ -141,7 +141,7 @@ python-dotenv==1.0.1
     # via pydantic-settings
 python-ldap==3.4.0
     # via csh-ldap
-requests==2.32.2
+requests==2.32.3
     # via
     #   -r requirements.in
     #   flask-pyoidc
