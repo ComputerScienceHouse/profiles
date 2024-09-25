@@ -1,7 +1,7 @@
 csh_ldap~=2.4.0
 ddtrace~=1.1.4
 Flask==1.1.4
-Flask-Migrate==3.1.0
+Flask-Migrate==4.0.7
 flask-optimize==0.2.9.8
 Flask-pyoidc==3.14.3
 Flask-SQLAlchemy==2.5.1

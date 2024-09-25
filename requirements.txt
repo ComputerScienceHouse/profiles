@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements.in
 #
-alembic==1.7.7
+alembic==1.13.3
     # via flask-migrate
 annotated-types==0.7.0
     # via pydantic
@@ -49,7 +49,7 @@ flask==1.1.4
     #   flask-sqlalchemy
     #   flask-uploads
     #   sentry-sdk
-flask-migrate==3.1.0
+flask-migrate==4.0.7
     # via -r requirements.in
 flask-optimize==0.2.9.8
     # via -r requirements.in
@@ -170,6 +170,7 @@ tomlkit==0.13.2
     # via pylint
 typing-extensions==4.12.2
     # via
+    #   alembic
     #   astroid
     #   pydantic
     #   pydantic-core
