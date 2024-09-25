@@ -10,10 +10,10 @@ annotated-types==0.7.0
     # via pydantic
 astroid==3.2.4
     # via pylint
-attrs==21.4.0
-    # via ddtrace
 blinker==1.4
     # via sentry-sdk
+bytecode==0.15.1
+    # via ddtrace
 certifi==2024.7.4
     # via
     #   requests
@@ -30,16 +30,18 @@ cryptography==43.0.1
     # via oic
 csh-ldap==2.4.0
     # via -r requirements.in
-ddsketch==2.0.3
-    # via ddtrace
-ddtrace==1.1.4
+ddtrace==2.13.0
     # via -r requirements.in
 defusedxml==0.7.1
     # via oic
+deprecated==1.2.14
+    # via opentelemetry-api
 dill==0.3.5.1
     # via pylint
 dnspython==2.6.1
     # via srvlookup
+envier==0.5.2
+    # via ddtrace
 flask==1.1.4
     # via
     #   -r requirements.in
@@ -71,6 +73,8 @@ htmlmin==0.1.12
     # via flask-optimize
 idna==3.7
     # via requests
+importlib-metadata==8.4.0
+    # via opentelemetry-api
 importlib-resources==6.4.5
     # via flask-pyoidc
 isort==5.10.1
@@ -93,10 +97,10 @@ mccabe==0.7.0
     # via pylint
 oic==1.6.1
     # via flask-pyoidc
+opentelemetry-api==1.27.0
+    # via ddtrace
 packaging==21.3
-    # via
-    #   ddtrace
-    #   gunicorn
+    # via gunicorn
 pep517==0.12.0
     # via pip-tools
 pillow==10.3.0
@@ -106,9 +110,7 @@ pip-tools==6.6.2
 platformdirs==2.5.2
     # via pylint
 protobuf==3.20.2
-    # via
-    #   ddsketch
-    #   ddtrace
+    # via ddtrace
 pyasn1==0.4.8
     # via
     #   pyasn1-modules
@@ -150,18 +152,13 @@ requests==2.32.3
 sentry-sdk[flask]==2.14.0
     # via -r requirements.in
 six==1.16.0
-    # via
-    #   ddsketch
-    #   ddtrace
-    #   pyjwkest
+    # via pyjwkest
 sqlalchemy==1.4.36
     # via
     #   alembic
     #   flask-sqlalchemy
 srvlookup==2.0.0
     # via csh-ldap
-tenacity==8.0.1
-    # via ddtrace
 tomli==2.0.1
     # via
     #   pep517
@@ -172,6 +169,8 @@ typing-extensions==4.12.2
     # via
     #   alembic
     #   astroid
+    #   bytecode
+    #   ddtrace
     #   pydantic
     #   pydantic-core
     #   pylint
@@ -185,8 +184,16 @@ werkzeug==1.0.1
     #   flask
 wheel==0.38.1
     # via pip-tools
+wrapt==1.16.0
+    # via
+    #   ddtrace
+    #   deprecated
+xmltodict==0.13.0
+    # via ddtrace
 zipp==3.20.2
-    # via importlib-resources
+    # via
+    #   importlib-metadata
+    #   importlib-resources
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
