@@ -88,6 +88,7 @@ markupsafe==2.1.2
     #   -r requirements.in
     #   jinja2
     #   mako
+    #   sentry-sdk
 mccabe==0.7.0
     # via pylint
 oic==1.6.1
@@ -146,7 +147,7 @@ requests==2.32.2
     #   flask-pyoidc
     #   oic
     #   pyjwkest
-sentry-sdk[flask]==1.5.12
+sentry-sdk[flask]==2.14.0
     # via -r requirements.in
 six==1.16.0
     # via
