@@ -1,5 +1,5 @@
 csh_ldap~=2.4.0
-ddtrace~=2.13.0
+ddtrace~=2.14.2
 Flask==1.1.4
 Flask-Migrate==4.0.7
 flask-optimize==0.2.9.8

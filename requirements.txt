@@ -30,7 +30,7 @@ cryptography==43.0.1
     # via oic
 csh-ldap==2.4.0
     # via -r requirements.in
-ddtrace==2.13.0
+ddtrace==2.14.2
     # via -r requirements.in
 defusedxml==0.7.1
     # via oic
@@ -87,7 +87,7 @@ mako==1.2.2
     # via
     #   alembic
     #   oic
-markupsafe==2.1.2
+markupsafe==2.0.1
     # via
     #   -r requirements.in
     #   jinja2
