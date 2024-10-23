@@ -93,6 +93,12 @@ a:active {
   background-color: #b19cd9;
 }
 
+.badge-strange {
+	color: #000;
+	background-color: #ffffff; 
+	font-family: "Comic Sans"; 
+}
+
 .profile-link,
 .profile-link:hover,
 .profile-link:visited {
