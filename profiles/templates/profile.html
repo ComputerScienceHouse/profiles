@@ -99,6 +99,10 @@
 							<span class="badge badge-pill badge-primary">Drink Admin</span>
 							{% endif %}
 
+							{% if "segfault" in member_info.group_list %}
+							<span class="badge badge-pill badge-strange">segfault</span> 
+							{% endif %} 
+
 							{% if member_info.user_obj.nsaccountlock == "TRUE" %}
 							<span class="badge badge-pill badge-dark">Disabled</span>
 							{% endif %}
