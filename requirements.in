@@ -1,4 +1,4 @@
-csh_ldap~=2.4.0
+git+https://github.com/Qelxiros/csh_ldap@master
 ddtrace~=2.13.0
 Flask==1.1.4
 Flask-Migrate==4.0.7
@@ -14,5 +14,5 @@ pylint~=3.2.7
 Pillow==10.3.0
 requests~=2.32.3
 sentry-sdk[flask]~=2.14.0
-markupsafe==2.1.2
+markupsafe==2.0.1
 Werkzeug==1.0.1
