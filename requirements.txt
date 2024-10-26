@@ -8,7 +8,7 @@ alembic==1.13.3
     # via flask-migrate
 annotated-types==0.7.0
     # via pydantic
-astroid==3.2.4
+astroid==3.3.5
     # via pylint
 blinker==1.4
     # via sentry-sdk
@@ -87,7 +87,7 @@ mako==1.2.2
     # via
     #   alembic
     #   oic
-markupsafe==2.0.1
+markupsafe==2.1.2
     # via
     #   -r requirements.in
     #   jinja2
@@ -133,7 +133,7 @@ pygravatar==0.0.6
     # via -r requirements.in
 pyjwkest==1.4.2
     # via oic
-pylint==3.2.7
+pylint==3.3.1
     # via -r requirements.in
 pymysql==1.1.1
     # via -r requirements.in
