@@ -4,9 +4,10 @@ import csh_ldap
 import ldap
 import sentry_sdk
 
+from werkzeug.exceptions import NotFound
 from flask import Flask, flash, jsonify, redirect, render_template, request
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
-from flask_pyoidc.provider_configuration import ProviderConfiguration
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientRegistrationInfo
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import IMAGES, UploadSet, configure_uploads
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -25,7 +26,9 @@ auth = OIDCAuthentication(
     {
         'default': ProviderConfiguration(
             issuer=app.config["OIDC_ISSUER"],
-            client_registration_info=app.config["OIDC_CLIENT_CONFIG"],
+            client_registration_info=ClientRegistrationInfo(
+                **app.config["OIDC_CLIENT_CONFIG"]
+            )
         )
     },
     app,
@@ -187,6 +190,8 @@ def clear_cache(info=None):
 @app.errorhandler(404)
 @app.errorhandler(500)
 def handle_internal_error(e):
+    if isinstance(e, NotFound):
+        return render_template("404.html", message=str(e)), 404
     if isinstance(e.original_exception, BadQueryError):
         return render_template("404.html", message=e.original_exception), 404
     raise e.original_exception
