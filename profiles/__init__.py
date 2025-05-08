@@ -27,7 +27,8 @@ auth = OIDCAuthentication(
         "default": ProviderConfiguration(
             issuer=app.config["OIDC_ISSUER"],
             client_metadata=ClientMetadata(
-                app.config["OIDC_CLIENT_ID"], app.config["OIDC_CLIENT_SECRET"]
+                app.config["PROFILES_OIDC_CLIENT_ID"],
+                app.config["PROFILES_OIDC_CLIENT_SECRET"],
             ),
         )
     },
