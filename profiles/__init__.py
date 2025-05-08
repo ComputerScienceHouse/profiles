@@ -7,7 +7,7 @@ import sentry_sdk
 from werkzeug.exceptions import NotFound
 from flask import Flask, flash, jsonify, redirect, render_template, request
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
-from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientRegistrationInfo
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import IMAGES, UploadSet, configure_uploads
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -24,11 +24,11 @@ else:
 
 auth = OIDCAuthentication(
     {
-        'default': ProviderConfiguration(
+        "default": ProviderConfiguration(
             issuer=app.config["OIDC_ISSUER"],
-            client_registration_info=ClientRegistrationInfo(
-                **app.config["OIDC_CLIENT_CONFIG"]
-            )
+            client_metadata=ClientMetadata(
+                app.config["OIDC_CLIENT_ID"], app.config["OIDC_CLIENT_SECRET"]
+            ),
         )
     },
     app,
@@ -51,35 +51,48 @@ configure_uploads(app, photos)
 
 # Import ldap model after instantiating object
 # pylint: disable=wrong-import-position
-from profiles.ldap import (BadQueryError, _ldap_get_group_members,
-                           get_gravatar, get_image, ldap_get_active_members,
-                           ldap_get_all_members, ldap_get_current_students,
-                           ldap_get_eboard, ldap_get_group_desc,
-                           ldap_get_groups, ldap_get_intro_members,
-                           ldap_get_member, ldap_get_onfloor_members,
-                           ldap_get_year, ldap_is_active, ldap_is_rtp,
-                           ldap_search_members, ldap_update_profile,
-                           proxy_image)
+from profiles.ldap import (
+    BadQueryError,
+    _ldap_get_group_members,
+    get_gravatar,
+    get_image,
+    ldap_get_active_members,
+    ldap_get_all_members,
+    ldap_get_current_students,
+    ldap_get_eboard,
+    ldap_get_group_desc,
+    ldap_get_groups,
+    ldap_get_intro_members,
+    ldap_get_member,
+    ldap_get_onfloor_members,
+    ldap_get_year,
+    ldap_is_active,
+    ldap_is_rtp,
+    ldap_search_members,
+    ldap_update_profile,
+    proxy_image,
+)
 from profiles.utils import before_request, get_member_info, process_image
+
 # pylint: enable=wrong-import-position
 
 
 @app.route("/", methods=["GET"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def home(info=None):
     return redirect("/user/" + info["uid"], code=302)
 
 
 @app.route("/user/<uid>", methods=["GET"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def user(uid=None, info=None):
     return render_template("profile.html", info=info, member_info=get_member_info(uid))
 
 
 @app.route("/results", methods=["POST"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def results():
     searched = request.form["query"]
@@ -87,7 +100,7 @@ def results():
 
 
 @app.route("/search", methods=["GET"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def search(searched=None, info=None):
     # return jsonify(ldap_search_members(searched))
@@ -101,7 +114,7 @@ def search(searched=None, info=None):
 
 
 @app.route("/group/<_group>", methods=["GET"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def group(_group=None, info=None):
     group_desc = ldap_get_group_desc(_group)
@@ -120,7 +133,7 @@ def group(_group=None, info=None):
 
 
 @app.route("/year/<_year>", methods=["GET"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def year(_year=None, info=None):
     return render_template(
@@ -129,7 +142,7 @@ def year(_year=None, info=None):
 
 
 @app.route("/update", methods=["POST"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def update(info=None):
     if "photo" in request.form:
@@ -141,7 +154,7 @@ def update(info=None):
 
 
 @app.route("/upload", methods=["POST"])
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def upload(info=None):
     if "photo" in request.form:
@@ -162,7 +175,7 @@ def image(uid):
 
 
 @app.route("/clearcache")
-@auth.oidc_auth('default')
+@auth.oidc_auth("default")
 @before_request
 def clear_cache(info=None):
     if not ldap_is_rtp(info["user_obj"]):
