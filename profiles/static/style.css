@@ -96,7 +96,7 @@ a:active {
 .badge-strange {
 	color: #000;
 	background-color: #ffffff; 
-	font-family: "Comic Sans"; 
+	font-family: "Comic Sans MS", "Comic Sans", cursive; 
 }
 
 .profile-link,
