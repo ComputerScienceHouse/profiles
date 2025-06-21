@@ -87,7 +87,7 @@ mako==1.2.2
     # via
     #   alembic
     #   oic
-markupsafe==2.0.1
+markupsafe==2.1.2
     # via
     #   -r requirements.in
     #   jinja2
@@ -103,7 +103,7 @@ packaging==21.3
     # via gunicorn
 pep517==0.12.0
     # via pip-tools
-pillow==10.3.0
+pillow==11.0.0
     # via -r requirements.in
 pip-tools==6.6.2
     # via -r requirements.in
