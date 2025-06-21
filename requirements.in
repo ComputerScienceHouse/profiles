@@ -6,7 +6,7 @@ flask-optimize==0.2.9.8
 Flask-pyoidc==3.14.3
 Flask-SQLAlchemy==2.5.1
 gunicorn==23.0.0
-pip-tools~=6.6.2
+pip-tools~=6.10.0
 PyMySQL==1.1.1
 pyGravatar==0.0.6
 git+https://github.com/maxcountryman/flask-uploads@master

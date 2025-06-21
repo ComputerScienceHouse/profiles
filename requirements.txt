@@ -12,6 +12,8 @@ astroid==3.2.4
     # via pylint
 blinker==1.4
     # via sentry-sdk
+build==1.2.2.post1
+    # via pip-tools
 bytecode==0.15.1
     # via ddtrace
 certifi==2024.7.4
@@ -74,7 +76,9 @@ htmlmin==0.1.12
 idna==3.7
     # via requests
 importlib-metadata==8.4.0
-    # via opentelemetry-api
+    # via
+    #   build
+    #   opentelemetry-api
 importlib-resources==6.4.5
     # via flask-pyoidc
 isort==5.10.1
@@ -87,7 +91,7 @@ mako==1.2.2
     # via
     #   alembic
     #   oic
-markupsafe==2.0.1
+markupsafe==2.1.2
     # via
     #   -r requirements.in
     #   jinja2
@@ -100,12 +104,12 @@ oic==1.6.1
 opentelemetry-api==1.27.0
     # via ddtrace
 packaging==21.3
-    # via gunicorn
-pep517==0.12.0
-    # via pip-tools
+    # via
+    #   build
+    #   gunicorn
 pillow==10.3.0
     # via -r requirements.in
-pip-tools==6.6.2
+pip-tools==6.10.0
     # via -r requirements.in
 platformdirs==2.5.2
     # via pylint
@@ -139,6 +143,8 @@ pymysql==1.1.1
     # via -r requirements.in
 pyparsing==3.0.9
     # via packaging
+pyproject-hooks==1.2.0
+    # via build
 python-dotenv==1.0.1
     # via pydantic-settings
 python-ldap==3.4.0
@@ -161,7 +167,7 @@ srvlookup==2.0.0
     # via csh-ldap
 tomli==2.0.1
     # via
-    #   pep517
+    #   build
     #   pylint
 tomlkit==0.13.2
     # via pylint
