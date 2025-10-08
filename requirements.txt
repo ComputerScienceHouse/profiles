@@ -32,7 +32,7 @@ click==8.3.0
     #   pip-tools
 cryptography==46.0.2
     # via oic
-csh-ldap @ git+https://github.com/ComputerScienceHouse/csh_ldap@2.5.0
+csh-ldap @ git+https://github.com/ComputerScienceHouse/csh_ldap@2.5.1
     # via -r requirements.in
 ddtrace==3.15.0
     # via -r requirements.in

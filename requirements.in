@@ -1,4 +1,4 @@
-csh-ldap @ git+https://github.com/ComputerScienceHouse/csh_ldap@2.5.0
+csh-ldap @ git+https://github.com/ComputerScienceHouse/csh_ldap@2.5.1
 ddtrace==3.15.0
 Flask==3.1.2
 Flask-Migrate==4.1.0
