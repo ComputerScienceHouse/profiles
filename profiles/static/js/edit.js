@@ -1,25 +1,6 @@
-//show edit forms 
-$(function() {
-	$("#edit").on('click', function () {
-		$(".user-form-input").show()
-		$(".user-form-value").hide()
-		$("#save").show()
-		$("#edit").hide()
-	});
-});
-
-//show image upload on click
-$(function() {
-	$("#self-picture").on('click', function () {
-		$("#upload-form").toggle()
-	});
-});
-
-//upload form data
-$(function() {
-	$("#save").on('click', function (e) {
-
-		var form_data = { 
+function submitFormData() {
+	return new Promise((resolve, reject) => {
+		var form_data = {
 			"name": $("#user-name").val(),
 			"birthday": $("#user-birthday").val(),
 			"phone": $(".user-mobile").map(function() {
@@ -52,13 +33,61 @@ $(function() {
 		    contentType: 'application/json',
 		    data: JSON.stringify(form_data),
 			success: function (data, textStatus, jqXHR) {
-				location.reload();
+				resolve(data);
 			},
 			error: function(error) {
 				console.log(error);
+				reject(error);
 			}
 		});
 
+	});
+}
+
+
+//show edit forms 
+$(function() {
+	$("#edit").on('click', function () {
+		$(".user-form-input").show()
+		$(".user-form-value").hide()
+		$("#save").show()
+		$("#edit").hide()
+		$("#social-media").css("text-align", "left")
+	});
+});
+
+//show image upload on click
+$(function () {
+	$("#self-picture").on('click', function () {
+		$("#upload-form").toggle()
+	});
+});
+
+//upload form data
+$(function () {
+	$("#save").on('click', function (e) {
+		submitFormData().then(function (data) {
+			location.reload();
+		}).catch(function (error) {
+			console.log(error);
+		});
+	});
+});
+
+//redirects to eac
+$(function () {
+	$(".add-socials").on('click', function () {
+		submitFormData().then(function (data) {
+			$(".user-form-input").hide()
+			$(".user-form-value").show()
+			$("#save").hide()
+			$("#edit").show()
+			$("#social-media").css("text-align", "center")
+
+			window.location.href = 'https://eac.csh.rit.edu'
+		}).catch(function (error) {
+			console.log(error);
+		});
 	});
 });
 
