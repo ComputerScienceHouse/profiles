@@ -1,5 +1,4 @@
 FROM python:3.13-slim-trixie
-MAINTAINER Galen Guyer <galen@galenguyer.com>
 
 RUN ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 
