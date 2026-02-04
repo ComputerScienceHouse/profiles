@@ -89,7 +89,13 @@ def home(info=None):
 @auth.oidc_auth("default")
 @before_request
 def user(uid=None, info=None):
-    return render_template("profile.html", info=info, member_info=get_member_info(uid))
+    try:
+        return render_template("profile.html", info=info, member_info=get_member_info(uid))
+    except BadQueryError as bqe:
+        # ldap_get_member() returns a BadQueryError if getting the user's information fails.
+        # Flask already treats a stray BadQueryError as a 404, but actually handling it prevents the traceback
+        # from getting dumped into the log.
+        return render_template("404.html", message=bqe), 404
 
 
 @app.route("/results", methods=["POST"])
@@ -172,7 +178,10 @@ def logout():
 
 @app.route("/image/<uid>", methods=["GET"])
 def image(uid):
-    return get_image(uid)
+    try:
+        return get_image(uid)
+    except BadQueryError as bqe:
+        return render_template("404.html", message=bqe), 404
 
 
 @app.route("/clearcache")
