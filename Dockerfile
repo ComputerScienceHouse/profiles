@@ -20,4 +20,4 @@ COPY . /opt/profiles
 
 RUN git config --system --add safe.directory '*' # This is also some OKD shit.
 
-ENTRYPOINT ["ddtrace-run", "gunicorn", "profiles:app",  "--bind=0.0.0.0:8080", "--access-logfile=-", "--timeout=600"]
+ENTRYPOINT ["gunicorn", "profiles:app",  "--bind=0.0.0.0:8080", "--access-logfile=-", "--timeout=600"]

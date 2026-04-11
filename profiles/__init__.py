@@ -8,11 +8,9 @@ from werkzeug.exceptions import NotFound
 from flask import Flask, flash, jsonify, redirect, render_template, request
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
-from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import IMAGES, UploadSet, configure_uploads
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
-from sqlalchemy.exc import SQLAlchemyError
 
 app = Flask(__name__)
 
@@ -64,10 +62,7 @@ from profiles.ldap import (
     ldap_get_group_desc,
     ldap_get_groups,
     ldap_get_intro_members,
-    ldap_get_member,
     ldap_get_onfloor_members,
-    ldap_get_year,
-    ldap_is_active,
     ldap_is_rtp,
     ldap_search_members,
     ldap_update_profile,
@@ -81,8 +76,7 @@ from profiles.utils import before_request, get_member_info, process_image
 @app.after_request
 def set_cache_headers(response):
     if "Cache-Control" not in response.headers:
-        response.headers["Cache-Control"] = "no-store"
-        response.headers["Vary"] = "Cookie"
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
     return response
 
 
