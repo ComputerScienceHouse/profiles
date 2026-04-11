@@ -82,6 +82,7 @@ from profiles.utils import before_request, get_member_info, process_image
 @auth.oidc_auth("default")
 @before_request
 def home(info=None):
+    print(session["userinfo"], info)
     return redirect("/user/" + info["uid"], code=302)
 
 

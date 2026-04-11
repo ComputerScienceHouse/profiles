@@ -6,8 +6,6 @@ RUN apt-get -yq update && \
     apt-get -yq --no-install-recommends install gcc libsasl2-dev libldap2-dev libssl-dev git && \
     apt-get -yq clean all
 
-RUN mkdir /opt/profiles
-
 WORKDIR /opt/profiles
 
 RUN pip install --upgrade pip
