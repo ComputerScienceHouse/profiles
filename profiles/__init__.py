@@ -5,7 +5,7 @@ import ldap
 import sentry_sdk
 
 from werkzeug.exceptions import NotFound
-from flask import Flask, flash, jsonify, redirect, render_template, request
+from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_pyoidc.flask_pyoidc import OIDCAuthentication
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
 from flask_sqlalchemy import SQLAlchemy
