@@ -78,14 +78,6 @@ from profiles.utils import before_request, get_member_info, process_image
 # pylint: enable=wrong-import-position
 
 
-@app.after_request
-def set_cache_headers(response):
-    if "Cache-Control" not in response.headers:
-        response.headers["Cache-Control"] = "no-store"
-        response.headers["Vary"] = "Cookie"
-    return response
-
-
 @app.route("/", methods=["GET"])
 @auth.oidc_auth("default")
 @before_request
