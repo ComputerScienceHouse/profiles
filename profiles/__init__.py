@@ -63,6 +63,7 @@ from profiles.ldap import (
     ldap_get_groups,
     ldap_get_intro_members,
     ldap_get_onfloor_members,
+    ldap_get_year,
     ldap_is_rtp,
     ldap_search_members,
     ldap_update_profile,
