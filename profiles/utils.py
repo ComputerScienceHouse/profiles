@@ -1,6 +1,5 @@
 # Credit to Liam Middlebrook and Ram Zallan
 # https://github.com/liam-middlebrook/gallery
-import subprocess
 import base64
 import datetime
 
@@ -12,6 +11,7 @@ import requests
 import ldap
 
 from profiles import _ldap
+import profiles
 from profiles.ldap import (ldap_get_calendar,
                            ldap_get_member,
                            ldap_get_pronouns,
@@ -25,13 +25,11 @@ from profiles.ldap import (ldap_get_calendar,
 def before_request(func):
     @wraps(func)
     def wrapped_function(*args, **kwargs):
-        git_revision = subprocess.check_output(
-            ['git', 'rev-parse', '--short', 'HEAD']).decode('utf-8').rstrip()
         uuid = str(session["userinfo"].get("sub", ""))
         uid = str(session["userinfo"].get("preferred_username", ""))
         user_obj = _ldap.get_member(uid, uid=True)
         info = {
-            "git_revision": git_revision,
+            "git_revision": profiles.app.config['GIT_HASH'],
             "uuid": uuid,
             "uid": uid,
             "user_obj": user_obj,

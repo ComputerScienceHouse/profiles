@@ -2,6 +2,7 @@ import os
 import random
 import string
 from os import environ as env
+import subprocess
 
 # Sentry DSN
 SENTRY_DSN = env.get("PROFILES_SENTRY_DSN", "")
@@ -26,7 +27,9 @@ OIDC_CLIENT_CONFIG = {
 LDAP_BIND_DN = env.get("LDAP_BIND_DN", default="cn=profiles,ou=Apps,dc=csh,dc=rit,dc=edu")
 LDAP_BIND_PASS = env.get("LDAP_BIND_PW", default=None)
 
+GIT_HASH = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('utf-8').rstrip()
+
 DATADOG_RUM_CONFIG = {
     'DATADOG_ENV': os.environ.get('DATADOG_ENV', 'local'),
-    'DATADOG_APP_VERSION': os.environ.get('DATADOG_APP_VERSION', 'unset'),
+    'DATADOG_APP_VERSION': os.environ.get('DATADOG_APP_VERSION', GIT_HASH),
 }
