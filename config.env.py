@@ -25,3 +25,8 @@ OIDC_CLIENT_CONFIG = {
 
 LDAP_BIND_DN = env.get("LDAP_BIND_DN", default="cn=profiles,ou=Apps,dc=csh,dc=rit,dc=edu")
 LDAP_BIND_PASS = env.get("LDAP_BIND_PW", default=None)
+
+DATADOG_RUM_CONFIG = {
+    'DATADOG_ENV': os.environ.get('DATADOG_ENV', 'local'),
+    'DATADOG_APP_VERSION': os.environ.get('DATADOG_APP_VERSION', 'unset'),
+}

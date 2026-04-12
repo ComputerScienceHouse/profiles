@@ -41,18 +41,16 @@
           clientToken: 'pub2f0696fe063adeb0dc204547f4584f55',
           site: 'datadoghq.com',
           service: 'profiles',
-          env: '{{ DATADOG_ENV }}',              // e.g. 'prod', 'staging-1', 'dev'
-          version: '{{ DATADOG_APP_VERSION }}',      // e.g. '1.0.0'
+          env: '{{ DATADOG_ENV }}',
+          version: '{{ DATADOG_APP_VERSION }}',
           sessionSampleRate: 100,          // capture 100% of sessions
-          sessionReplaySampleRate: 100,     // capture 20% of sessions with replay
+          sessionReplaySampleRate: 100,    // capture 100% of sessions with replay
           trackResources: true,            // Enable Resource tracking
           trackUserInteractions: true,     // Enable Action tracking
           trackLongTasks: true,            // Enable Long Tasks tracking
 
-          // ----- Recommended options (commented by default) -----
-
-          allowedTracingUrls: [ 'http://localhost:8080', 'https://profiles.csh.rit.edu', 'https://profiles-dev.csh.rit.edu'], // Enable distributed tracing
-          defaultPrivacyLevel: 'mask-user-input', // or 'allow' / 'mask-all'
+          allowedTracingUrls: [ 'http://localhost:8080', 'https://profiles.csh.rit.edu', 'https://profiles-dev.csh.rit.edu'],
+          defaultPrivacyLevel: 'mask-user-input',
         });
       });
     </script>
