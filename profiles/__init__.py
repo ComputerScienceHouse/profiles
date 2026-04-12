@@ -90,12 +90,12 @@ def home(info=None):
 @before_request
 def user(uid=None, info=None):
     try:
-        return render_template("profile.html", info=info, member_info=get_member_info(uid))
+        return render_template("profile.html", info=info, member_info=get_member_info(uid), **app.config['DATADOG_RUM_CONFIG'])
     except BadQueryError as bqe:
         # ldap_get_member() returns a BadQueryError if getting the user's information fails.
         # Flask already treats a stray BadQueryError as a 404, but actually handling it prevents the traceback
         # from getting dumped into the log.
-        return render_template("404.html", message=bqe), 404
+        return render_template("404.html", message=bqe, *app.config['DATADOG_RUM_CONFIG']), 404
 
 
 @app.route("/results", methods=["POST"])
@@ -116,7 +116,7 @@ def search(searched=None, info=None):
     if len(members) == 1:
         return redirect("/user/" + members[0].uid, 302)
     return render_template(
-        "listing.html", info=info, title="Search Results: " + searched, members=members
+        "listing.html", info=info, title="Search Results: " + searched, members=members, *app.config['DATADOG_RUM_CONFIG']
     )
 
 
@@ -128,7 +128,7 @@ def group(_group=None, info=None):
 
     if _group == "eboard":
         return render_template(
-            "listing.html", info=info, title=group_desc, members=ldap_get_eboard()
+            "listing.html", info=info, title=group_desc, members=ldap_get_eboard(), *app.config['DATADOG_RUM_CONFIG']
         )
 
     return render_template(
@@ -136,6 +136,7 @@ def group(_group=None, info=None):
         info=info,
         title=group_desc,
         members=_ldap_get_group_members(_group),
+        *app.config['DATADOG_RUM_CONFIG']
     )
 
 
@@ -144,7 +145,7 @@ def group(_group=None, info=None):
 @before_request
 def year(_year=None, info=None):
     return render_template(
-        "listing.html", info=info, title="Year: " + _year, members=ldap_get_year(_year)
+        "listing.html", info=info, title="Year: " + _year, members=ldap_get_year(_year), *app.config['DATADOG_RUM_CONFIG']
     )
 
 
@@ -181,7 +182,7 @@ def image(uid):
     try:
         return get_image(uid)
     except BadQueryError as bqe:
-        return render_template("404.html", message=bqe), 404
+        return render_template("404.html", message=bqe, *app.config['DATADOG_RUM_CONFIG']), 404
 
 
 @app.route("/clearcache")
@@ -214,9 +215,9 @@ def clear_cache(info=None):
 @app.errorhandler(500)
 def handle_internal_error(e):
     if isinstance(e, NotFound):
-        return render_template("404.html", message=str(e)), 404
+        return render_template("404.html", message=str(e), *app.config['DATADOG_RUM_CONFIG']), 404
     if isinstance(e.original_exception, BadQueryError):
-        return render_template("404.html", message=e.original_exception), 404
+        return render_template("404.html", message=e.original_exception, *app.config['DATADOG_RUM_CONFIG']), 404
     raise e.original_exception
 
 

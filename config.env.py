@@ -7,7 +7,7 @@ from os import environ as env
 SENTRY_DSN = env.get("PROFILES_SENTRY_DSN", "")
 
 # Flask config
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 IP = os.environ.get('PROFILES_IP', 'localhost')
 PORT = os.environ.get('PROFILES_PORT', 8080)
 SERVER_NAME = os.environ.get('PROFILES_SERVER_NAME', 'profiles.csh.rit.edu')
