@@ -90,7 +90,8 @@ def home(info=None):
 @before_request
 def user(uid=None, info=None):
     try:
-        return render_template("profile.html", info=info, member_info=get_member_info(uid), **app.config['DATADOG_RUM_CONFIG'])
+        return render_template("profile.html", info=info, 
+                            member_info=get_member_info(uid), **app.config['DATADOG_RUM_CONFIG'])
     except BadQueryError as bqe:
         # ldap_get_member() returns a BadQueryError if getting the user's information fails.
         # Flask already treats a stray BadQueryError as a 404, but actually handling it prevents the traceback
@@ -116,7 +117,8 @@ def search(searched=None, info=None):
     if len(members) == 1:
         return redirect("/user/" + members[0].uid, 302)
     return render_template(
-        "listing.html", info=info, title="Search Results: " + searched, members=members, *app.config['DATADOG_RUM_CONFIG']
+        "listing.html", info=info, title="Search Results: " + searched, 
+        members=members, *app.config['DATADOG_RUM_CONFIG']
     )
 
 
@@ -128,7 +130,8 @@ def group(_group=None, info=None):
 
     if _group == "eboard":
         return render_template(
-            "listing.html", info=info, title=group_desc, members=ldap_get_eboard(), *app.config['DATADOG_RUM_CONFIG']
+            "listing.html", info=info, title=group_desc, 
+            members=ldap_get_eboard(), *app.config['DATADOG_RUM_CONFIG']
         )
 
     return render_template(
