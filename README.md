@@ -77,7 +77,7 @@ Reach out to an RTP to get OIDC credentials that will allow you to develop local
 
 ```DATADOG_ENV``` is the env where you are developing, should stay local for local development
 
-```DATADOG_APP_VERSION``` is the version of your app, set to commit hash on okd
+```DATADOG_APP_VERSION``` is the version of your app, when unset defaults to git commit hash 
 
  If you did everything right, you should be able to run ```python app.py``` and develop locally.
 
