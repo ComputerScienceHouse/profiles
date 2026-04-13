@@ -154,7 +154,7 @@ def year(_year=None, info=None):
     return render_template(
         "listing.html",
         info=info,
-        title="Year: " + _year, 
+        title="Year: " + _year,
         members=ldap_get_year(_year),
         **app.config['DATADOG_RUM_CONFIG']
     )
