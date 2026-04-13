@@ -28,4 +28,31 @@
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"></script>
 
+    <script>
+      (function(h,o,u,n,d) {
+        h = h[d] = h[d] || { q: [], onReady: function (c) { h.q.push(c) } }
+        d = o.createElement(u); d.async = 1; d.src = n; d.crossOrigin=''
+        n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
+      })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js', 'DD_RUM')
+
+      window.DD_RUM.onReady(function () {
+        window.DD_RUM.init({
+          applicationId: '65be0cac-59ab-4ad7-8c23-5a3e577893fe',
+          clientToken: 'pub2f0696fe063adeb0dc204547f4584f55',
+          site: 'datadoghq.com',
+          service: 'profiles',
+          env: '{{ DATADOG_ENV }}',
+          version: '{{ DATADOG_APP_VERSION }}',
+          sessionSampleRate: 100,          // capture 100% of sessions
+          sessionReplaySampleRate: 100,    // capture 100% of sessions with replay
+          trackResources: true,            // Enable Resource tracking
+          trackUserInteractions: true,     // Enable Action tracking
+          trackLongTasks: true,            // Enable Long Tasks tracking
+
+          allowedTracingUrls: [ 'http://localhost:8080', 'https://profiles.csh.rit.edu', 'https://profiles-dev.csh.rit.edu'],
+          defaultPrivacyLevel: 'mask-user-input',
+        });
+      });
+    </script>
+
 </head>

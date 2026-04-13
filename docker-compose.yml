@@ -1,0 +1,17 @@
+version: "3"
+services:
+  profiles:
+    build: .
+    container_name: profiles
+    ports:
+      - "127.0.0.1:8080:8080"
+    env_file:
+      - path: .env
+        required: false
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./profiles
+          target: /opt/profiles/profiles
+          ignore:
+            - __pycache__

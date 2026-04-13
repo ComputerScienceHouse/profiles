@@ -61,17 +61,32 @@ to
 SERVER_NAME = os.environ.get('PROFILES_SERVER_NAME', 'localhost:8080')
 ```
 
-Reach out to an RTP to get OIDC credentials that will allow you to develop locally behind OIDC auth.
+#### OIDC
+
+Reach out to an RTP to get OIDC credentials that will allow you to develop locally behind OIDC auth. You will need `PROFILES_OIDC_CLIENT_ID` and `PROFILES_OIDC_CLIENT_SECRET`
+
+#### LDAP
 
 ```LDAP_BIND_DN``` is your CSH DN. It is in the following format:
 
 ```uid={CSH User Name},cn=users,cn=accounts,dc=csh,dc=rit,dc=edu```
 
+```LDAP_BIND_PASS``` is your CSH password.
 
- ```LDAP_BIND_PASS``` is your CSH password.
+#### DATADOG
+
+```DATADOG_ENV``` is the env where you are developing, should stay local for local development
+
+```DATADOG_APP_VERSION``` is the version of your app, when unset defaults to git commit hash 
 
  If you did everything right, you should be able to run ```python app.py``` and develop locally.
 
+Running with Docker
+--------------------
+
+Alternatively, you can run profiles using docker or podman compose. You can configure the environment in same way as above, using a `config.py` file, or you can copy the `.env.example` file to `.env` and configure it there. 
+
+The docker-compose file is also set up for automatic redeploying with watch if you run with `podman compose up --watch --build` 
 
 Code Standards
 ------------
