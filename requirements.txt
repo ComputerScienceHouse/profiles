@@ -32,7 +32,7 @@ click==8.3.0
     #   pip-tools
 cryptography==46.0.2
     # via oic
-csh-ldap @ git+https://github.com/ComputerScienceHouse/csh_ldap@2.5.1
+csh-ldap>=2.5.8
     # via -r requirements.in
 ddtrace==3.15.0
     # via -r requirements.in
@@ -144,7 +144,7 @@ pyproject-hooks==1.2.0
     #   pip-tools
 python-dotenv==1.1.1
     # via pydantic-settings
-python-ldap==3.4.4
+python-ldap==3.4.5
     # via csh-ldap
 requests==2.32.5
     # via
@@ -160,7 +160,7 @@ sqlalchemy==2.0.43
     # via
     #   alembic
     #   flask-sqlalchemy
-srvlookup==2.0.0
+srvlookup==3.0.0
     # via csh-ldap
 tomlkit==0.13.3
     # via pylint
