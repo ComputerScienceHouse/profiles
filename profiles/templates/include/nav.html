@@ -2,7 +2,7 @@
     
     <div class="container">
     <a class="navbar-brand" href="/">
-        <img src="/static/assets/images/csh_logo_white.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        <img src="/static/assets/images/csh_logo_white.svg" width="30" height="30" class="d-inline-block align-top" alt="CSH Logo">
         Profiles
     </a>
 
@@ -70,10 +70,12 @@
 
         </ul>
         <ul class="navbar-nav ms-auto">
-            <form id="search" class="align-self-center w-100" action="/search" method="GET">
-                <input class="form-control form-control-sm me-sm-2" id="search-field" name="q" type="text" placeholder="Search">
-                <span class="nav-item fa fa-cog fa-spin text-light d-none text-md" id="load-icon"></span>
-            </form>
+            <li class="nav-item d-flex align-items-center">
+                <form id="search" class="d-flex" action="/search" method="GET">
+                    <input class="form-control form-control-sm me-sm-2" id="search-field" name="q" type="text" placeholder="Search">
+                    <span class="nav-item fa fa-cog fa-spin text-light d-none text-md" id="load-icon"></span>
+                </form>
+            </li>
             <li class="navbar-user dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="user01">
                     <img src="/image/{{ info.uid }}" width="30" height="30" class="rounded-circle">
