@@ -1,58 +1,53 @@
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Computer Science House">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Computer Science House">
 
-    <title>CSH Profiles</title>
+  <title>CSH Profiles</title>
 
-    <link rel="manifest" href="/static/manifest.json">
-    <meta name="theme-color" href="https://themeswitcher.csh.rit.edu/api/colour">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/rowgroup/1.0.2/css/rowGroup.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/rowgroup/1.0.2/css/rowGroup.dataTables.min.css"> -->
+  <link href="https://cdn.datatables.net/v/bs5/dt-3.0.2/rg-2.0.0/datatables.min.css" rel="stylesheet" integrity="sha384-Fz1bxJyFg3EBy0ujYq4j/XF5Ow3QmJNNjSaAHRT+fIz+d3EymzrRRXUa57NREved" crossorigin="anonymous">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://assets.csh.rit.edu/csh-material-bootstrap/5.3.10/dist/css/csh-material-bootstrap.min.css" media="screen">
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://themeswitcher.csh.rit.edu/api/get" media="screen">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/static/style.css">
 
-    <link rel="stylesheet" href="/static/style.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"></script>
 
-    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"></script>
+  <script>
+    (function(h,o,u,n,d) {
+      h = h[d] = h[d] || { q: [], onReady: function (c) { h.q.push(c) } }
+      d = o.createElement(u); d.async = 1; d.src = n; d.crossOrigin=''
+      n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
+    })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js', 'DD_RUM')
 
-    <script>
-      (function(h,o,u,n,d) {
-        h = h[d] = h[d] || { q: [], onReady: function (c) { h.q.push(c) } }
-        d = o.createElement(u); d.async = 1; d.src = n; d.crossOrigin=''
-        n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
-      })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us1/v6/datadog-rum.js', 'DD_RUM')
+    window.DD_RUM.onReady(function () {
+      window.DD_RUM.init({
+        applicationId: '65be0cac-59ab-4ad7-8c23-5a3e577893fe',
+        clientToken: 'pub2f0696fe063adeb0dc204547f4584f55',
+        site: 'datadoghq.com',
+        service: 'profiles',
+        env: '{{ DATADOG_ENV }}',
+        version: '{{ DATADOG_APP_VERSION }}',
+        sessionSampleRate: 100,          // capture 100% of sessions
+        sessionReplaySampleRate: 100,    // capture 100% of sessions with replay
+        trackResources: true,            // Enable Resource tracking
+        trackUserInteractions: true,     // Enable Action tracking
+        trackLongTasks: true,            // Enable Long Tasks tracking
 
-      window.DD_RUM.onReady(function () {
-        window.DD_RUM.init({
-          applicationId: '65be0cac-59ab-4ad7-8c23-5a3e577893fe',
-          clientToken: 'pub2f0696fe063adeb0dc204547f4584f55',
-          site: 'datadoghq.com',
-          service: 'profiles',
-          env: '{{ DATADOG_ENV }}',
-          version: '{{ DATADOG_APP_VERSION }}',
-          sessionSampleRate: 100,          // capture 100% of sessions
-          sessionReplaySampleRate: 100,    // capture 100% of sessions with replay
-          trackResources: true,            // Enable Resource tracking
-          trackUserInteractions: true,     // Enable Action tracking
-          trackLongTasks: true,            // Enable Long Tasks tracking
-
-          allowedTracingUrls: [ 'http://localhost:8080', 'https://profiles.csh.rit.edu', 'https://profiles-dev.csh.rit.edu'],
-          defaultPrivacyLevel: 'mask-user-input',
-        });
+        allowedTracingUrls: [ 'http://localhost:8080', 'https://profiles.csh.rit.edu', 'https://profiles-dev.csh.rit.edu'],
+        defaultPrivacyLevel: 'mask-user-input',
       });
-    </script>
+    });
+  </script>
 
 </head>
