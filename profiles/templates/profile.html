@@ -24,7 +24,7 @@
 					<div class="card-body">
 						<div class="text-center">
 							{% if member_info.uid == info["uid"] %}
-							<div id="upload-form" style="display: none; padding-bottom:10px;">
+							<div id="upload-form" class="d-none pb-2">
 										<div id="upload-image"></div>
 
 										<form accept="image/*" enctype="multipart/form-data" >
@@ -36,8 +36,8 @@
 							</div>
 							{% endif %}
 							
-							<h2 class="card-title user-form-value" style="margin-bottom: 4px;">{{ member_info.name }}</h2>
-							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:8px;">
+							<h2 class="card-title user-form-value mb-2 fw-semibold">{{ member_info.name }}</h2>
+							<input type="text" class="form-control form-control-lg user-form-input fs-3 text-center mb-2" id="user-name" value="{{ member_info.user_obj.cn }}">
 							{% if  member_info.pronouns %}
 							<h5 class="card-subtitle user-form-value mb-3 text-muted">{{ member_info.pronouns }}</h5>
 							{% endif %}
@@ -134,7 +134,7 @@
 								{% endif %}
 								{% if member_info.user_obj.github %}
 								<a href="https://github.com/{{ member_info.user_obj.github }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@{{ member_info.user_obj.github }}">
-									<h2 class="d-inline" style="color: #6e5494;">
+									<h2 class="d-inline color-gh-purple">
 										<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
 									</h2>
 								</a>
@@ -146,7 +146,7 @@
 								{% endif %}
 								{% if member_info.user_obj.twitterName %}
 								<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
-									<h2 class="d-inline" style="color: #00aced;">
+									<h2 class="d-inline color-twitter-blue">
 										<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
 									</h2>
 								</a>
@@ -154,7 +154,7 @@
 							</div>
 							
 							{% endif %}
-							<div style="text-align: left;">
+							<div class="text-start">
 								<div class="form-group user-form-input">
 									<label for="user-homepage">Homepage URL</label>
 									<input type="url" class="form-control form-control-sm" id="user-homepage" value="{{ member_info.user_obj.homepageURL }}" placeholder="Homepage URL">

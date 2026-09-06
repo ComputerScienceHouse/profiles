@@ -101,6 +101,14 @@ a:active {
 	font-family: "Comic Sans MS", "Comic Sans", cursive; 
 }
 
+.color-twitter-blue {
+  color: #00aced;
+}
+
+.color-gh-purple {
+  color: #6e5494;
+}
+
 .profile-link,
 .profile-link:hover,
 .profile-link:visited {
