@@ -4,9 +4,7 @@
 {% include "include/head.html" %}
 
 <body>
-
 	{% include "include/nav.html" %}
-
 
 	{#Body#}
 
@@ -17,9 +15,9 @@
 					<div class="card-custom-wide-img">
 						<div class="card-custom-avatar">
 							{% if member_info.uid == info["uid"] %}
-							<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
+								<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
 							{% else %}
-							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background>
+								<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background>
 							{% endif %}
 						</div>
 					</div>
@@ -27,23 +25,24 @@
 						<div style="text-align: center;">
 							{% if member_info.uid == info["uid"] %}
 							<div id="upload-form" style="display: none; padding-bottom:10px;">
-						    			<div id="upload-image"></div>
+										<div id="upload-image"></div>
 
-						    			<form accept="image/*" enctype="multipart/form-data" >
-						    			<input type="file" name="photo" id="images">
-						    			<button type="button" id="photo-button" class="btn btn-primary">Upload Image</button>
+										<form accept="image/*" enctype="multipart/form-data" >
+										<input type="file" name="photo" id="images">
+										<button type="button" id="photo-button" class="btn btn-primary">Upload Image</button>
 
-						    			<div id="upload-image-i"></div>
+										<div id="upload-image-i"></div>
 								</form>
 							</div>
 							{% endif %}
+							
 							<h2 class="card-title user-form-value" style="margin-bottom: 4px;">{{ member_info.name }}</h2>
 							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:8px;">
 							{% if  member_info.pronouns %}
 							<h5 class="card-subtitle user-form-value mb-3 text-muted">{{ member_info.pronouns }}</h5>
 							{% endif %}
-							<input type="text" class="form-control form-control-sm user-form-input" id="user-pronouns" placeholder="Pronouns" value="{{ member_info.pronouns }}" style="font-size: 16px !important; text-align: center; margin-bottom:20px;">
-							<h6 class="card-subtitle mb-2 text-muted">
+							<input type="text" class="form-control form-control-sm user-form-input text-center mb-3 text-md" id="user-pronouns" placeholder="Pronouns" value="{{ member_info.pronouns }}">
+							<h6 class="card-subtitle mb-2 text-muted fw-semibold">
 								{% if member_info.active %}
 								Active Member
 								{% elif "honorarymembers" in member_info.group_list %}
@@ -60,51 +59,51 @@
 							</h6>
 
 							{% if "current_student" in member_info.group_list %}
-							<span class="badge badge-pill badge-secondary">Current Student</span>
+							<span class="badge rounded-pill text-bg-secondary">Current Student</span>
 							{% endif %}
 
 							{% if "rtp" in member_info.group_list %}
-							<span class="badge badge-pill badge-warning">Root Type Person</span>
+							<span class="badge rounded-pill text-bg-warning">Root Type Person</span>
 							{% endif %}
 
 							{% if "webmaster" in member_info.group_list %}
-							<span class="badge badge-pill badge-info">Webmaster</span>
+							<span class="badge rounded-pill text-bg-blue">Webmaster</span>
 							{% endif %}
 
 							{% if "mediapcadmin" in member_info.group_list %}
-							<span class="badge badge-pill badge-info">Media PC Admin</span>
+							<span class="badge rounded-pill text-bg-blue">Media PC Admin</span>
 							{% endif %}
 
 							{% if "3da" in member_info.group_list %}
-							<span class="badge badge-pill badge-pink">3D Printer Admin</span>
+							<span class="badge rounded-pill text-bg-pink">3D Printer Admin</span>
 							{% endif %}
 
 							{% if "eboard" in member_info.group_list %}
-							<span class="badge badge-pill badge-success">Executive Board</span>
+							<span class="badge rounded-pill text-bg-success">Executive Board</span>
 							{% endif %}
 
 							{% if "constitutional_maintainers" in member_info.group_list %}
-							<span class="badge badge-pill badge-danger">Constitutional Maintainer</span>
+							<span class="badge rounded-pill text-bg-danger">Constitutional Maintainer</span>
 							{% endif %}
 
 							{% if "wiki_maintainers" in member_info.group_list %}
-							<span class="badge badge-pill badge-purple">Wiki Maintainer</span>
+							<span class="badge rounded-pill text-bg-purple">Wiki Maintainer</span>
 							{% endif %}
 
 							{% if "devcade" in member_info.group_list %}
-							<span class="badge badge-pill badge-info">Devcade Admin</span>
+							<span class="badge rounded-pill text-bg-blue">Devcade Admin</span>
 							{% endif %}
 
 							{% if "drink" in member_info.group_list %}
-							<span class="badge badge-pill badge-primary">Drink Admin</span>
+							<span class="badge rounded-pill text-bg-primary">Drink Admin</span>
 							{% endif %}
 
 							{% if "segfault" in member_info.group_list %}
-							<span class="badge badge-pill badge-strange">segfault</span> 
+							<span class="badge rounded-pill text-bg-strange">segfault</span> 
 							{% endif %} 
 
 							{% if member_info.user_obj.nsaccountlock == "TRUE" %}
-							<span class="badge badge-pill badge-dark">Disabled</span>
+							<span class="badge rounded-pill text-bg-dark">Disabled</span>
 							{% endif %}
 
 
@@ -270,7 +269,7 @@
 								</h6>
 								<p class="card-text">
 									{% for group in member_info.group_list %}
-									<a href="/group/{{ group }}" class="badge badge-pill badge-light">{{ group }}</a>
+									<a href="/group/{{ group }}" class="badge rounded-pill text-bg-light">{{ group }}</a>
 									{% endfor %}
 								</p>
 							</div>
