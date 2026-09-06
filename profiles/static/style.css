@@ -95,6 +95,11 @@ a:active {
   background-color: #b19cd9;
 }
 
+.text-bg-green {
+  color: #fff;
+  background-color: #4caf50;
+}
+
 .text-bg-strange {
 	color: #000;
 	background-color: #ffffff; 
