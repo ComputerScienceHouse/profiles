@@ -11,7 +11,13 @@ $(function() {
 //show image upload on click
 $(function() {
 	$("#self-picture").on('click', function () {
-		$("#upload-form").toggle()
+		let uploadForm = document.getElementById("upload-form");
+
+		if (uploadForm.classList.contains("d-none")) {
+			uploadForm.classList.remove("d-none");
+		} else {
+			uploadForm.classList.add("d-none");
+		}
 	});
 });
 

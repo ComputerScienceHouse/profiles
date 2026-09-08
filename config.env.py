@@ -27,7 +27,7 @@ OIDC_CLIENT_CONFIG = {
 OIDC_REDIRECT_URI = env.get("PROFILES_OIDC_REDIRECT_URI", "http://localhost:8080/redirect_uri")
 
 LDAP_BIND_DN = env.get("LDAP_BIND_DN", default="cn=profiles,ou=Apps,dc=csh,dc=rit,dc=edu")
-LDAP_BIND_PASS = env.get("LDAP_BIND_PW", default=None)
+LDAP_BIND_PASS = env.get("LDAP_BIND_PASS", default=None)
 
 GIT_HASH = subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('utf-8').rstrip()
 
