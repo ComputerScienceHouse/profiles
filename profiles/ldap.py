@@ -253,13 +253,13 @@ def ldap_update_profile(form_input, uid):
         account.cn = form_input["name"]
 
     if not form_input["birthday"] == account.birthday:
-        date = form_input["birthday"].split('/')
-        account.birthday = date[2] + date[0] + date[1]
+        if len(form_input["birthday"]) == 8 or len(form_input["birthday"]) == 0:
+            account.birthday = form_input["birthday"]
+        elif len(form_input["birthday"]) == 11:
+            date = form_input["birthday"].split('/')
+            account.birthday = date[2] + date[0] + date[1]
 
-    try:
-        if not form_input["phone"] == account.get("mobile"):
-            ldap_multi_update(uid, "mobile", form_input["phone"])
-    except KeyError:
+    if not form_input["phone"] == account.get("mobile"):
         ldap_multi_update(uid, "mobile", form_input["phone"])
 
     if not form_input["calendar"] == account.icallink:
@@ -313,16 +313,10 @@ def ldap_update_profile(form_input, uid):
     if not form_input["google"] == account.googleScreenName:
         account.googleScreenName = form_input["google"]
 
-    try:
-        if not form_input["mail"] == account.mail:
-            ldap_multi_update(uid, "mail", form_input["mail"])
-    except KeyError:
+    if not form_input["mail"] == account.mail:
         ldap_multi_update(uid, "mail", form_input["mail"])
 
-    try:
-        if not form_input["nickname"] == account.nickname:
-            ldap_multi_update(uid, "nickname", form_input["nickname"])
-    except KeyError:
+    if not form_input["nickname"] == account.nickname:
         ldap_multi_update(uid, "nickname", form_input["nickname"])
 
     if not form_input["shell"] == account.shell:
