@@ -69,7 +69,7 @@
 
 body {
 	padding-top: 80px;
-	background-color: #eee;
+	/* background-color: #eee; */
 }
 
 a,
@@ -133,9 +133,9 @@ a:active {
   background-color: #181818;
 }
 
-.badge-grey {
-  color:#000;
-  background-color: #eee;
+.badge-misc {
+  background-color: var(--bs-secondary-bg);
+  color: var(--bs-secondary-text);
 }
 
 .color-twitter-blue {
