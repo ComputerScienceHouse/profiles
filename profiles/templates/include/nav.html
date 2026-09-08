@@ -78,7 +78,7 @@
             </li>
             <li class="navbar-user dropdown">
                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="user01">
-                    <img src="/image/{{ info.uid }}" width="30" height="30" class="rounded-circle">
+                    <img src="/image/{{ info.uid }}" width="36" height="36" class="rounded-circle">
                     {{ info.uid }}
                     <span class="caret"></span>
                 </a>
@@ -90,10 +90,10 @@
                 </div>
             </li>
 
-            <div class="bd-theme nav-item dropdown ms-auto">
-                <a href="#" class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="theme-icon-active bi bi-circle-half"></i>
-                    <span class="bd-theme-text"></span>
+            <li class="bd-theme nav-item dropdown align-content-center">
+                <a href="#" class="nav-link dropdown-toggle text-light d-flex align-items-center" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="theme-icon-active bi bi-circle-half fs-5"></i>
+                    <span class="bd-theme-text d-lg-none ms-2">Toggle Theme </span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="bd-theme">
                     <button class="dropdown-item" aria-pressed="false" data-bs-theme-value="light">
@@ -109,7 +109,7 @@
                         Auto
                     </button>
                 </ul>
-            </div>
+            </li>
         </ul>
     </div>
 </div>
