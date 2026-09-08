@@ -1,9 +1,12 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary py-1">
     
     <div class="container">
-    <a class="navbar-brand" href="/">Profiles</a>
+    <a class="navbar-brand d-inline-flex align-items-center" href="/">
+        <img src="/static/assets/images/csh_logo_white.svg" width="30" height="30" class="" alt="CSH Logo">&nbsp;
+        Profiles
+    </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,7 +20,7 @@
 
             <li class="nav-item dropdown">
 
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="groups">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="groups">
                     Years
                     <span class="caret"></span>
                 </a>
@@ -32,7 +35,7 @@
 
             <li class="nav-item dropdown">
 
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="groups">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="groups">
                     Groups
                     <span class="caret"></span>
                 </a>
@@ -53,7 +56,7 @@
             {% if info.rtp %}
             <li class="nav-item dropdown">
 
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="groups">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="groups">
                     Admin
                     <span class="caret"></span>
                 </a>
@@ -66,26 +69,46 @@
             {% endif %}
 
         </ul>
-        <ul class="nav navbar-nav ml-auto">
-            <form id="search" action="/search" method="GET">
-                <input class="form-control form-control-sm mr-sm-2" id="search-field" name="q"  type="text" placeholder="Search">
-                <span class="nav-item fa fa-cog fa-spin" style="font-size:24px; color:#fff;display:none" id="load-icon"></span>
-            </form>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item d-flex align-items-center">
+                <form id="search" class="d-flex" action="/search" method="GET">
+                    <input class="form-control form-control-sm me-sm-2 bg-primary border-primary-subtle text-light" id="search-field" name="q" type="text" placeholder="Search">
+                    <span class="nav-item fa fa-cog fa-spin text-light d-none text-md" id="load-icon"></span>
+                </form>
+            </li>
             <li class="navbar-user dropdown">
-
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="user01">
-                    <img src="/image/{{ info.uid }}">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" id="user01">
+                    <img src="/image/{{ info.uid }}" width="36" height="36" class="rounded-circle">
                     {{ info.uid }}
                     <span class="caret"></span>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="user01">
                     <a class="dropdown-item" href="/">Profile</a>
-                    <a class="dropdown-item" href="https://themeswitcher.csh.rit.edu/">Theme</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
+            </li>
 
+            <li class="bd-theme nav-item dropdown align-content-center">
+                <a href="#" class="nav-link dropdown-toggle text-light d-flex align-items-center" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="theme-icon-active bi bi-circle-half fs-5"></i>
+                    <span class="bd-theme-text d-lg-none ms-2">Toggle Theme </span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="bd-theme">
+                    <button class="dropdown-item" aria-pressed="false" data-bs-theme-value="light">
+                        <i class="bi bi-sun-fill"></i>
+                        Light
+                    </button>
+                    <button class="dropdown-item" aria-pressed="false" data-bs-theme-value="dark">
+                        <i class="bi bi-moon-fill"></i>
+                        Dark
+                    </button>
+                    <button class="dropdown-item" aria-pressed="false" data-bs-theme-value="auto">
+                        <i class="bi bi-circle-half"></i>
+                        Auto
+                    </button>
+                </ul>
             </li>
         </ul>
     </div>

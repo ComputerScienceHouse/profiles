@@ -3,47 +3,46 @@
 
 {% include "include/head.html" %}
 
-<body>
-
+<body class="bg-body-tertiary">
 	{% include "include/nav.html" %}
-
 
 	{#Body#}
 
 	<div id="profile-container" class="container">
 		<div class="row">
 			<div class="col-sm-12 col-md-6">
-				<div class="card card-custom-wide mb-3">
+				<div class="card card-custom-wide mb-3 shadow-sm overflow-hidden">
 					<div class="card-custom-wide-img">
 						<div class="card-custom-avatar">
 							{% if member_info.uid == info["uid"] %}
-							<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background data-toggle="tooltip" data-placement="right" title="Click to edit image.">
+								<img class="img-fluid" id="self-picture" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background data-bs-toggle="tooltip" data-bs-placement="right" title="Click to edit image.">
 							{% else %}
-							<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background>
+								<img class="img-fluid" src="/image/{{ member_info.uid }}" alt="Avatar" loading="lazy" data-adaptive-background>
 							{% endif %}
 						</div>
 					</div>
 					<div class="card-body">
-						<div style="text-align: center;">
+						<div class="text-center">
 							{% if member_info.uid == info["uid"] %}
-							<div id="upload-form" style="display: none; padding-bottom:10px;">
-						    			<div id="upload-image"></div>
+							<div id="upload-form" class="d-none pb-2">
+										<div id="upload-image"></div>
 
-						    			<form accept="image/*" enctype="multipart/form-data" >
-						    			<input type="file" name="photo" id="images">
-						    			<button type="button" id="photo-button" class="btn btn-primary">Upload Image</button>
+										<form accept="image/*" enctype="multipart/form-data" >
+										<input type="file" name="photo" id="images">
+										<button type="button" id="photo-button" class="btn btn-primary">Upload Image</button>
 
-						    			<div id="upload-image-i"></div>
+										<div id="upload-image-i"></div>
 								</form>
 							</div>
 							{% endif %}
-							<h2 class="card-title user-form-value" style="margin-bottom: 4px;">{{ member_info.name }}</h2>
-							<input type="text" class="form-control form-control-sm user-form-input" id="user-name" value="{{ member_info.user_obj.cn }}" style="font-size: 26px !important; text-align: center; margin-bottom:8px;">
+							
+							<h2 class="card-title user-form-value mb-2 fw-semibold">{{ member_info.name }}</h2>
+							<input type="text" class="form-control form-control-lg user-form-input fs-3 text-center mb-2" id="user-name" value="{{ member_info.user_obj.cn }}">
 							{% if  member_info.pronouns %}
 							<h5 class="card-subtitle user-form-value mb-3 text-muted">{{ member_info.pronouns }}</h5>
 							{% endif %}
-							<input type="text" class="form-control form-control-sm user-form-input" id="user-pronouns" placeholder="Pronouns" value="{{ member_info.pronouns }}" style="font-size: 16px !important; text-align: center; margin-bottom:20px;">
-							<h6 class="card-subtitle mb-2 text-muted">
+							<input type="text" class="form-control form-control-sm user-form-input text-center mb-3 text-md" id="user-pronouns" placeholder="Pronouns" value="{{ member_info.pronouns }}">
+							<h6 class="card-subtitle mb-2 text-muted fw-semibold">
 								{% if member_info.active %}
 								Active Member
 								{% elif "honorarymembers" in member_info.group_list %}
@@ -60,100 +59,101 @@
 							</h6>
 
 							{% if "current_student" in member_info.group_list %}
-							<span class="badge badge-pill badge-secondary">Current Student</span>
+							<span class="badge rounded-pill badge-current-student">Current Student</span>
 							{% endif %}
 
 							{% if "rtp" in member_info.group_list %}
-							<span class="badge badge-pill badge-warning">Root Type Person</span>
+							<span class="badge rounded-pill badge-rtp">Root Type Person</span>
 							{% endif %}
 
 							{% if "webmaster" in member_info.group_list %}
-							<span class="badge badge-pill badge-info">Webmaster</span>
+							<span class="badge rounded-pill badge-webmaster">Webmaster</span>
 							{% endif %}
 
 							{% if "mediapcadmin" in member_info.group_list %}
-							<span class="badge badge-pill badge-info">Media PC Admin</span>
+							<span class="badge rounded-pill badge-mediapc">Media PC Admin</span>
 							{% endif %}
 
 							{% if "3da" in member_info.group_list %}
-							<span class="badge badge-pill badge-pink">3D Printer Admin</span>
+							<span class="badge rounded-pill badge-3da">3D Printer Admin</span>
 							{% endif %}
 
 							{% if "eboard" in member_info.group_list %}
-							<span class="badge badge-pill badge-success">Executive Board</span>
+							<span class="badge rounded-pill badge-eboard">Executive Board</span>
 							{% endif %}
 
 							{% if "constitutional_maintainers" in member_info.group_list %}
-							<span class="badge badge-pill badge-danger">Constitutional Maintainer</span>
+							<span class="badge rounded-pill badge-constitutional-maintainer">Constitutional Maintainer</span>
 							{% endif %}
 
 							{% if "wiki_maintainers" in member_info.group_list %}
-							<span class="badge badge-pill badge-purple">Wiki Maintainer</span>
+							<span class="badge rounded-pill badge-wiki">Wiki Maintainer</span>
 							{% endif %}
 
 							{% if "devcade" in member_info.group_list %}
-							<span class="badge badge-pill badge-info">Devcade Admin</span>
+							<span class="badge rounded-pill badge-devcade">Devcade Admin</span>
 							{% endif %}
 
 							{% if "drink" in member_info.group_list %}
-							<span class="badge badge-pill badge-primary">Drink Admin</span>
+							<span class="badge rounded-pill badge-drink">Drink Admin</span>
 							{% endif %}
 
 							{% if "segfault" in member_info.group_list %}
-							<span class="badge badge-pill badge-strange">segfault</span> 
+							<span class="badge rounded-pill badge-segfault">segfault</span> 
 							{% endif %} 
 
 							{% if member_info.user_obj.nsaccountlock == "TRUE" %}
-							<span class="badge badge-pill badge-dark">Disabled</span>
+							<span class="badge rounded-pill badge-disabled">Disabled</span>
 							{% endif %}
-
 
 							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName or member_info.user_obj.resumeURL %}
 							<hr>
 							
-							{% if member_info.user_obj.homepageURL %}
-							<a href="{{ member_info.user_obj.homepageURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.homepageURL }}">
-								<h2 style="display: inline" class="text-muted">
-									<i class="fas fa-globe" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+							<div>
+								{% if member_info.user_obj.homepageURL %}
+								<a href="{{ member_info.user_obj.homepageURL }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ member_info.user_obj.homepageURL }}">
+									<h2 class="d-inline text-muted">
+										<i class="fas fa-globe" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.blogURL %}
+								<a href="{{ member_info.user_obj.blogURL }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
+									<h2 class="d-inline text-warning">
+										<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.resumeURL %}
+								<a href="{{ member_info.user_obj.resumeURL }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ member_info.user_obj.resumeURL }}">
+									<h2 class="d-inline text-info">
+										<i class="far fa-file-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.github %}
+								<a href="https://github.com/{{ member_info.user_obj.github }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@{{ member_info.user_obj.github }}">
+									<h2 class="d-inline color-gh-purple">
+										<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+								{% if member_info.user_obj.googleScreenName %}
+								<h2 class="d-inline text-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ member_info.user_obj.googleScreenName }}">
+									<i class="fab fa-google" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
 								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.blogURL %}
-							<a href="{{ member_info.user_obj.blogURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.blogURL }}">
-								<h2 style="display: inline" class="text-warning">
-									<i class="fas fa-rss" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.resumeURL %}
-							<a href="{{ member_info.user_obj.resumeURL }}" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.resumeURL }}">
-								<h2 style="display: inline" class="text-info">
-									<i class="far fa-file-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.github %}
-							<a href="https://github.com/{{ member_info.user_obj.github }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.github }}">
-								<h2 style="display: inline; color: #6e5494;">
-									<i class="fab fa-github" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
-							{% if member_info.user_obj.googleScreenName %}
-							<h2 style="display: inline" class="text-success" data-toggle="tooltip" data-placement="bottom" title="{{ member_info.user_obj.googleScreenName }}">
-								<i class="fab fa-google" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-							</h2>
-							{% endif %}
-							{% if member_info.user_obj.twitterName %}
-							<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-toggle="tooltip" data-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
-								<h2 style="display: inline; color: #00aced;">
-									<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-								</h2>
-							</a>
-							{% endif %}
+								{% endif %}
+								{% if member_info.user_obj.twitterName %}
+								<a href="https://twitter.com/{{ member_info.user_obj.twitterName }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@{{ member_info.user_obj.twitterName }}">
+									<h2 class="d-inline color-twitter-blue">
+										<i class="fab fa-twitter" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+									</h2>
+								</a>
+								{% endif %}
+							</div>
 							
 							{% endif %}
-							<div style="text-align: left;">
+							<div class="text-start">
 								<div class="form-group user-form-input">
 									<label for="user-homepage">Homepage URL</label>
 									<input type="url" class="form-control form-control-sm" id="user-homepage" value="{{ member_info.user_obj.homepageURL }}" placeholder="Homepage URL">
@@ -179,7 +179,7 @@
 							{% if member_info.uid == info["uid"] %}
 							<hr class="user-form-value">
 							<button type="button" id="edit" class="btn btn-primary">Edit Profile</button>
-							<button type="button" id="save" class="btn btn-success user-form-input">Save Changes</button>
+							<button type="button" id="save" class="btn btn-success user-form-input mt-2">Save Changes</button>
 							{% endif %}
 						</div>
 
@@ -187,10 +187,10 @@
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-6">
-				<div class="card mb-3">
+				<div class="card mb-3 shadow-sm">
 					<div class="card-body">
-						<h3 class="card-title">General</h3>
-						<div class="row" style="padding-top:10px;">
+						<h3 class="card-title fw-semibold">General</h3>
+						<div class="row pt-2">
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-user"></i> Username
@@ -265,12 +265,12 @@
 								<p class="card-text">{{ member_info.lastlogin }}</p>
 							</div>
 							<div class="col-12">
-								<h6 class="card-subtitle text-muted mb-3">
+								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-users"></i> Groups
 								</h6>
 								<p class="card-text">
 									{% for group in member_info.group_list %}
-									<a href="/group/{{ group }}" class="badge badge-pill badge-light">{{ group }}</a>
+									<a href="/group/{{ group }}" class="badge rounded-pill badge-misc">{{ group }}</a>
 									{% endfor %}
 								</p>
 							</div>
@@ -279,10 +279,10 @@
 				</div>
 			</div>
 			<div class="col-sm-12 col-md-6">
-				<div class="card mb-3">
+				<div class="card mb-3 shadow-sm">
 					<div class="card-body">
-						<h3 class="card-title">Membership</h3>
-						<div class="row" style="padding-top:10px;">
+						<h3 class="card-title fw-semibold">Membership</h3>
+						<div class="row pt-2">
 							{% if member_info.rn %}
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
@@ -351,10 +351,10 @@
 			</div>
 			{% if member_info.user_obj.ritAlumni or member_info.user_obj.ritDn or member_info.user_obj.major or member_info.user_obj.ritYear %}
 			<div class="col-sm-12 col-md-6">
-				<div class="card mb-3">
+				<div class="card mb-3 shadow-sm">
 					<div class="card-body">
-						<h3 class="card-title">Student</h3>
-						<div class="row" style="padding-top:10px;">
+						<h3 class="card-title fw-semibold">Student</h3>
+						<div class="row pt-2">
 							{% if member_info.user_obj.ritDn %}
 							<div class="col-6 mb-4">
 								<h6 class="card-subtitle text-muted mb-2">
