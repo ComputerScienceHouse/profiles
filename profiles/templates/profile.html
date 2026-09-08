@@ -59,53 +59,52 @@
 							</h6>
 
 							{% if "current_student" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-light">Current Student</span>
+							<span class="badge rounded-pill badge-current-student">Current Student</span>
 							{% endif %}
 
 							{% if "rtp" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-warning">Root Type Person</span>
+							<span class="badge rounded-pill badge-rtp">Root Type Person</span>
 							{% endif %}
 
 							{% if "webmaster" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-blue">Webmaster</span>
+							<span class="badge rounded-pill badge-webmaster">Webmaster</span>
 							{% endif %}
 
 							{% if "mediapcadmin" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-blue">Media PC Admin</span>
+							<span class="badge rounded-pill badge-mediapc">Media PC Admin</span>
 							{% endif %}
 
 							{% if "3da" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-pink">3D Printer Admin</span>
+							<span class="badge rounded-pill badge-3da">3D Printer Admin</span>
 							{% endif %}
 
 							{% if "eboard" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-green">Executive Board</span>
+							<span class="badge rounded-pill badge-eboard">Executive Board</span>
 							{% endif %}
 
 							{% if "constitutional_maintainers" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-danger">Constitutional Maintainer</span>
+							<span class="badge rounded-pill badge-constitutional-maintainer">Constitutional Maintainer</span>
 							{% endif %}
 
 							{% if "wiki_maintainers" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-purple">Wiki Maintainer</span>
+							<span class="badge rounded-pill badge-wiki">Wiki Maintainer</span>
 							{% endif %}
 
 							{% if "devcade" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-blue">Devcade Admin</span>
+							<span class="badge rounded-pill badge-devcade">Devcade Admin</span>
 							{% endif %}
 
 							{% if "drink" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-primary">Drink Admin</span>
+							<span class="badge rounded-pill badge-drink">Drink Admin</span>
 							{% endif %}
 
 							{% if "segfault" in member_info.group_list %}
-							<span class="badge rounded-pill text-bg-strange">segfault</span> 
+							<span class="badge rounded-pill badge-segfault">segfault</span> 
 							{% endif %} 
 
 							{% if member_info.user_obj.nsaccountlock == "TRUE" %}
-							<span class="badge rounded-pill text-bg-dark">Disabled</span>
+							<span class="badge rounded-pill badge-disabled">Disabled</span>
 							{% endif %}
-
 
 							{% if member_info.user_obj.homepageURL or member_info.user_obj.blogURL or member_info.user_obj.github or member_info.user_obj.googleScreenName or member_info.user_obj.twitterName or member_info.user_obj.resumeURL %}
 							<hr>
@@ -266,12 +265,12 @@
 								<p class="card-text">{{ member_info.lastlogin }}</p>
 							</div>
 							<div class="col-12">
-								<h6 class="card-subtitle text-muted mb-3">
+								<h6 class="card-subtitle text-muted mb-2">
 									<i class="fas fa-users"></i> Groups
 								</h6>
 								<p class="card-text">
 									{% for group in member_info.group_list %}
-									<a href="/group/{{ group }}" class="badge rounded-pill text-bg-light">{{ group }}</a>
+									<a href="/group/{{ group }}" class="badge rounded-pill badge-grey">{{ group }}</a>
 									{% endfor %}
 								</p>
 							</div>

@@ -80,30 +80,62 @@ a:active {
 	text-decoration: none;
 }
 
-.text-bg-blue {
+/* LDAP ROLE BADGES */
+
+.badge-current-student {
   color: #fff;
-  background-color: #2196f3;
+  background-color: #bbb;
+}
+.badge-rtp {
+  color: #fff;
+  background-color: #ff9800;
 }
 
-.text-bg-pink {
-  color: #fff;
-  background-color: #cb42a9;
-}
-
-.text-bg-purple {
-  color: #fff;
-  background-color: #b19cd9;
-}
-
-.text-bg-green {
+.badge-eboard {
   color: #fff;
   background-color: #4caf50;
 }
 
-.text-bg-strange {
+.badge-constitutional-maintainer {
+  color: #fff;
+  background-color: #e51c23;
+}
+.badge-3da {
+  color: #fff;
+  background-color: #cb42a9;
+}
+
+.badge-drink {
+  color: #fff;
+  background-color: #b0197e;
+}
+
+.badge-webmaster,
+.badge-devcade,
+.badge-mediapc {
+  color: #fff;
+  background-color: #2196f3;
+}
+
+.badge-wiki {
+  color: #fff;
+  background-color: #b19cd9;
+}
+
+.badge-segfault {
 	color: #000;
 	background-color: #ffffff; 
 	font-family: "Comic Sans MS", "Comic Sans", cursive; 
+}
+
+.badge-disabled {
+  color: #fff;
+  background-color: #181818;
+}
+
+.badge-grey {
+  color:#000;
+  background-color: #eee;
 }
 
 .color-twitter-blue {
