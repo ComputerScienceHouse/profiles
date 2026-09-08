@@ -22,7 +22,8 @@ OIDC_CLIENT_CONFIG = {
     'client_id': os.environ.get('PROFILES_OIDC_CLIENT_ID', 'profiles'),
     'client_secret': os.environ.get('PROFILES_OIDC_CLIENT_SECRET', ''),
     'post_logout_redirect_uris': [os.environ.get('PROFILES_OIDC_LOGOUT_REDIRECT_URI', 'https://profiles.csh.rit.edu/logout')]
-}
+
+OIDC_REDIRECT_URI = env.get("PROFILES_OIDC_REDIRECT_URI", "http://localhost:8080/redirect_uri")
 
 LDAP_BIND_DN = env.get("LDAP_BIND_DN", default="cn=profiles,ou=Apps,dc=csh,dc=rit,dc=edu")
 LDAP_BIND_PASS = env.get("LDAP_BIND_PW", default=None)
